@@ -69,7 +69,6 @@ class HandleInertiaRequests extends Middleware
         }
 
         //dd($result);
-
         //Generates urls for language switcher with each locale
         $locale_urls = $this->locale_urls();
         //Generates link for go back button

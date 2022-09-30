@@ -48,7 +48,7 @@ class CartController extends Controller
         }
 
         //dd(Cart::getCart());
-        return Inertia::render('Cart',[
+        return Inertia::render('ShoppingCart',[
             'products' => $products,
             'images' => $images,
             'page' => $page,
@@ -211,10 +211,7 @@ class CartController extends Controller
     public function addToCart(Request $request){
         //dd($request->all());
         $product = Product::findOrFail($request['id']);
-        if($product->parent_id == null) {
-            //dd($product->slug);
-            return redirect(route('client.product.show',[$product->slug]));
-        }
+
 
         Cart::add($request);
 

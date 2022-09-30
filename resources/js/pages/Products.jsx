@@ -90,9 +90,9 @@ const Products = ({seo}) => {
       <Layout seo={seo}>
           <div className="bg-custom-zinc-300 py-12">
               <div className="wrapper pb-10">
-                  <div className="text-3xl bold mb-10">
+                  {category ? <div className="text-3xl bold mb-10">
                       {category.title} <span className="text-xl opacity-20 pl-3">{category.product_count} products</span>
-                  </div>
+                  </div>:null}
                   <button
                       onClick={() => setShowFilters(true)}
                       className="bold text-lg  whitespace-nowrap"
@@ -136,6 +136,7 @@ const Products = ({seo}) => {
                                           price={item.special_price ? item.special_price : item.price}
                                           discount={discount}
                                           link={route('client.product.show',item.slug)}
+                                          id={item.id}
                                       />
                                   );
                               })}

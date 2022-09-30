@@ -6,6 +6,7 @@ import { Link } from '@inertiajs/inertia-react'
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Inertia } from '@inertiajs/inertia';
 
 const ProductBox = (props) => {
   const [favorite, setFavorite] = useState(false);
@@ -21,6 +22,15 @@ const ProductBox = (props) => {
     toast.info("Product is added to Favorites");
   };
 
+
+    function addToWishlist(id){
+        Inertia.post(route('client.favorite.add'), {id:id});
+    }
+
+    function addToCartF(id){
+        Inertia.post(route('add-to-cart'), {id:id,qty:1});
+    }
+
   return (
     <>
       <div className="bg-white rounded p-5 text-sm relative">
@@ -33,7 +43,10 @@ const ProductBox = (props) => {
         )}
         <div className="absolute top-5 right-5">
           <button
-            onClick={toFavorites}
+            onClick={() => {
+                toFavorites();
+                addToWishlist(props.id)
+            }}
             className="w-10 h-10 flex justify-center items-center rounded-md bg-custom-zinc-200 mb-2"
           >
             {/*<HeartIcon
@@ -51,7 +64,10 @@ const ProductBox = (props) => {
 
           </button>
           <button
-            onClick={toCart}
+            onClick={() => {
+                toCart();
+                addToCartF(props.id);
+            }}
             className="w-10 h-10 flex justify-center items-center rounded-md bg-custom-zinc-200"
           >
             {/*<CartIcon

@@ -54,11 +54,15 @@ const Navbar = () => {
             </div>
           </button>
           <div className="h-10 w-1/3 mx-5 relative text-sm  hidden md:inline-block">
-            <input
-              className="w-full h-full bg-custom-zinc-100 text-center border-none placeholder:opacity-40"
-              type="text"
-              placeholder="Search here"
-            />
+              <form action={route('search.index')}>
+                  <input
+                      className="w-full h-full bg-custom-zinc-100 text-center border-none placeholder:opacity-40"
+                      type="text"
+                      placeholder="Search here"
+                      name="term"
+                  />
+              </form>
+
             <FiSearch className="absolute top-1/2 -translate-y-1/2 right-2 stroke-custom-dark w-5 h-5" />
           </div>
           <div className="md:flex ml-20 hidden">
@@ -155,7 +159,7 @@ const Navbar = () => {
 
 
                 {wishlist_count > 0 ? <button className="absolute bottom-4 left-3 w-5 h-5 rounded-full bg-custom-blue text-white text-xs ">
-                2
+                    {wishlist_count}
               </button>:null}
             </Link>
             <Link className="relative group lg:ml-5 ml-3" href={route("client.cart.index")}>
@@ -165,7 +169,7 @@ const Navbar = () => {
                 </svg>
 
                 {cart_count > 0 ? <button className="absolute bottom-4 left-3 w-5 h-5 rounded-full bg-custom-blue text-white text-xs ">
-                2
+                    {cart_count}
               </button>:null}
             </Link>
           </div>

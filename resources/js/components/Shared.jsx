@@ -9,6 +9,7 @@ import { Link } from '@inertiajs/inertia-react'
 import { colors } from "./Data";
 import { BiChevronDown } from "react-icons/bi";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
+import {Inertia} from "@inertiajs/inertia";
 
 export const LocationMap = () => {
   return (
@@ -142,8 +143,8 @@ export const FilterOptions = ({ title, options }) => {
   );
 };
 
-export const Quantity = () => {
-  const [number, setNumber] = useState(1);
+export const Quantity = (props) => {
+  const [number, setNumber] = useState(props.qty ? props.qty : 1);
 
   const decrease = () => {
     if (number > 1) {
@@ -151,10 +152,18 @@ export const Quantity = () => {
     } else {
       setNumber(1);
     }
+
+      if(props.cart)
+          Inertia.get(route('update_cart'), {id:props.id,qty: number > 1 ? number - 1 : 1})
   };
   const increase = () => {
     setNumber(number + 1);
+
+      if(props.cart)
+          Inertia.get(route('update_cart'), {id:props.id,qty: number + 1})
   };
+
+
 
   return (
     <div className="flex items-center ">
@@ -215,6 +224,14 @@ export const CartTabs = ({ active }) => {
 export const CartItem = (props) => {
   const [remove, setRemove] = useState(false);
 
+    function removeFromWishlist(id){
+        Inertia.get(route('client.favorite.remove'), {id:id})
+    }
+
+    function removeItem(id){
+        Inertia.get(route('remove-from-cart'), {id:id})
+    }
+
   return (
     <tr className={remove ? "hidden" : ""}>
       <td className="p-4 border-b border-solid ">
@@ -231,7 +248,7 @@ export const CartItem = (props) => {
         <div className="opacity-50 text-sm">{props.brand}</div>
       </td>
       <td className="p-4 border-b border-solid ">
-        <Quantity />
+        <Quantity id={props.id} qty={props.qty} cart={props.cart} />
       </td>
       <td className="p-4 border-b border-solid whitespace-nowrap">
         ₾ {props.price}
@@ -248,7 +265,15 @@ export const CartItem = (props) => {
       )}
 
       <td className="p-4 border-b border-solid ">
-        <button onClick={() => setRemove(true)}>
+        <button onClick={() => {
+            setRemove(true)
+            if (props.cart){
+                //alert(4);
+                removeItem(props.id)
+
+            } else
+            removeFromWishlist(props.id)
+        }}>
           {/*<Delete />*/}
             <svg xmlns="http://www.w3.org/2000/svg" width="18.797" height="21.93" viewBox="0 0 18.797 21.93">
                 <g id="delete" transform="translate(-4.5 -2.25)">

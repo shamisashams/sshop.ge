@@ -27,7 +27,9 @@ const CabinetNav = ({ active }) => {
             <Link onClick={sendVerificationLink} className="text-custom-blue underline">
               Verify now!
             </Link>{" "}
-          </div>:null}
+          </div>:<div className="text-green-300">
+                Email verified{" "}
+            </div>}
         </div>
         <div className="fio-buttons-wrapper">
           <div className="fio-buttons">

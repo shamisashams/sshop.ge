@@ -36,7 +36,7 @@ class SearchController extends Controller
     public function index(string $locale, Request $request)
     {
 
-        $page = Page::where('key', 'search')->firstOrFail();
+        $page = Page::where('key', 'about')->firstOrFail();
 //        return 1;
 
         //dd($category->getAncestors());
@@ -106,8 +106,6 @@ class SearchController extends Controller
             'category' => null,
             'images' => $images,
             'filter' => $this->getAttributes(),
-            'subcategories' => $subCategories,
-            'collections' => [],
             "seo" => [
                 "title"=>$page->meta_title,
                 "description"=>$page->meta_description,
