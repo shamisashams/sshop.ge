@@ -183,7 +183,7 @@ class ProductController extends Controller
 
 
         //dd(last($product->categories));
-        $categories = $product->categories()->with('colors.file')->get();
+        $categories = $product->categories()->get();
 
 
         $path = [];
@@ -233,20 +233,14 @@ class ProductController extends Controller
             $path[$k]['id'] = $ancestor->id;
             $path[$k]['slug'] = $ancestor->slug;
             $path[$k]['title'] = $ancestor->title;
-            $path[$k]['colors'] = $ancestor->colors;
-            $path[$k]['corner'] = $ancestor->corner;
-            $path[$k]['size'] = $ancestor->size;
-            $path[$k]['color'] = $ancestor->color;
+
             $k++;
         }
 
         $path[$k]['id'] = $arr[$max]['current']->id;
         $path[$k]['slug'] = $arr[$max]['current']->slug;
         $path[$k]['title'] = $arr[$max]['current']->title;
-        $path[$k]['colors'] = $arr[$max]['current']->colors;
-        $path[$k]['corner'] = $arr[$max]['current']->corner;
-        $path[$k]['size'] = $arr[$max]['current']->size;
-        $path[$k]['color'] = $arr[$max]['current']->color;
+
         //dd($path);
 
 

@@ -57,9 +57,11 @@ class HandleInertiaRequests extends Middleware
 
         $result = $this->buildTree($categories);
 
+
+
         $info = Setting::with(['translation'])->get();
 
-        //dd($info);
+        //dd($result);
         $_result = [];
         foreach ($info as $item){
             $_result[$item->key] = $item->value;
@@ -120,6 +122,9 @@ class HandleInertiaRequests extends Middleware
             $result[$key]['position'] = $category->position;
             $result[$key]['children'] = [];
             $result[$key]['files'] = $category->files;
+            $result[$key]['file'] = $category->file;
+            $result[$key]['depth'] = $category->depth;
+            $result[$key]['on_page'] = $category->on_page;
             if(count($category->children)){
                 $result[$key]['children'] = $this->buildTree($category->children);
             }

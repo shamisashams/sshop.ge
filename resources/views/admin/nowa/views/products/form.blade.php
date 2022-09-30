@@ -272,7 +272,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         @enderror
                     </div>
 
-                    @if($product->created_at and $product->parent_id !== null)
+                    {{--@if($product->created_at and $product->parent_id !== null)--}}
                     <div class="form-group">
                         {!! Form::label('price',__('admin.price'),['class' => 'form-label']) !!}
                         {!! Form::number('price',$product->price ?? old('price'),['class' => 'form-control','step' => '0.01','min' => '0']) !!}
@@ -285,9 +285,9 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         </small>
                         @enderror
                     </div>
-                    @endif
+                    {{--@endif--}}
 
-                    @if($product->created_at and $product->parent_id !== null)
+                    {{--@if($product->created_at and $product->parent_id !== null)--}}
                     <div class="form-group">
                         {!! Form::label('special_price',__('admin.special_price'),['class' => 'form-label']) !!}
                         {!! Form::number('special_price',$product->special_price ?? old('special_price'),['class' => 'form-control','step' => '0.01','min' => '0']) !!}
@@ -300,7 +300,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         </small>
                         @enderror
                     </div>
-                    @endif
+                  {{--  @endif--}}
 
                     <div class="form-group">
                         <label class="form-label">@lang('admin.installment_price')</label>
@@ -377,7 +377,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         <label class="form-label">@lang('admin.promocode')</label>
                         <select name="promocode_id" class="form-control">
                             <option value=""></option>
@@ -393,10 +393,10 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                             </div>
                         </small>
                         @enderror
-                    </div>
+                    </div>--}}
 
 
-                    @if($product->created_at and $product->parent_id !== null)
+                    {{--@if($product->created_at and $product->parent_id !== null)
                     <div class="form-group">
                         <div class="main-content-label mg-b-5">
                             @lang('admin.product_stock')
@@ -411,7 +411,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                             </label>
                         </div>
                     @endforeach
-                    @endif
+                    @endif--}}
 
 
                     <div class="form-group">
@@ -498,7 +498,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         @enderror
 
                     </div>--}}
-                    @if($product->created_at and $product->parent_id !== null)
+                    {{--@if($product->created_at and $product->parent_id !== null)
                     <div class="form-group">
                         <div class="main-content-label mg-b-5">
                             @lang('admin.product_collection')
@@ -527,7 +527,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         @enderror
                     </div>
 
-                    @endif
+                    @endif--}}
 
 
 
@@ -560,7 +560,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         if ($item->code == 'size')
                         $size_attr = $item;
                         ?>
-                        @if(($product->created_at and $product->parent_id == null) && in_array($item->code,$arr))
+
                             <div class="form-group">
                                 <label class="form-label">{{$item->code}}</label>
 
@@ -607,134 +607,11 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
 
 
 
-                            @elseif(($product->created_at and $product->parent_id !== null) && !in_array($item->code,$arr))
-
-                                <div class="form-group">
-                                    <label class="form-label">{{$item->code}}</label>
-
-                                    @if($item->code == 'size')
-                                        <?php
-                                        $attr_size_id = $item->id;
-                                        ?>
-                                        <div class="form-group">
-                                            <ul id="selected_products">
-                                                @foreach($item->options as $option)
-                                                    <?php
-                                                    if (isset($prod_attr[$item->id])){
-                                                        if($prod_attr[$item->id] == $option->id){
-                                                            $selected = true;
-                                                        } else $selected = false;
-                                                    } else $selected = false;
-                                                    ?>
-                                                    @if($selected)
-                                                        <li>
-                                                            <span>{{$option->value}}</span>
-                                                            <input type="hidden" name="attribute[{{$item->id}}]" value="{{$option->id}}">
-                                                            <a href="javascript:;" class="delete_product">delete</a>
-                                                        </li>
-                                                        @else
-                                                            {{--<input type="hidden" name="attribute[{{$item->id}}]" value="">--}}
-                                                    @endif
-                                                @endforeach
-                                            </ul>
-                                            <input class="form-control" type="text" id="search_product" name="term" value="" placeholder="Add search products">
-                                            <ul id="product_list">
-
-                                            </ul>
-                                        </div>
-
-                                    @else
-                                        @if($item->type == 'select')
-                                            <select class="form-control" name="attribute[{{$item->id}}]">
-                                                <option value=""></option>
-                                                @foreach($item->options as $option)
-                                                    <?php
-                                                    if (isset($prod_attr[$item->id])){
-                                                        if($prod_attr[$item->id] == $option->id){
-                                                            $selected = ' selected';
-                                                        } else $selected = '';
-                                                    } else $selected = '';
-                                                    ?>
-                                                    <option value="{{$option->id}}"{{$selected}}>{{$option->code}} {{$option->label}} {{$option->value}}</option>
-                                                @endforeach
-                                            </select>
-                                        @else
-
-                                            <?php
-                                            if (isset($prod_attr_bool[$item->id])){
-                                                if($prod_attr_bool[$item->id]){
-                                                    $checked = ' checked';
-                                                    $val = 1;
-                                                } else {
-                                                    $checked = '';
-                                                    $val = 0;
-                                                }
-                                            } else {
-                                                $checked = '';
-                                                $val = 0;
-                                            }
-                                            ?>
-
-                                            <label class="ckbox">
-                                                <input type="hidden" name="attribute[{{$item->id}}]" value="{{$val}}">
-                                                <input class="bool_ckbox" type="checkbox"{{$checked}}>
-                                                <span></span>
-                                            </label>
-
-                                        @endif
-                                    @endif
 
 
-                                </div>
 
 
-                        @elseif(!$product->created_at && in_array($item->code,$arr))
-                            <div class="form-group">
-                                <label class="form-label">{{$item->code}}</label>
 
-                                @if($item->type == 'select')
-                                    <select class="form-control" name="attribute[{{$item->id}}]">
-                                        <option value=""></option>
-                                        @foreach($item->options as $option)
-                                            <?php
-                                            if (isset($prod_attr[$item->id])){
-                                                if($prod_attr[$item->id] == $option->id){
-                                                    $selected = ' selected';
-                                                } else $selected = '';
-                                            } elseif(old('attribute.'.$item->id) == $option->id){
-                                                $selected = ' selected';
-                                            }
-                                            else $selected = '';
-                                            ?>
-                                            <option value="{{$option->id}}"{{$selected}}>{{$option->code}} {{$option->label}} {{$option->value}}</option>
-                                        @endforeach
-                                    </select>
-                                @else
-
-                                    <?php
-                                    if (isset($prod_attr_bool[$item->id])){
-                                        if($prod_attr_bool[$item->id]){
-                                            $checked = ' checked';
-                                            $val = 1;
-                                        } else {
-                                            $checked = '';
-                                            $val = 0;
-                                        }
-                                    } else {
-                                        $checked = '';
-                                        $val = 0;
-                                    }
-                                    ?>
-
-                                    <label class="ckbox">
-                                        <input type="hidden" name="attribute[{{$item->id}}]" value="{{$val}}">
-                                        <input class="bool_ckbox" type="checkbox"{{$checked}}>
-                                        <span></span>
-                                    </label>
-
-                                @endif
-                            </div>
-                            @endif
                     @endforeach
 
 
@@ -757,7 +634,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
 
 
 
-        <!-- /row -->
+        {{--<!-- /row -->
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="card">
@@ -777,7 +654,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
         <!-- row -->
 
 
@@ -790,7 +667,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                     <div>
                         <h6 class="card-title mb-1">@lang('admin.prouctimages')</h6>
                     </div>
-                    {{--<div class="input-images"></div>--}}
+                    <div class="input-images"></div>
                     @if ($errors->has('images'))
                         <span class="help-block">
                                             {{ $errors->first('images') }}
@@ -829,74 +706,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
     </div>
 
 
-    @if(!$product->created_at || $product->parent_id == null)
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.add_matras_variant')</h6>
-                    </div>
 
-
-                    <button type="button" id="add_size">add size</button>
-
-                    <div id="variants">
-
-
-
-                        @foreach($product->variants as $variant)
-
-                            <?php
-                            $prod_attr = \Illuminate\Support\Arr::pluck($variant->attribute_values,'integer_value','attribute_id');
-
-                            ?>
-
-                        <div class="row row-sm row_size">
-                            <div class="col-lg">
-                                <select class="form-control" name="matras[{{$variant->id}}][option_id]">
-
-                                    @foreach($attributes as $item)
-                                        @if($item->code == 'size')
-
-                                            @foreach($item->options as $option)
-                                                <?php
-                                                if (isset($prod_attr[$item->id])){
-                                                    if($prod_attr[$item->id] == $option->id){
-                                                        $selected = ' selected';
-                                                    } else $selected = '';
-                                                } else $selected = '';
-                                                ?>
-                                                <option value="{{$option->id}}" {{$selected}}>{{$option->value}}</option>
-
-                                            @endforeach
-                                            @break
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <input class="form-control" placeholder="Price" type="number" name="matras[{{$variant->id}}][price]" value="{{$variant->price}}">
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <input class="form-control" placeholder="Special Price" type="number" name="matras[{{$variant->id}}][special_price]" value="{{$variant->special_price}}">
-                            </div>
-                            <div class="col-lg mg-t-10 mg-lg-t-0">
-                                <a data-id="{{$variant->id}}" class="btn delete_size" href="javascript:;">delete</a>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-
-
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
     <!-- row closed -->
 
     <!-- /row -->
@@ -908,159 +718,9 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
 
 
 
-    @if($product->created_at and $product->parent_id === null)
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="main-content-label mg-b-5">
-                                @lang('admin.colors')
-                                <div class="form-group">
-                                    <a class="btn btn-success" href="{{route('product.add-color',$product)}}">@lang('admin.add_colors')</a>
-                                </div>
-
-                                <table class="table">
-                                    <tr>
-                                        <th>id</th>
-                                        <th>color</th>
-                                        <th></th>
-                                    </tr>
-                                    @foreach($product->colors as $color)
-                                        <tr>
-                                            <td>{{$color->id}}</td>
-                                            <td style="background-color: {{$color->color}}">{{$color->color}}</td>
-                                            <td>
-                                                <a href="{{locale_route('product.edit_color',[$product,$color->id])}}"
-                                                   class="pl-3">
-                                                    <i class="fa fa-edit">შეცვლა</i>
-                                                </a>
-                                                <a href="{{locale_route('product.delete_color',[$product,$color->id])}}"
-                                                   onclick="return confirm('Are you sure?')" class="pl-3">
-                                                    <i class="fa fa-edit">წაშლა</i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-
-    @if($product->created_at and $product->parent_id == null)
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.product_variants')</h6>
-                    </div>
-
-                    <div>
-                        <a class="btn btn-success" href="{{route('product.variant.create',$product)}}">@lang('admin.create_variant')</a>
-                    </div>
 
 
 
-                    <div>
-                        <table class="table mg-b-0 text-md-nowrap">
-                            <tr>
-                                <th>id</th>
-                                <th>title</th>
-                                <th>attributes</th>
-                                <th>price</th>
-                                <th>stock</th>
-                                <th></th>
-                            </tr>
-
-                            @foreach($product->variants as $variant)
-                                <?php
-
-                                $v_stock_ids = $variant->stocks->pluck("id")->toArray();
-                                $result = [];
-
-                                foreach ($variant->attribute_values as $item){
-                                    $options = $item->attribute->options;
-                                    $value = '';
-                                    foreach ($options as $option){
-                                        if($item->attribute->type == 'select'){
-                                            if($item->integer_value == $option->id) {
-                                                if($item->attribute->code == 'size'){
-                                                    $result[$item->attribute->code] = $option->value;
-                                                }
-                                                elseif ($item->attribute->code == 'corner'){
-                                                    $result[$item->attribute->code] = $option->code;
-                                                }
-                                                else {
-                                                    $result[$item->attribute->code] = $option->label;
-                                                }
-                                            }
-
-                                        }
-                                    }
-
-                                }
-                                ?>
-                                <tr>
-                                    <td>
-                                        {{$variant->id}}
-                                    </td>
-                                    <td>
-                                        {{$variant->title}}
-                                    </td>
-                                    <td>
-                                        <?php
-                                        $attributes = '';
-
-                                        foreach ($result as $key => $value){
-                                            $attributes .= '<b>' . $key . '</b> : ' . $value . "\n";
-                                        }
-                                        ?>
-                                        <pre>{!! $attributes !!}</pre>
-                                    </td>
-                                    <td>{!! $variant->special_price ? $variant->special_price .' <span style="text-decoration: line-through;">' . $variant->price . '</span>' : $variant->price !!}</td>
-                                    <td>
-                                        <?php
-                                        $_stocks = '';
-
-
-                                        foreach ($stocks as $_stock){
-                                            if(in_array($_stock->id,$v_stock_ids)) $_checked = 'checked';
-                                            else $_checked = '';
-                                            $_stocks .= '<div class="form-group"><label class="ckbox">
-                        <input onclick="return false" type="checkbox" name="stock_id[]" data-checkboxes="mygroup" class="custom-control-input" '. $_checked .' value="'.$_stock->id.'">
-                        <span style="margin-left: 5px">'.$_stock->title.'</span>
-
-                        </label></div>';
-                                        }
-                                        ?>
-                                        {!! $_stocks !!}
-                                    </td>
-                                    <td>
-                                        <a href="{{locale_route('product.edit',$variant->id)}}"
-                                           class="pl-3">
-                                            <i class="fa fa-edit">შეცვლა</i>
-                                        </a>
-                                        <a href="{{locale_route('product.destroy',$variant->id)}}"
-                                           onclick="return confirm('Are you sure?')" class="pl-3">
-                                            <i class="fa fa-edit">წაშლა</i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
 
 @endsection
 

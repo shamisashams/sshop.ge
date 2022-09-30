@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog;
+use App\Models\News;
 use App\Models\Page;
 use App\Models\ProductSet;
 use App\Models\Slider;
@@ -86,7 +86,7 @@ class HomeController extends Controller
             'images' => $images,
             'collections' => ProductSet::with(['translation','latestImage'])->where('status',1)->get(),
             'collection' => ProductSet::with(['translation','latestImage','products','products.stocks'])->where('status',1)->inRandomOrder()->first(),
-            'blogs' => Blog::with(['translation','latestImage'])->limit(4)->inRandomOrder()->get()
+            'blogs' => News::with(['translation','latestImage'])->limit(4)->inRandomOrder()->get()
         ])->withViewData([
             'meta_title' => $page->meta_title,
             'meta_description' => $page->meta_description,

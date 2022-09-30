@@ -133,8 +133,8 @@
                     "slug": "contact"
                 },
                 {
-                    "url": "blog.index",
-                    "name": "ბლოგი",
+                    "url": "news.index",
+                    "name": "სიახლები",
                     "i18n": "blog",
                     "icon": "g_translate",
                     "slug": "blog"

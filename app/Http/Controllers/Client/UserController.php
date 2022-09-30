@@ -9,6 +9,7 @@ use App\Models\Page;
 use App\Repositories\Eloquent\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use App\Repositories\Eloquent\GalleryRepository;
@@ -40,7 +41,7 @@ class UserController extends Controller
 
         //dd($files);
 
-        return Inertia::render('RegularCabinet', ["page" => $page, "seo" => [
+        return Inertia::render('PersonalInformation', ["page" => $page, "seo" => [
             "title"=>$page->meta_title,
             "description"=>$page->meta_description,
             "keywords"=>$page->meta_keyword,
@@ -60,6 +61,7 @@ class UserController extends Controller
 
     public function saveSettings(Request $request){
 
+        //dd($request->all());
         $data = $request->validate([
             'name' => 'required',
             'surname' => 'required',
@@ -68,6 +70,17 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . auth()->id(),
             'id_number' => 'required'
         ]);
+
+        if($request->post('password')){
+            $data = $request->validate([
+                'password' => 'min:3',
+                'repeat_password' => 'same:password'
+            ]);
+
+            //dd($data);
+
+            $data['password'] = Hash::make($data['password']);
+        }
 
         auth()->user()->update($data);
         return redirect()->back()->with('success',__('client.success_saved'));

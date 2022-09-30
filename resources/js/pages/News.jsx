@@ -6,8 +6,13 @@ import NewsBox from "../components/NewsBox";
 //import News4 from "../assets/images/news/4.png";
 //import News5 from "../assets/images/news/5.png";
 //import News6 from "../assets/images/news/6.png";
+import Layout from "@/Layouts/Layout";
+import { Link, usePage } from '@inertiajs/inertia-react'
 
-const News = () => {
+const News = ({seo}) => {
+
+    const {news} = usePage().props;
+
   const newsData = [
     {
       img: "/client/assets/images/news/1.png",
@@ -60,33 +65,36 @@ const News = () => {
   ];
 
   return (
-    <div className="batman">
-      <div className="wrapper">
-        <div className="news-titles">
-          <div className="title">News</div>
-          <div className="paragraph">
-            We serve clients in financial services, law, insurance, diverse
-            corporate sectors and strategy consulting. We design innovative and
-            differentiated content ideas for our clients` worldwide conferences
-            and events of all sizes.
+      <Layout seo={seo}>
+          <div className="batman">
+              <div className="wrapper">
+                  <div className="news-titles">
+                      <div className="title">News</div>
+                      <div className="paragraph">
+                          We serve clients in financial services, law, insurance, diverse
+                          corporate sectors and strategy consulting. We design innovative and
+                          differentiated content ideas for our clients` worldwide conferences
+                          and events of all sizes.
+                      </div>
+                  </div>
+                  <div className="news-grid">
+                      {news.data.map((item, index) => {
+                          return (
+                              <NewsBox
+                                  key={index}
+                                  link={route('client.news.show',item.slug)}
+                                  img={item.latest_image ? item.latest_image.file_full_url : null}
+                                  title={item.title}
+                                  date={item.formatted_date}
+                                  paragraph={item.short_description}
+                              />
+                          );
+                      })}
+                  </div>
+              </div>
           </div>
-        </div>
-        <div className="news-grid">
-          {newsData.map((item, index) => {
-            return (
-              <NewsBox
-                key={index}
-                link={item.link}
-                img={item.img}
-                title={item.title}
-                date={item.date}
-                paragraph={item.paragraph}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </div>
+      </Layout>
+
   );
 };
 

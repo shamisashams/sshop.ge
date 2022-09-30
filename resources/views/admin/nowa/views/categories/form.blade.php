@@ -164,14 +164,16 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                         </div>
                     </div>
 
-                    {{--<div class="form-group mb-0 justify-content-end">
+                    @if($category->isRoot())
+                    <div class="form-group mb-0 justify-content-end">
                         <div class="checkbox">
                             <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" name="corner" class="custom-control-input" id="checkbox-corner" {{$category->corner ? 'checked' : ''}}>
-                                <label for="checkbox-corner" class="custom-control-label mt-1">{{__('admin.corner')}}</label>
+                                <input type="checkbox" data-checkboxes="mygroup" name="on_page" class="custom-control-input" id="checkbox-corner" {{$category->on_page ? 'checked' : ''}}>
+                                <label for="checkbox-corner" class="custom-control-label mt-1">{{__('admin.show_on_page')}}</label>
                             </div>
                         </div>
-                    </div>--}}
+                    </div>
+                    @endif
 
                     {{--<div class="form-group mb-0 justify-content-end">
                         <div class="checkbox">
@@ -216,7 +218,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                     }
                     ?>
 
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         <label class="form-label">@lang('admin.fiter_attributes')</label>
                         <select class="form-control" name="filter">
                             <option value="">--none--</option>
@@ -224,7 +226,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                                 <option value="{{$k}}" {{$k == $sel_a ? 'selected':''}}>{{$attr}}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div>--}}
 
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>

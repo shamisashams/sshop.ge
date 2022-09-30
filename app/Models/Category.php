@@ -67,6 +67,10 @@ class Category extends Model
      */
     protected $table = 'categories';
 
+    protected $appends = [
+        'product_count'
+    ];
+
     /**
      * @var string[]
      */
@@ -78,7 +82,8 @@ class Category extends Model
         'parent_id',
         'corner',
         'size',
-        'color'
+        'color',
+        'on_page'
     ];
 
     /** @var string */
@@ -164,4 +169,7 @@ class Category extends Model
         return $this->hasMany(CategoryColor::class);
     }
 
+    public function getProductCountAttribute(){
+        return $this->products()->count();
+    }
 }

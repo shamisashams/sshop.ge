@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->withoutMiddleware('web')->name('upload');
 
@@ -29,6 +31,9 @@ Route::any('bog/callback/status', [\App\BogPay\BogCallbackController::class, 'st
 Route::any('bog/callback/refund',[\App\BogPay\BogCallbackController::class, 'refund'])->withoutMiddleware('web')->name('bogCallbackRefund');
 
 Route::any('space/callback/status', [\App\SpacePay\SpaceCallbackController::class, 'status'])->withoutMiddleware('web')->name('spaceCallbackStatus');
+
+
+
 
 Route::redirect('', config('translatable.fallback_locale'));
 Route::prefix('{locale?}')
@@ -70,7 +75,7 @@ Route::prefix('{locale?}')
                 Route::get('product/{product}/{product_color}/delete_color',[\App\Http\Controllers\Admin\ProductController::class,'deleteColor'])->name('product.delete_color');
 //
 
-                Route::post('product/search',[\App\Http\Controllers\Admin\BlogController::class,'getProducts'])->name('product.search.ajax');
+                Route::post('product/search',[\App\Http\Controllers\Admin\NewsController::class,'getProducts'])->name('product.search.ajax');
 
 
                 Route::post('size/search',[\App\Http\Controllers\Admin\ProductController::class,'getSizes'])->name('size.search.ajax');
@@ -109,8 +114,8 @@ Route::prefix('{locale?}')
                 Route::resource('attribute', \App\Http\Controllers\Admin\AttributeController::class);
                 Route::get('attribute/{attribute}/destroy', [\App\Http\Controllers\Admin\AttributeController::class, 'destroy'])->name('attribute.destroy');
 
-                Route::resource('blog', \App\Http\Controllers\Admin\BlogController::class);
-                Route::get('blog/{blog}/destroy', [\App\Http\Controllers\Admin\BlogController::class, 'destroy'])->name('blog.destroy');
+                Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
+                Route::get('news/{news}/destroy', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('news.destroy');
 
                 Route::resource('partner', \App\Http\Controllers\Admin\PartnerController::class)->parameters(['partner' => 'user']);
                 Route::get('partner/{user}/destroy', [\App\Http\Controllers\Admin\PartnerController::class, 'destroy'])->name('partner.destroy');
@@ -175,9 +180,9 @@ Route::prefix('{locale?}')
         });
 
         Route::middleware(['auth_client'])->group(function (){
-            Route::get('client/cabinet',[\App\Http\Controllers\Client\UserController::class,'index'])->name('client.cabinet');
-            Route::get('client/orders',[\App\Http\Controllers\Client\UserController::class,'orders'])->name('client.orders');
-            Route::get('client/order/{order}/details',[\App\Http\Controllers\Client\UserController::class,'orderDetails'])->name('client.order-details');
+            Route::get('account',[\App\Http\Controllers\Client\UserController::class,'index'])->name('client.cabinet');
+            Route::get('account/orders',[\App\Http\Controllers\Client\UserController::class,'orders'])->name('client.orders');
+            Route::get('account/order/{order}/details',[\App\Http\Controllers\Client\UserController::class,'orderDetails'])->name('client.order-details');
             Route::get('favorites',[\App\Http\Controllers\Client\FavoriteController::class,'index'])->name('client.favorite.index');
             Route::post('favorites',[\App\Http\Controllers\Client\FavoriteController::class,'addToWishlist'])->name('client.favorite.add');
             Route::post('favorites-set',[\App\Http\Controllers\Client\FavoriteController::class,'addToWishlistCollection'])->name('client.favorite.add-set');
@@ -221,8 +226,8 @@ Route::prefix('{locale?}')
             Route::get('partner-join', [\App\Http\Controllers\Client\PartnerController::class, 'index'])->name('partner.join');
             Route::post('partner-join', [\App\Http\Controllers\Client\PartnerController::class, 'store'])->name('partner.store');
 
-            Route::get('blog', [\App\Http\Controllers\Client\BlogController::class, 'index'])->name('client.blog.index');
-            Route::get('blog/{blog}', [\App\Http\Controllers\Client\BlogController::class, 'show'])->name('client.blog.show');
+            Route::get('news', [\App\Http\Controllers\Client\NewsController::class, 'index'])->name('client.news.index');
+            Route::get('news/{news}', [\App\Http\Controllers\Client\NewsController::class, 'show'])->name('client.news.show');
 
             Route::get('furniture-set/{slug}',[\App\Http\Controllers\Client\CollectionController::class,'show'])->name('client.collection.show');
 
@@ -253,7 +258,20 @@ Route::prefix('{locale?}')
             });
 
             Route::post('test/filter',[\App\Http\Controllers\TestController::class,'filter']);*/
+            Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+                $request->fulfill();
+
+                return redirect('/home');
+            })->middleware(['auth', 'signed'])->name('verification.verify');
+
+            Route::post('/email/verification-notification', function (Request $request) {
+                $request->user()->sendEmailVerificationNotification();
+
+                return back()->with('message', 'Verification link sent!');
+            })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
         });
+
+
 
         //Social-------------------------------------------------------
         Route::get('/auth/facebook/redirect', function () {

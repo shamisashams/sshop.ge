@@ -6,12 +6,23 @@ import ProductSlider from "../components/ProductSlider";
 import { DirectionBtn } from "../components/Shared";
 //import Img1 from "../assets/images/products/14.png";
 //import { Link } from "react-router-dom";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 //import Arrow from "../assets/images/icons/arrow.svg";
 import Layout from "@/Layouts/Layout";
 
 
 const Home = ({seo}) => {
+
+    const {categories} = usePage().props;
+
+    let categories_ = [];
+
+    categories.map((item,index) => {
+        if(parseInt(item.on_page) === 1)
+        categories_.push(item);
+    });
+
+    console.log(categories_,categories)
   return (
       <Layout seo={seo}>
           <>
@@ -24,7 +35,7 @@ const Home = ({seo}) => {
                   <ProductSlider />
               </section>
               <section className="wrapper py-10">
-                  <CategoryBox />
+                  <CategoryBox categories={categories_} />
               </section>
               <section className="py-10 wrapper">
                   <div className="text-lg bold mb-5">Popular Now</div>

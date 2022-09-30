@@ -38,13 +38,7 @@ class CategoryController extends Controller
 //        return 1;
         $category = Category::where(['status' => 1, 'slug' => $slug])->firstOrFail();
         //dd($category->getAncestors());
-        /*$products = Product::where(['status' => 1, 'product_categories.category_id' => $category->id])
-            ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')->with(['latestImage'])
-            ->orderby('updated_at','desc')
-            ->paginate(16);*/
-        $subCategories =$category->descendants->toTree();
 
-        $collections = $category->collections()->with(['translation'])->get();
 
 
 
@@ -71,17 +65,9 @@ class CategoryController extends Controller
                 }
 
             }
-            $sale = false;
-            $prices = [];
+
             $product['attributes'] = $_result;
-            foreach ($product->variants as $variant){
-                $prices[] = $variant->special_price ? $variant->special_price : $variant->price;
-                if($variant->special_price){
-                    $sale = true;
-                }
-            }
-            $product['min_price'] = !empty($prices) ? min($prices) : 0;
-            $product['sale'] = $sale;
+
 
         }
 
@@ -105,8 +91,6 @@ class CategoryController extends Controller
         return Inertia::render('Products',[
             'products' => $products,
             'category' => $category,
-            'subcategories' => $subCategories,
-            'collections' => $collections,
             'images' => $images,
             'filter' => $this->getAttributes($category),
             "seo" => [

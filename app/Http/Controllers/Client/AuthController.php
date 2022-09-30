@@ -14,6 +14,7 @@ use Inertia\Inertia;
 use App\Repositories\Eloquent\GalleryRepository;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -42,7 +43,7 @@ class AuthController extends Controller
 
         //dd($files);
 
-        return Inertia::render('Signin', ["page" => $page, "seo" => [
+        return Inertia::render('LogIn', ["page" => $page, "seo" => [
             "title"=>$page->meta_title,
             "description"=>$page->meta_description,
             "keywords"=>$page->meta_keyword,
@@ -95,7 +96,7 @@ class AuthController extends Controller
 
         //dd($files);
 
-        return Inertia::render('Signup', ["page" => $page, "seo" => [
+        return Inertia::render('SignUp', ["page" => $page, "seo" => [
             "title"=>$page->meta_title,
             "description"=>$page->meta_description,
             "keywords"=>$page->meta_keyword,
@@ -119,7 +120,7 @@ class AuthController extends Controller
         $request->validate([
            'name' => 'required|min:3',
            'surname' => 'required:min:3',
-           'id' => 'required|unique:users,id_number',
+           'id_number' => 'required|unique:users,id_number',
             'phone' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:3',
@@ -134,7 +135,12 @@ class AuthController extends Controller
 
         //dd($attributes);
 
-        User::query()->create($attributes);
+        $user = User::query()->create($attributes);
+
+        if ($user){
+            event(new Registered($user));
+        }
+
 
         return redirect()->back()->with('success',__('client.successful_registration'));
     }

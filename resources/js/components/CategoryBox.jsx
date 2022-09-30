@@ -1,13 +1,14 @@
 import React from "react";
 //import { Link } from "react-router-dom";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 import { DirectionBtn } from "./Shared";
 //import Img1 from "../assets/images/products/10.png";
 //import Img2 from "../assets/images/products/11.png";
 //import Img3 from "../assets/images/products/12.png";
 //import Img4 from "../assets/images/products/13.png";
 
-const CategoryBox = () => {
+const CategoryBox = ({categories}) => {
+
   const categoryBoxes = [
     {
       title: "Computers",
@@ -126,7 +127,7 @@ const CategoryBox = () => {
   return (
     <>
       <div className="grid lg:grid-cols-2 lg:gap-6 gap-3 xl:text-base text-sm">
-        {categoryBoxes.map((item, index) => {
+        {categories.map((item, index) => {
           return (
             <div
               key={index}
@@ -139,22 +140,22 @@ const CategoryBox = () => {
                     {item.title}
                   </div>
                   <div className="mb-6">
-                    {item.list.map((el, index) => {
+                    {item.children.map((el, index) => {
                       return (
                         <Link
                           key={index}
-                          href={el.href}
+                          href={route('client.category.show',el.slug)}
                           className="block lg:mb-3 mb-1"
                         >
-                          {el.text}
+                          {el.title}
                         </Link>
                       );
                     })}
                   </div>
                 </div>
-                <DirectionBtn link={item.link} text="Go to page" />
+                <DirectionBtn link={route('client.category.show',item.slug)} text="Go to page" />
               </div>
-              <img className="max-w-sm xl:w-auto w-1/2" src={item.img} alt="" />
+              <img className="max-w-sm xl:w-auto w-1/2" src={item.file ? item.file.file_full_url:null} alt="" />
             </div>
           );
         })}

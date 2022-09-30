@@ -93,8 +93,9 @@ class CategoryController extends Controller
         $saveData['size'] = isset($saveData['size']) && (bool)$saveData['size'];
         $saveData['color'] = isset($saveData['color']) && (bool)$saveData['color'];
         $saveData['parent_id'] = $saveData['parent_id'] ? $saveData['parent_id'] : null;
+        $saveData['on_page'] = isset($saveData['on_page']) && (bool)$saveData['on_page'];
 
-        $filter = $saveData['filter'];
+        $filter = isset($saveData['filter']) ?? null;
         unset($saveData['filter']);
         if($filter == 'corner_color'){
             $saveData['corner'] = 1;
@@ -198,9 +199,10 @@ class CategoryController extends Controller
         $saveData['size'] = isset($saveData['size']) && (bool)$saveData['size'];
         $saveData['color'] = isset($saveData['color']) && (bool)$saveData['color'];
         $saveData['parent_id'] = $saveData['parent_id'] ? $saveData['parent_id'] : null;
+        $saveData['on_page'] = isset($saveData['on_page']) && (bool)$saveData['on_page'];
 
 
-        $filter = $saveData['filter'];
+        $filter = isset($saveData['filter']) ?? null;
         unset($saveData['filter']);
         if($filter == 'corner_color'){
             $saveData['corner'] = 1;

@@ -10,7 +10,7 @@ import { Pagination, Navigation } from "swiper";
 //import Product4 from "../assets/images/products/4.png";
 import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
 
-const SingleSlider = () => {
+const SingleSlider = ({images}) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const imgs = ["/client/assets/images/products/1.png", "/client/assets/images/products/2.png", "/client/assets/images/products/3.png", "/client/assets/images/products/4.png"];
@@ -29,11 +29,11 @@ const SingleSlider = () => {
         swiper.navigation.update();
       }}
     >
-      {imgs.map((item, index) => {
+      {images.map((item, index) => {
         return (
           <SwiperSlide key={index}>
             <div className="w-full pb-10">
-              <img className="w-4/5 mx-auto" src={item} alt="" />
+              <img className="w-4/5 mx-auto" src={item.file_full_url} alt="" />
             </div>
           </SwiperSlide>
         );

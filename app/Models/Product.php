@@ -236,7 +236,7 @@ class Product extends Model implements Searchable
     }
 
     public function blogs(){
-        return $this->belongsToMany(Blog::class,'blog_products');
+        return $this->belongsToMany(News::class,'blog_products');
     }
 
 }

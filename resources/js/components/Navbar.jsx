@@ -23,7 +23,8 @@ const Navbar = () => {
     setSubCatIndex(0);
   };
 
-    const { locales, currentLocale, locale_urls, cart_count, wishlist_count } = usePage().props;
+    const { locales, currentLocale, locale_urls, cart_count, wishlist_count, categories } = usePage().props;
+
 
   return (
     <>
@@ -83,7 +84,34 @@ const Navbar = () => {
                     : "opacity-0 invisible"
                 }`}
               >
-                <a
+
+                  {Object.keys(locales).map((name, index) => {
+                      if (locales[name] !== currentLocale) {
+                          return (
+                          <a
+                              className={`opacity-50  transition-all duration-300 ${
+                                  showLang ? "ml-2" : "-ml-3"
+                              } `}
+                              href={locale_urls[name]}
+                          >
+                              {name}
+                          </a>
+                          );
+                      } else {
+                          return (
+                              <a
+                                  className={`opacity-100 transition-all duration-300  ${
+                                      showLang ? "ml-2" : "-ml-3"
+                                  }  `}
+                                  href="javascript:;"
+                              >
+                                  {name}
+                              </a>
+                          )
+                      }
+                  })}
+
+                {/*<a
                   className={`opacity-50  transition-all duration-300 ${
                     showLang ? "ml-2" : "-ml-3"
                   } `}
@@ -106,10 +134,10 @@ const Navbar = () => {
                   href="#"
                 >
                   Rus
-                </a>
+                </a>*/}
               </div>
             </div>
-            <Link className=" group  lg:ml-5 ml-3" href="/login">
+            <Link className=" group  lg:ml-5 ml-3" href={route("client.login.index")}>
               {/*<UserIcon className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" />*/}
                 <svg className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" id="Component_44_1" data-name="Component 44 – 1" xmlns="http://www.w3.org/2000/svg" width="13.176" height="16.105" viewBox="0 0 13.176 16.105">
                     <path id="Path_4" data-name="Path 4" d="M214.392,32.114a4.392,4.392,0,1,0-3.106-1.286A4.393,4.393,0,0,0,214.392,32.114Zm0-7.32a2.928,2.928,0,1,1-2.07.858,2.928,2.928,0,0,1,2.07-.858Z" transform="translate(-207.804 -23.33)" stroke="none" />
@@ -117,7 +145,7 @@ const Navbar = () => {
                 </svg>
 
             </Link>
-            <Link className="relative group lg:ml-5 ml-3" href="/favorites">
+            <Link className="relative group lg:ml-5 ml-3" href={route("client.favorite.index")}>
               {/*<HeartIcon className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" />*/}
                 <svg className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" xmlns="http://www.w3.org/2000/svg" width="19.964" height="17.605" viewBox="0 0 19.964 17.605">
                     <g id="Icon_feather-heart" data-name="Icon feather-heart" transform="translate(0.75 0.75)">
@@ -125,19 +153,20 @@ const Navbar = () => {
                     </g>
                 </svg>
 
-                <button className="absolute bottom-4 left-3 w-5 h-5 rounded-full bg-custom-blue text-white text-xs ">
+
+                {wishlist_count > 0 ? <button className="absolute bottom-4 left-3 w-5 h-5 rounded-full bg-custom-blue text-white text-xs ">
                 2
-              </button>
+              </button>:null}
             </Link>
-            <Link className="relative group lg:ml-5 ml-3" href="/shopping-cart">
+            <Link className="relative group lg:ml-5 ml-3" href={route("client.cart.index")}>
               {/*<CartIcon className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" />*/}
                 <svg className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" id="Component_45_1" data-name="Component 45 – 1" xmlns="http://www.w3.org/2000/svg" width="18.475" height="16.105" viewBox="0 0 18.475 16.105">
                     <path id="Path_1" data-name="Path 1" d="M262.387,193.239a.734.734,0,0,0-.58-.285h-2.14l-2.841-4.933a.732.732,0,1,0-1.27.731l2.42,4.2h-9.349l2.42-4.2a.733.733,0,1,0-1.27-.731l-2.841,4.933H244.8a.732.732,0,0,0-.709.918l2.442,9.339a.733.733,0,0,0,.709.547h12.127a.733.733,0,0,0,.708-.547l2.442-9.339a.731.731,0,0,0-.128-.633Zm-3.587,9.055h-11l-2.059-7.874h15.113Z" transform="translate(-244.064 -187.654)" stroke=" none"/>
                 </svg>
 
-                <button className="absolute bottom-4 left-3 w-5 h-5 rounded-full bg-custom-blue text-white text-xs ">
+                {cart_count > 0 ? <button className="absolute bottom-4 left-3 w-5 h-5 rounded-full bg-custom-blue text-white text-xs ">
                 2
-              </button>
+              </button>:null}
             </Link>
           </div>
         </div>
@@ -149,7 +178,7 @@ const Navbar = () => {
           <div className="w-full h-full bg-white/[0.9] backdrop-blur-md py-10 ">
             <div className="wrapper flex items-start justify-start">
               <div className="scrollbar overflow-y-scroll md:pr-10 pr-5 md:mr-10 mr-5 ">
-                {mainCategory.map((item, index) => {
+                {categories.map((item, index) => {
                   return (
                     <button
                       onClick={() => mainCatClick(index)}
@@ -158,7 +187,7 @@ const Navbar = () => {
                         index + 1 === catIndex ? "text-custom-blue" : ""
                       }`}
                     >
-                      {item}
+                      {item.title}
                     </button>
                   );
                 })}

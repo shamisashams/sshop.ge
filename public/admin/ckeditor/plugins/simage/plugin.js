@@ -102,9 +102,9 @@ CKEDITOR.plugins.add( 'simage', {
 								newLine = CKEDITOR.dom.element.createFromHtml('<p><br></p>')
 								if (editor.config.srcSet){
 									srcSet = editor.config.srcSet(data)
-									imgElem = '<div class="art_img img"><img src="' + url + '" class="image-editor" srcset="'+ srcSet +'" data-width="' + inputWidth + '" data-height="' + inputHeight + '" height="' + height + '" width="' + width + '"></div>'
+									imgElem = '<div class="i-news"><img src="' + url + '" class="image-editor" srcset="'+ srcSet +'" data-width="' + inputWidth + '" data-height="' + inputHeight + '" height="' + height + '" width="' + width + '"></div>'
 								} else{
-									imgElem = '<div class="art_img img"><img src="' + url + '" class="image-editor" data-width="' + inputWidth + '" data-height="' + inputHeight + '" height="' + height + '" width="' + width + '"></div>'
+									imgElem = '<div class="i-news"><img src="' + url + '" class="image-editor" data-width="' + inputWidth + '" data-height="' + inputHeight + '" height="' + height + '" width="' + width + '"></div>'
 								}
 								imgDomElem = CKEDITOR.dom.element.createFromHtml(imgElem)
 								elem.append(imgDomElem)

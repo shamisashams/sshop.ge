@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog;
+use App\Models\News;
 use App\Models\Certificate;
 use App\Models\Page;
 use App\Models\ProductSet;

@@ -19,7 +19,7 @@ const Footer = () => {
           <Link className="bold mb-4 block" href={route('client.about.index')}>
               {__('client.nav_about',localizations)}
           </Link>
-          <Link className="bold mb-4 block" href="/news">
+          <Link className="bold mb-4 block" href={route('client.news.index')}>
               {__('client.nav_news',localizations)}
           </Link>
           <Link className="bold mb-4 block" href={route('client.contact.index')}>
