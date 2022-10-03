@@ -83,7 +83,7 @@ const Favorites = ({seo}) => {
                                       img={item.product.latest_image ? item.product.latest_image.file_full_url:null}
                                       name={item.product.title}
                                       brand={brand}
-                                      price={item.product.price}
+                                      price={item.product.special_price ? item.product.special_price : item.product.price}
                                       id={item.product.id}
                                   />
                               );

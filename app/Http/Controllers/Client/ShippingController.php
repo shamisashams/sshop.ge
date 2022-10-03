@@ -49,7 +49,7 @@ class ShippingController extends Controller
         }
 
         //dd($products);
-        return Inertia::render('Shipping',[
+        return Inertia::render('ShippingDetails',[
             'products' => $products,
             'images' => $images,
             'page' => $page,
@@ -234,17 +234,22 @@ class ShippingController extends Controller
     }
 
     public function submitShipping(Request $request){
+        //dd($request->all());
         $data = $request->validate([
            'city_id' => 'required',
            'address' => 'required',
            'phone' => 'required',
-           'ship_price' => 'numeric',
            'comment' => 'nullable'
         ]);
+        $city = City::find($data['city_id']);
+
+        $data['ship_price'] = $city->ship_price;
         //dd($data);
         $info = [
             'shipping' => $data
         ];
+
+        //dd($info);
         session($info);
 
         return redirect()->route('client.payment.index');

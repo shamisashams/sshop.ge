@@ -216,7 +216,7 @@ class CartController extends Controller
         Cart::add($request);
 
         if ($request->post('buy_now')){
-            return redirect()->route('client.cart.index');
+            return redirect()->route('client.shipping.index');
         }
         return redirect()->back();
 

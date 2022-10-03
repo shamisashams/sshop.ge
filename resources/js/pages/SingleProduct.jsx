@@ -9,6 +9,8 @@ import ProductSlider from "../components/ProductSlider";
 import Installment from "../components/Installment";
 import Layout from "@/Layouts/Layout";
 import { Link, usePage } from '@inertiajs/inertia-react'
+import { Inertia } from "@inertiajs/inertia";
+
 
 const SingleProduct = ({seo}) => {
   const [favorite, setFavorite] = useState(false);
@@ -18,6 +20,25 @@ const SingleProduct = ({seo}) => {
 
     let discount;
     discount = 100 - ((product.special_price * 100) / product.price).toFixed();
+
+
+    function addToCart(product, qty) {
+
+        Inertia.post(route("add-to-cart"), { id: product.id, qty: qty });
+    }
+
+    function buyNow(product, qty) {
+
+        Inertia.post(route("add-to-cart"), {
+            id: product.id,
+            qty: qty,
+            buy_now: true,
+        });
+    }
+
+    function addToWishlist(id) {
+        Inertia.post(route("client.favorite.add"), { id: id });
+    }
 
   return (
       <Layout seo={seo}>
@@ -103,14 +124,21 @@ const SingleProduct = ({seo}) => {
                                   <span>Watch the video</span>
                               </button>
                               <div className="flex justify-start items-center  my-6 flex-wrap">
-                                  <button className="bg-custom-blue text-white rounded-md bold border-custom-blue  border border-solid py-4 px-10 mr-3 mb-2">
+                                  <button onClick={() => {
+                                      buyNow(product,1)
+                                  }} className="bg-custom-blue text-white rounded-md bold border-custom-blue  border border-solid py-4 px-10 mr-3 mb-2">
                                       Buy now
                                   </button>
-                                  <button className=" rounded-md bold border-custom-blue text-custom-blue border border-solid py-4 px-10 mr-3 mb-2">
+                                  <button onClick={() => {
+                                      addToCart(product,1)
+                                  }} className=" rounded-md bold border-custom-blue text-custom-blue border border-solid py-4 px-10 mr-3 mb-2">
                                       Add to cart
                                   </button>
                                   <button
-                                      onClick={() => setFavorite(!favorite)}
+                                      onClick={() => {
+                                          setFavorite(!favorite)
+                                          addToWishlist(product.id)
+                                      }}
                                       className="w-10 h-10 flex justify-center items-center rounded-md bg-custom-zinc-200 mb-2"
                                   >
                                       {/*<HeartIcon

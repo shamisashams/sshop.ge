@@ -52,7 +52,7 @@ class PaymentController extends Controller
         }
 
         //dd($products);
-        return Inertia::render('Payment',[
+        return Inertia::render('PaymentDetails',[
             'products' => $products,
             'images' => $images,
             'page' => $page,

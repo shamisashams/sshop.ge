@@ -144,7 +144,7 @@ export const FilterOptions = ({ title, options }) => {
 };
 
 export const Quantity = (props) => {
-  const [number, setNumber] = useState(props.qty ? props.qty : 1);
+  const [number, setNumber] = useState(props.qty ? parseInt(props.qty) : 1);
 
   const decrease = () => {
     if (number > 1) {
@@ -174,6 +174,7 @@ export const Quantity = (props) => {
         <HiOutlineMinus />
       </button>
       <div className="bold mx-3 text-lg">{number}</div>
+        <input type="hidden" id={'inp_product_' + props.id} value={number}/>
       <button
         className="flex items-center justify-center bg-custom-zinc-200  rounded-lg w-8 h-8"
         onClick={increase}
@@ -188,7 +189,7 @@ export const CartTabs = ({ active }) => {
   return (
     <div className="w-full border-b border-solid flex justify-between text-xs sm:text-sm lg:text-base">
       <Link
-        href="/shopping-cart"
+        href={route('client.cart.index')}
         className={`opacity-60  pb-5 px-3  ${
           active === 0
             ? "text-custom-blue !opacity-100 border-b-4 border-custom-blue border-solid "
@@ -198,7 +199,7 @@ export const CartTabs = ({ active }) => {
         1. Cart
       </Link>
       <Link
-        href="/shipping-details"
+        href={route('client.shipping.index')}
         className={`opacity-60  pb-5 px-3  ${
           active === 1
             ? "text-custom-blue !opacity-100 border-b-4 border-custom-blue border-solid "
@@ -208,7 +209,7 @@ export const CartTabs = ({ active }) => {
         2. Shipping details
       </Link>
       <Link
-        href="/payment-details"
+        href={route('client.payment.index')}
         className={`opacity-60  pb-5 px-3  ${
           active === 2
             ? "text-custom-blue !opacity-100 border-b-4 border-custom-blue border-solid "
@@ -231,6 +232,21 @@ export const CartItem = (props) => {
     function removeItem(id){
         Inertia.get(route('remove-from-cart'), {id:id})
     }
+
+    function addToCart(product,qty){
+
+
+
+        Inertia.post(route('add-to-cart'), {id: product,qty:qty});
+    }
+
+    function buyNow(product,qty){
+
+        Inertia.post(route('add-to-cart'), {id: product,qty:qty, buy_now:true});
+    }
+
+
+    //alert(qty)
 
   return (
     <tr className={remove ? "hidden" : ""}>
@@ -255,10 +271,18 @@ export const CartItem = (props) => {
       </td>
       {props.btns && (
         <td className="p-4 border-b border-solid whitespace-nowrap">
-          <button className="bg-custom-blue text-white rounded-md bold border-custom-blue  border border-solid py-4 px-10 mr-3 mb-2">
+          <button onClick={() => {
+              let qty = document.getElementById('inp_product_' + props.id);
+              qty = qty ? qty.value : 1;
+              buyNow(props.id,qty);
+          }} className="bg-custom-blue text-white rounded-md bold border-custom-blue  border border-solid py-4 px-10 mr-3 mb-2">
             Buy now
           </button>
-          <button className=" rounded-md bold border-custom-blue text-custom-blue border border-solid py-4 px-10 mr-3 mb-2">
+          <button onClick={() => {
+              let qty = document.getElementById('inp_product_' + props.id);
+              qty = qty ? qty.value : 1;
+              addToCart(props.id,qty)
+          }} className=" rounded-md bold border-custom-blue text-custom-blue border border-solid py-4 px-10 mr-3 mb-2">
             Add to cart
           </button>
         </td>

@@ -16,6 +16,10 @@ const ShoppingCart = ({seo}) => {
         Inertia.get(route('remove-from-cart'), {id:id})
     }
 
+    function proceedToPayment(){
+        Inertia.visit(route('client.shipping.index'));
+    }
+
   const items = [
     {
       img: "/client/assets/images/products/5.png",
@@ -59,7 +63,7 @@ const ShoppingCart = ({seo}) => {
                                               img={item.product.latest_image ? item.product.latest_image.file_full_url :null}
                                               name={item.product.title}
                                               brand={brand}
-                                              price={item.product.price}
+                                              price={item.product.special_price ? item.product.special_price : item.product.price}
                                               id={item.product.id}
                                               qty={item.quantity}
                                               cart
@@ -77,7 +81,7 @@ const ShoppingCart = ({seo}) => {
                                   <div className="bold text-lg">Subtotal</div>
                                   <div className="bold text-lg text-custom-blue">₾ {cart.total}</div>
                               </div>
-                              <button className="w-full bold text-white bg-custom-blue rounded-xl py-5">
+                              <button onClick={proceedToPayment} className="w-full bold text-white bg-custom-blue rounded-xl py-5">
                                   Proceed to payment
                               </button>
                           </div>
