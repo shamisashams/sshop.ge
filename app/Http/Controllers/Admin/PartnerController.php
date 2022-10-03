@@ -3,202 +3,106 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\SliderRequest;
-use App\Mail\CredentialChanged;
-use App\Mail\PromocodeProduct;
-use App\Models\Slider;
-use App\Models\User;
-use App\Repositories\Eloquent\UserRepository;
-use App\Repositories\SliderRepositoryInterface;
+use App\Http\Requests\Admin\GalleryRequest;
+use App\Http\Requests\Admin\ProductRequest;
+use App\Models\Category;
+use App\Models\File;
+use App\Models\Gallery;
+use App\Models\Partner;
+use App\Models\Product;
+use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\GalleryRepositoryInterface;
+use App\Repositories\ProductRepositoryInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PartnerController extends Controller
 {
 
-    private $userRepository;
 
 
     public function __construct(
-        UserRepository $userRepository
+
     )
     {
-        $this->userRepository = $userRepository;
 
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index(SliderRequest $request)
+    public function index(GalleryRequest $request)
     {
-        /*return view('admin.pages.slider.index', [
-            'sliders' => $this->slideRepository->getData($request, ['translations'])
-        ]);*/
-
-        return view('admin.nowa.views.partner.index', [
-            'partners' => $this->userRepository->getPartners($request)
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $slider = $this->userRepository->model;
-
-        $url = locale_route('slider.store', [], false);
-        $method = 'POST';
-
-        /*return view('admin.pages.slider.form', [
-            'slider' => $slider,
-            'url' => $url,
-            'method' => $method,
-        ]);*/
-
-        return view('admin.nowa.views.slider.form', [
-            'slider' => $slider,
-            'url' => $url,
-            'method' => $method,
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\Admin\ProductRequest $request
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \ReflectionException
-     */
-    public function store(SliderRequest $request)
-    {
-        $saveData = Arr::except($request->except('_token'), []);
-        $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
-        $slider = $this->userRepository->create($saveData);
-
-        // Save Files
-        if ($request->hasFile('images')) {
-            $slider = $this->userRepository->saveFiles($slider->id, $request);
-        }
-
-        return redirect(locale_route('slider.index', $slider->id))->with('success', __('admin.create_successfully'));
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param string $locale
-     * @param \App\Models\Product $product
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function show(string $locale, Slider $slider)
-    {
-        return view('admin.pages.slider.show', [
-            'slider' => $slider,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     *
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function edit(string $locale, User $user)
-    {
-
-        //dd($user);
-        $url = locale_route('partner.update', $user->id, false);
+        $url = locale_route('partner.update', false);
         $method = 'PUT';
 
-        /*return view('admin.pages.slider.form', [
-            'slider' => $slider,
-            'url' => $url,
-            'method' => $method,
-        ]);*/
-
         return view('admin.nowa.views.partner.form', [
-            'partner' => $user,
+            'partners' => Partner::query()->orderBy('company_name')->get(),
             'url' => $url,
-            'method' => $method,
+            'method' => $method
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\Admin\CategoryRequest $request
-     * @param string $locale
-     * @param \App\Models\Category $category
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function update(Request $request, string $locale, $user_id)
+
+
+
+
+
+
+    public function update(Request $request, string $locale)
     {
 
-        $user = User::where('id',$user_id)->firstOrFail();
-
-        /*$request->validate([
-            'username' => 'required|unique:partners,username,'.$user_id . ',user_id',
-            'password' => 'nullable',
-        ]);*/
-
-        $this->userRepository->model = $user;
-
-        $notify = false;
         //dd($request->all());
-        $saveData = Arr::except($request->except('_token','_method'), []);
 
-        $data = [];
-        if($saveData['status'] == 'approved' && $user->status != 'approved'){
-            $notify = true;
-            $data['username'] = $user->name . '_' . uniqid();;
-            $data['password'] = Str::random(8);
-            $saveData['password'] = Hash::make($data['password']);
-            $this->userRepository->model->partner()->updateOrCreate(['user_id' => $user_id],['username' => $data['username']]);
+        $partners = Partner::all();
+        //dd($request->all());
+        if (count($partners)) {
+
+            foreach ($partners as $file) {
+                if (!$request->old_images) {
+                    if (Storage::exists('public/partners/' . $file->title)) {
+                        Storage::delete('public/partners/' . $file->title);
+                    }
+                    $file->delete();
+
+                    continue;
+                }
+                if (!in_array((string)$file->id, $request->old_images, true)) {
+                    if (Storage::exists('public/partners/' . $file->title)) {
+                        Storage::delete('public/partners/' . $file->title);
+                    }
+                    $file->delete();
+                }
+
+                $file->update(['company_name' => isset($request->post('company_name')[$file->id]) ? $request->post('company_name')[$file->id] : null]);
+            }
         }
 
 
-        //dd($saveData);
-         $this->userRepository->update($user_id, $saveData);
+        if ($request->hasFile('images')) {
 
-        $user = $this->userRepository->saveFiles($user_id, $request);
-
-
-
-        //dd($user);
-        if ($notify){
-            Mail::to($user)->send(new CredentialChanged($data));
+            foreach ($request->file('images') as $key => $file) {
+                $imagename = date('Ymhs') . str_replace(' ', '', $file->getClientOriginalName());
+                $destination = base_path() . '/storage/app/public/partners';
+                $request->file('images')[$key]->move($destination, $imagename);
+                Partner::query()->create([
+                    'title' => $imagename,
+                    'path' => 'storage/partners',
+                    'format' => $file->getClientOriginalExtension(),
+                ]);
+            }
         }
 
-        return redirect(locale_route('partner.index', $user_id))->with('success', __('admin.update_successfully'));
+
+        return redirect(locale_route('partner.index'))->with('success', __('admin.update_successfully'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param string $locale
-     * @param \App\Models\Category $category
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function destroy(string $locale, User $user)
-    {
-        if (!$this->userRepository->delete($user->id)) {
-            return redirect(locale_route('partner.show', $user->id))->with('danger', __('admin.not_delete_message'));
-        }
-        return redirect(locale_route('partner.index'))->with('success', __('admin.delete_message'));
-    }
 }

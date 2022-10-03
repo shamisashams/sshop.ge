@@ -13,6 +13,61 @@ const Products = ({seo}) => {
 
     //console.log(products);
 
+
+    let links = function (links) {
+        let rows = [];
+        //links.shift();
+        //links.splice(-1);
+        {
+            links.map(function (item, index) {
+                if (index > 0 && index < links.length - 1) {
+                    rows.push(
+                        <Link
+                            href={item.url}
+                            className={
+                                item.active
+                                    ? "mx-2 bold opacity-100"
+                                    : "mx-2 bold opacity-50"
+                            }
+                        >
+                            {item.label}
+                        </Link>
+                    );
+                }
+            });
+        }
+        return <div className="nums"> {rows.length > 1 ? rows : null} </div>;
+    };
+
+    let linksPrev = function (links) {
+        let rowCount = 0;
+        links.map(function (item, index) {
+            if (index > 0 && index < links.length - 1) {
+                rowCount++;
+            }
+        });
+        return rowCount > 1 ? (
+            <Link href={links[0].url}>
+                <Arrow color="#2F3E51" rotate="90" />
+                <Arrow color="#2F3E51" rotate="90" />
+            </Link>
+        ) : null;
+    };
+    let linksNext = function (links) {
+        let rowCount = 0;
+        links.map(function (item, index) {
+            if (index > 0 && index < links.length - 1) {
+                rowCount++;
+            }
+        });
+        return rowCount > 1 ? (
+            <Link href={links[links.length - 1].url}>
+                <Arrow color="#2F3E51" rotate="-90" />
+                <Arrow color="#2F3E51" rotate="-90" />
+            </Link>
+        ) : null;
+    };
+
   const [showFilters, setShowFilters] = useState(false);
   const options = [
     {
@@ -142,10 +197,11 @@ const Products = ({seo}) => {
                               })}
                           </div>
                           <div className="flex items-center justify-end mt-10">
-                              <button className="mx-2 bold opacity-100">1</button>
+                              {/*<button className="mx-2 bold opacity-100">1</button>
                               <button className="mx-2 bold opacity-50">2</button>
                               <button className="mx-2 bold opacity-50">3</button>
-                              <button className="mx-2 bold opacity-50">4</button>
+                              <button className="mx-2 bold opacity-50">4</button>*/}
+                              {links(products.links)}
                           </div>
                       </div>
                   </div>

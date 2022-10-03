@@ -117,8 +117,12 @@ Route::prefix('{locale?}')
                 Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
                 Route::get('news/{news}/destroy', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('news.destroy');
 
-                Route::resource('partner', \App\Http\Controllers\Admin\PartnerController::class)->parameters(['partner' => 'user']);
-                Route::get('partner/{user}/destroy', [\App\Http\Controllers\Admin\PartnerController::class, 'destroy'])->name('partner.destroy');
+
+
+
+                //Partners
+                Route::get('partner', [\App\Http\Controllers\Admin\PartnerController::class,'index'])->name('partner.index');
+                Route::put('partner', [\App\Http\Controllers\Admin\PartnerController::class,'update'])->name('partner.update');
 
                 Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
                 Route::get('user/{user}/destroy', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('user.destroy');

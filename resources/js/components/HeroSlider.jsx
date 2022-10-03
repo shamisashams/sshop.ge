@@ -5,10 +5,18 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper";
 import { heroData } from "./Data";
 //import { Link } from "react-router-dom";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 //import Arrow from "../assets/images/icons/arrow.svg";
 
 const HeroSlider = () => {
+
+    const renderHTML = (rawHTML) =>
+        React.createElement("div", {
+            dangerouslySetInnerHTML: { __html: rawHTML },
+        });
+
+    const {sliders} = usePage().props;
+
   return (
     <>
       {" "}
@@ -19,21 +27,21 @@ const HeroSlider = () => {
         grabCursor
         className="relative heroSlider"
       >
-        {heroData.map((item, index) => {
+        {sliders.map((item, index) => {
           return (
             <SwiperSlide key={index} className="self-stretch !h-auto">
               <div
                 className="w-full h-full bg-center bg-cover bg-no-repeat "
-                style={{ backgroundImage: `url(${item.img})` }}
+                style={{ backgroundImage: `url(${item.file ? item.file.file_full_url : null})` }}
               >
                 <div className="wrapper md:py-32 py-10">
                   <div className="max-w-sm">
                     <div className="text-custom-blue text-sm">
-                      {item.status}
+                      {item.title}
                     </div>
-                    <div className="bold my-3 text-xl ">{item.title}</div>
-                    <div className="opacity-50 text-sm mb-5">{item.para}</div>
-                    <Link className="text-sm" href="/">
+                    <div className="bold my-3 text-xl ">{item.title_2}</div>
+                    <div className="opacity-50 text-sm mb-5">{renderHTML(item.description)}</div>
+                    <Link className="text-sm" href={item.youtube_url}>
                       Learn More
                       <img className="inline-block ml-2" src="/client/assets/images/icons/arrow.svg" alt="" />
                     </Link>

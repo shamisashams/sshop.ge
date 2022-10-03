@@ -14,9 +14,11 @@ class CreatePartnersTable extends Migration
     public function up()
     {
         Schema::create('partners', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned()->primary();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('username')->unique();
+            $table->id();
+            $table->string('title')->nullable();
+            $table->string('path')->nullable();
+            $table->string('format')->nullable();
+            $table->string('company_name')->nullable();
             $table->timestamps();
         });
     }

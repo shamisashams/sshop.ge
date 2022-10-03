@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\Page;
+use App\Models\Partner;
 use App\Models\ProductSet;
 use App\Models\Slider;
 use Illuminate\Support\Facades\App;
@@ -30,7 +31,7 @@ class HomeController extends Controller
 
         }
 
-        $sliders = Slider::query()->where("status", 1)->with(['file', 'translations']);
+        $sliders = Slider::query()->where("status", 1)->with(['file', 'translations'])->get();
 //        dd($page->file);
 //        dd(App::getLocale());
         $_products = app(ProductRepository::class)->getHomePageProducts();
@@ -72,7 +73,9 @@ class HomeController extends Controller
 
         //dd($products);
 
-        return Inertia::render('Home', ["sliders" => $sliders->get(), "page" => $page, "seo" => [
+        return Inertia::render('Home', ["sliders" => $sliders,
+            "partners" => Partner::query()->orderBy('company_name')->get(),
+            "page" => $page, "seo" => [
             "title"=>$page->meta_title,
             "description"=>$page->meta_description,
             "keywords"=>$page->meta_keyword,

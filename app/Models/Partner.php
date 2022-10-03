@@ -1,20 +1,35 @@
 <?php
-
+/**
+ *  app/Models/File.php
+ *
+ * Date-Time: 10.06.21
+ * Time: 09:55
+ * @author Insite LLC <hello@insite.international>
+ */
 namespace App\Models;
 
-use App\Traits\ScopeFilter;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Partner extends Model
 {
     use HasFactory;
+
+
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'partners';
+
+    protected $appends = [
+        'file_full_url'
+    ];
+
 
     /**
      * The attributes that are mass assignable.
@@ -22,13 +37,26 @@ class Partner extends Model
      * @var array
      */
     protected $fillable = [
-        'username',
+        'title',
+        'path',
+        'format',
+        'company_name'
     ];
 
-    protected $primaryKey = 'user_id';
+
+    /**
+     * Get the user's file full url.
+     *
+     * @return string
+     */
+    public function getFileUrlAttribute(): string
+    {
+        return $this->path . '/' . $this->title;
+    }
 
 
-    public function user(): BelongsTo{
-        return $this->belongsTo(User::class);
+    public function getFileFullUrlAttribute(): string
+    {
+        return asset($this->path . '/' . $this->title);
     }
 }
