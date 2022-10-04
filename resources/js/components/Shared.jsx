@@ -65,7 +65,7 @@ export const DirectionBtn = ({ link, text, back }) => {
   );
 };
 
-export const ColorPick = () => {
+export const ColorPick = ({attribute}) => {
   const [chooseColor, setChooseColor] = useState("");
 
   const handleClick = (color, index) => {
@@ -73,7 +73,7 @@ export const ColorPick = () => {
   };
   return (
     <>
-      {colors.map((color, index) => {
+      {attribute.options.map((color, index) => {
         return (
           <button
             onClick={() => handleClick(color, index)}
@@ -86,7 +86,7 @@ export const ColorPick = () => {
           >
             <div
               style={{
-                background: color,
+                background: color.color,
               }}
               className=" w-5 h-5"
             ></div>
@@ -97,8 +97,44 @@ export const ColorPick = () => {
   );
 };
 
-export const FilterOptions = ({ title, options }) => {
+export const FilterOptions = ({ title, options, attribute, appliedFilters }) => {
   const [showMore, setShowMore] = useState(false);
+
+    function removeA(arr) {
+        var what,
+            a = arguments,
+            L = a.length,
+            ax;
+        while (L > 1 && arr.length) {
+            what = a[--L];
+            while ((ax = arr.indexOf(what)) !== -1) {
+                arr.splice(ax, 1);
+            }
+        }
+        return arr;
+    }
+
+    const handleFilterClick = function (event, code, value) {
+        //Inertia.visit('?brand=12');
+
+        if (event.target.checked === true) {
+            if (appliedFilters.hasOwnProperty(code)) {
+                appliedFilters[code].push(value);
+            } else appliedFilters[code] = [value];
+        } else {
+            if (appliedFilters[code].length > 1)
+                removeA(appliedFilters[code], value.toString());
+            else delete appliedFilters[code];
+        }
+
+        let params = [];
+
+        for (let key in appliedFilters) {
+            params.push(key + "=" + appliedFilters[key].join(","));
+        }
+
+        Inertia.visit("?" + params.join("&"));
+    };
 
   return (
     <div className="pb-5 border-b border-solid mb-5">
@@ -110,6 +146,17 @@ export const FilterOptions = ({ title, options }) => {
         }`}
       >
         {options.map((item, index, id) => {
+
+            let checked;
+
+
+                if (appliedFilters.hasOwnProperty(attribute.code)) {
+                    if (appliedFilters[attribute.code].includes(item.id.toString())) {
+                        checked = true;
+                    } else checked = false;
+                } else checked = false;
+
+
           return (
             <div key={index} className="flex items-center justify-start mb-3">
               <input
@@ -117,13 +164,17 @@ export const FilterOptions = ({ title, options }) => {
                 type="checkbox"
                 name=""
                 id={`${item.label}_${index}`}
+                onClick={(event) => {
+                    handleFilterClick(event,attribute.code,item.id)
+                }}
+                checked={checked}
               />
               <label
                 className="w-4 h-4 rounded border border-solid mr-2  cursor-pointer"
                 htmlFor={`${item.label}_${index}`}
               ></label>
               <label className="" htmlFor={`${item.label}_${index}`}>
-                {`${item.label}_${index}`}{" "}
+                {`${item.label}`}{" "}
                 <span className="opacity-50 text-sm">({item.quantity})</span>
               </label>
             </div>

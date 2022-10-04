@@ -260,10 +260,23 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
 
 
                     <div class="form-group">
-                        {!! Form::label('code',__('admin.code'),['class' => 'form-label']) !!}
-                        {!! Form::text('code',$product->code ?? old('code'),['class' => 'form-control']) !!}
+                        {!! Form::label('code',__('admin.model'),['class' => 'form-label']) !!}
+                        {!! Form::text('model',$product->model ?? old('code'),['class' => 'form-control']) !!}
 
-                        @error('code')
+                        @error('model')
+                        <small class="text-danger">
+                            <div class="error">
+                                {{$message}}
+                            </div>
+                        </small>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('group',__('admin.group'),['class' => 'form-label']) !!}
+                        {!! Form::text('group',$product->group ?? old('group'),['class' => 'form-control']) !!}
+
+                        @error('group')
                         <small class="text-danger">
                             <div class="error">
                                 {{$message}}
@@ -315,7 +328,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         @enderror
                     </div>
 
-                    {{--<div class="form-group">
+                    <div class="form-group">
                         {!! Form::label('code',__('admin.quantity'),['class' => 'form-label']) !!}
                         {!! Form::number('quantity',$product->quantity,['class' => 'form-control','min' => '0']) !!}
 
@@ -326,7 +339,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                             </div>
                         </small>
                         @enderror
-                    </div>--}}
+                    </div>
 
                     {{--<div class="form-group">
                         <label class="form-label">@lang('admin.size')</label>

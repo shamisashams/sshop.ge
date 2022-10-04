@@ -88,7 +88,7 @@ const ShoppingCart = ({seo}) => {
                       </div>
                       <div className="py-10">
                           <div className="bold mb-4 text-lg">Special offers</div>
-                          <ProductSlider />
+                          <ProductSlider products={[]} />
                       </div>
                   </div>
               </div>

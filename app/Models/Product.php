@@ -19,43 +19,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 
-/**
- * App\Models\Product
- *
- * @property int $id
- * @property int $category_id
- * @property string $slug
- * @property int|null $status
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read ProductTranslation|null $translation
- * @property-read Category|null $category
- * @property-read Collection|ProductTranslation[] $translations
- * @property-read int|null $translations_count
- * @method static \Illuminate\Database\Eloquent\Builder|Product listsTranslations(string $translationField)
- * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Product notTranslatedIn(?string $locale = null)
- * @method static \Illuminate\Database\Query\Builder|Product onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Product orWhereTranslation(string $translationField, $value, ?string $locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Product orWhereTranslationLike(string $translationField, $value, ?string $locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Product orderByTranslation(string $translationField, string $sortMethod = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|Product query()
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product translated()
- * @method static \Illuminate\Database\Eloquent\Builder|Product translatedIn(?string $locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereTranslation(string $translationField, $value, ?string $locale = null, string $method = 'whereHas', string $operator = '=')
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereTranslationLike(string $translationField, $value, ?string $locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product withTranslation()
- * @method static \Illuminate\Database\Query\Builder|Product withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Product withoutTrashed()
- */
+
 class Product extends Model implements Searchable
 {
     use Translatable, HasFactory, ScopeFilter;
@@ -90,7 +54,9 @@ class Product extends Model implements Searchable
         'promocode_id',
         'installment_price',
         'min_price',
-        'max_price'
+        'max_price',
+        'model',
+        'group'
     ];
 
     /** @var string */
@@ -237,6 +203,10 @@ class Product extends Model implements Searchable
 
     public function blogs(){
         return $this->belongsToMany(News::class,'blog_products');
+    }
+
+    public function grouped(){
+        return $this->hasMany(self::class,'group','group');
     }
 
 }

@@ -18,8 +18,9 @@ const SingleProduct = ({seo}) => {
 
   const {product,category_path, product_images} = usePage().props;
 
+  console.log(product)
     let discount;
-    discount = 100 - ((product.special_price * 100) / product.price).toFixed();
+    discount = product.special_price ? (100 - ((product.special_price * 100) / product.price).toFixed()) : null;
 
 
     function addToCart(product, qty) {
@@ -87,16 +88,19 @@ const SingleProduct = ({seo}) => {
                           <div>
                               <div className="bold text-3xl mb-2">{product.title}</div>
                               <div className="mb-5 text-sm text-black/[0.5]">
-                                  Made By: <span className="bold text-lg text-black">{product.attributes.brand}</span>
+                                  Made By: <span className="bold text-lg text-black">{product.attributes.brand.option}</span>
                               </div>
                               <div className="text-lg bold">Specification</div>
                               <div className="grid grid-cols-2 gap-y-2 gap-x-5 opacity-50 text-sm mb-5 mt-3">
-                                  <div>Cpu: Intel Core i3-12100</div>
+                                  {Object.keys(product.attributes).map((item,index) => {
+                                      return <div>{product.attributes[item].attribute}: {product.attributes[item].option}</div>
+                                  })}
+                                  {/*<div>Cpu: Intel Core i3-12100</div>
                                   <div>SSD: 256GB</div>
                                   <div>Ram: 8GB</div>
                                   <div>Gpu: Geforce RTX 3090</div>
                                   <div>HDD: 1TB</div>
-                                  <div>Psu: 550WA</div>
+                                  <div>Psu: 550WA</div>*/}
                               </div>
                               <select className=" text-custom-blue mb-5 bg-transparent">
                                   <option value="1">See All Specs</option>
@@ -105,14 +109,14 @@ const SingleProduct = ({seo}) => {
                               </select>
                               <div className="mb-4">
                                   <div className="bold mb-2 text-lg">Choose color</div>
-                                  <ColorPick />
+                                  <ColorPick attribute={{options:[]}} />
                               </div>
-                              <div className="text-sm">
-                <span className="text-xs text-white bg-custom-red rounded py-0.5 px-2 mr-2">
-                  {discount}%
-                </span>
+                              {discount ? <div className="text-sm">
+                                  <span className="text-xs text-white bg-custom-red rounded py-0.5 px-2 mr-2">
+                                      {discount}%
+                                    </span>
                                   Discount for this product
-                              </div>
+                              </div>:null}
                               <div className="text-2xl bold my-5">
                                   {" "}
                                   ₾ <span className="text-4xl">{product.price}</span>{" "}
@@ -258,7 +262,7 @@ const SingleProduct = ({seo}) => {
               <div className="bg-custom-zinc-200 py-10 pb-20">
                   <div className="wrapper">
                       <div className="bold text-lg mb-10">You may also like</div>
-                      <ProductSlider />
+                      <ProductSlider products={[]} />
                   </div>
               </div>
               <Installment show={showPopup} hide={() => setShowPopup(false)} />

@@ -92,7 +92,7 @@ const Favorites = ({seo}) => {
                   </div>
                   <div className="py-10">
                       <div className="bold mb-4 text-lg">You may like</div>
-                      <ProductSlider />
+                      <ProductSlider products={[]} />
                   </div>
               </div>
           </div>

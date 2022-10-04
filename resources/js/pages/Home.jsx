@@ -13,7 +13,8 @@ import Layout from "@/Layouts/Layout";
 
 const Home = ({seo}) => {
 
-    const {categories} = usePage().props;
+    const {categories, products} = usePage().props;
+
 
     let categories_ = [];
 
@@ -22,7 +23,7 @@ const Home = ({seo}) => {
         categories_.push(item);
     });
 
-    console.log(categories_,categories)
+    console.log(categories_,categories, products)
   return (
       <Layout seo={seo}>
           <>
@@ -32,7 +33,7 @@ const Home = ({seo}) => {
                       <div className="text-lg bold">Best Price</div>
                       <DirectionBtn text="Go to page" link="products" />
                   </div>
-                  <ProductSlider />
+                  <ProductSlider products={products.special_price_tag} />
               </section>
               <section className="wrapper py-10">
                   <CategoryBox categories={categories_} />
@@ -43,10 +44,10 @@ const Home = ({seo}) => {
               </section>
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
-                      <div className="text-lg bold">Best Price</div>
+                      <div className="text-lg bold">Popular</div>
                       <DirectionBtn text="Go to page" link="products" />
                   </div>
-                  <ProductSlider />
+                  <ProductSlider products={products.popular} />
               </section>
               <section className="bg-custom-yellow py-10 mb-10">
                   <div className="wrapper flex justify-between items-center flex-col md:flex-row">
@@ -68,7 +69,7 @@ const Home = ({seo}) => {
                       <div className="text-lg bold">You may like</div>
                       <DirectionBtn text="Go to page" link="products" />
                   </div>
-                  <ProductSlider />
+                  <ProductSlider products={[]} />
               </section>
           </>
       </Layout>

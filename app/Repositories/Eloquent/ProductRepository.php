@@ -199,32 +199,24 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             });
         }
 
-        $query->where('products.parent_id',null);
         $query->groupBy('products.id');
 
         return $query->with('latestImage')->paginate('16')->withQueryString();
     }
 
 
-    public function getMaxPrice($category){
+    public function getMaxPrice(){
         //dd($category);
 
-        if(isset($params['subcategory'])){
-            $subcats = explode(',',$params['subcategory']);
-            return $this->model->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')->where('products.parent_id','!=',null)->whereIn('product_categories.category_id', $subcats)->max('price');
-        } else {
-            if ($category) {
 
-                return $this->model->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')->where('products.parent_id','!=',null)->whereIn('product_categories.category_id', explode(',', $category->id))->max('price');
-            } else {
-                return $this->model->where('parent_id','!=',null)->max('price');
-            }
-        }
+
+            return $this->model->max('price');
+
 
         //dd($this->model->where('parent_id','!=',null)->max('price'));
         //return $this->model->where('parent_id','!=',null)->max('price');
     }
-    public function getMinPrice($category){
+    public function getMinPrice(){
         return $this->model->min('price');
     }
 

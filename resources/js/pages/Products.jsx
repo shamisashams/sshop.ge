@@ -9,9 +9,16 @@ import { Link, usePage } from '@inertiajs/inertia-react'
 
 const Products = ({seo}) => {
 
-    const {category,products} = usePage().props;
+    let appliedFilters = [];
+    let urlParams = new URLSearchParams(window.location.search);
 
-    //console.log(products);
+    urlParams.forEach((value, index) => {
+        appliedFilters[index] = value.split(",");
+    });
+
+    const {category,products, filter} = usePage().props;
+
+    console.log(filter);
 
 
     let links = function (links) {
@@ -161,14 +168,16 @@ const Products = ({seo}) => {
                           <RangeSlider />
                           <div className="my-5">
                               <div className="opacity-50 text-sm mb-3">Choose Color</div>
-                              <ColorPick />
+                              <ColorPick attribute={filter.color} />
                           </div>
-                          {options.map((item, index) => {
+                          {filter.attributes.map((item, index) => {
                               return (
                                   <FilterOptions
                                       key={index}
-                                      title={item.title}
-                                      options={item.list}
+                                      title={item.name}
+                                      options={item.options}
+                                      attribute={item}
+                                      appliedFilters={appliedFilters}
                                   />
                               );
                           })}

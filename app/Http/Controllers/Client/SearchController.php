@@ -105,7 +105,7 @@ class SearchController extends Controller
             'products' => $products,
             'category' => null,
             'images' => $images,
-            'filter' => $this->getAttributes(),
+            'filter' => $this->getAttributes2(),
             "seo" => [
                 "title"=>$page->meta_title,
                 "description"=>$page->meta_description,
@@ -125,7 +125,7 @@ class SearchController extends Controller
         ]);
     }
 
-    private function getAttributes($category = null):array{
+    private function getAttributes():array{
         $attrs = $this->attributeRepository->model->with('options')->orderBy('position')->get();
         $result['attributes'] = [];
         $key = 0;
@@ -139,15 +139,71 @@ class SearchController extends Controller
             foreach ($item->options as $option){
                 $_options[$_key]['id'] = $option->id;
                 $_options[$_key]['label'] = $option->label;
+                $_options[$_key]['color'] = $option->color;
+                $_options[$_key]['value'] = $option->value;
                 $_key++;
             }
             $result['attributes'][$key]['options'] = $_options;
             $key++;
         }
-        $result['price']['max'] = $this->productRepository->getMaxprice($category);
-        $result['price']['min'] = $this->productRepository->getMinprice($category);
+        $result['price']['max'] = $this->productRepository->getMaxprice();
+        $result['price']['min'] = $this->productRepository->getMinprice();
         //dd($result);
         return $result;
+    }
+
+    private function getAttributes2($categoryId = null):array{
+        $query =  Product::query()->select('products.*')
+            ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
+            ->leftJoin('product_attribute_values','product_attribute_values.product_id','products.id');
+
+        if ($categoryId) {
+            $query->whereIn('product_categories.category_id', explode(',', $categoryId));
+        }
+
+        $products = $query->get();
+
+        $attributes = [];
+        $attributes['attributes'] = [];
+        foreach ($products as $product){
+            foreach ($product->attribute_values as $key => $item){
+                //dd($item);
+                if($item->attribute->code !== 'color'){
+                    $attributes['attributes'][$key]['id'] = $item->attribute_id;
+                    $attributes['attributes'][$key]['name'] = $item->attribute->name;
+                    $attributes['attributes'][$key]['code'] = $item->attribute->code;
+                    $attributes['attributes'][$key]['type'] = $item->attribute->type;
+                    $_key = 0;
+                    foreach ($item->attribute->options as $option){
+                        $_options[$_key]['id'] = $option->id;
+                        $_options[$_key]['label'] = $option->label;
+                        $_options[$_key]['color'] = $option->color;
+                        $_key++;
+                    }
+                    $attributes['attributes'][$key]['options'] = $_options;
+                } else {
+                    $attributes['color']['id'] = $item->attribute_id;
+                    $attributes['color']['name'] = $item->attribute->name;
+                    $attributes['color']['code'] = $item->attribute->code;
+                    $attributes['color']['type'] = $item->attribute->type;
+                    $_key = 0;
+                    foreach ($item->attribute->options as $option){
+                        $_options[$_key]['id'] = $option->id;
+                        $_options[$_key]['label'] = $option->label;
+                        $_options[$_key]['color'] = $option->color;
+                        $_key++;
+                    }
+                    $attributes['color']['options'] = $_options;
+                }
+
+            }
+        }
+        //dd($attributes);
+
+        $attributes['price']['max'] = $this->productRepository->getMaxprice();
+        $attributes['price']['min'] = $this->productRepository->getMinprice();
+        //dd($result);
+        return $attributes;
     }
 
 

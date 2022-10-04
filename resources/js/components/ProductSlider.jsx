@@ -7,7 +7,7 @@ import { FreeMode, Pagination } from "swiper";
 import { productSliderData } from "./Data";
 import ProductBox from "./ProductBox";
 
-const ProductSlider = () => {
+const ProductSlider = ({products}) => {
   return (
     <>
       <Swiper
@@ -43,17 +43,21 @@ const ProductSlider = () => {
           },
         }}
       >
-        {productSliderData.map((item, index) => {
+        {products.map((item, index) => {
+            console.log(item)
+            let discount;
+            discount = 100 - ((item.special_price * 100) / item.price).toFixed()
           return (
             <SwiperSlide key={index} className="pb-10">
               <ProductBox
-                img={item.img}
-                name={item.name}
-                brand={item.brand}
-                oldPrice={item.oldPrice}
-                price={item.price}
-                discount={item.discount}
-                link={item.link}
+                img={item.latest_image ? item.latest_image.file_full_url : null}
+                name={item.title}
+                brand={item.attributes.brand}
+                oldPrice={item.special_price ? item.price : null}
+                price={item.special_price ? item.special_price : item.price}
+                discount={discount}
+                link={route('client.product.show',item.slug)}
+                id={item.id}
               />
             </SwiperSlide>
           );

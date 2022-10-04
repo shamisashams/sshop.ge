@@ -108,7 +108,7 @@ const ProductBox = (props) => {
         <Link href={props.link} className="underline text-custom-blue ">
           See details
         </Link>
-        <ToastContainer
+        {/*<ToastContainer
           position="top-center"
           autoClose={5000}
           hideProgressBar={false}
@@ -118,7 +118,7 @@ const ProductBox = (props) => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-        />
+        />*/}
       </div>
     </>
   );

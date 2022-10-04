@@ -92,7 +92,7 @@ class CategoryController extends Controller
             'products' => $products,
             'category' => $category,
             'images' => $images,
-            'filter' => $this->getAttributes($category),
+            'filter' => $this->getAttributes2($category->id),
             "seo" => [
                 "title"=>$page->meta_title,
                 "description"=>$page->meta_description,
@@ -137,6 +137,42 @@ class CategoryController extends Controller
         return $result;
     }
 
+    private function getAttributes2($categoryId = null):array{
+        $query =  Product::query()->select('products.*')
+            ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
+            ->leftJoin('product_attribute_values','product_attribute_values.product_id','products.id');
+
+        if ($categoryId) {
+            $query->whereIn('product_categories.category_id', explode(',', $categoryId));
+        }
+
+        $products = $query->get();
+
+        $attributes = [];
+        $attributes['attributes'] = [];
+        foreach ($products as $product){
+            foreach ($product->attribute_values as $key => $item){
+                //dd($item);
+                $attributes['attributes'][$key]['id'] = $item->attribute_id;
+                $attributes['attributes'][$key]['name'] = $item->attribute->name;
+                $attributes['attributes'][$key]['code'] = $item->attribute->code;
+                $attributes['attributes'][$key]['type'] = $item->attribute->type;
+                $_key = 0;
+                foreach ($item->attribute->options as $option){
+                    $_options[$_key]['id'] = $option->id;
+                    $_options[$_key]['label'] = $option->label;
+                    $_key++;
+                }
+                $attributes['attributes'][$key]['options'] = $_options;
+            }
+        }
+        //dd($attributes);
+
+        $attributes['price']['max'] = $this->productRepository->getMaxprice();
+        $attributes['price']['min'] = $this->productRepository->getMinprice();
+        //dd($result);
+        return $attributes;
+    }
 
     public function popular(){
         $page = Page::where('key', 'products')->firstOrFail();

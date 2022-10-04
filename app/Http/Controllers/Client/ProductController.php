@@ -88,6 +88,27 @@ class ProductController extends Controller
 
         $productImages = $product->files()->orderBy('id','desc')->get();
 
+        $gpouped = $product->grouped()->with('attribute_values.attribute')->get();
+
+        $arr = [];
+        $d =[];
+        foreach ($gpouped as $v_product){
+            foreach ($v_product->attribute_values as $attr_value){
+                foreach ($attr_value->attribute->options as $option){
+                    if($attr_value->integer_value == $option->id) {
+                        if($attr_value->attribute->code == 'color'){
+                            $arr[$attr_value->attribute->code]['attribute'] = $attr_value->attribute->name;
+                            $arr[$attr_value->attribute->code]['option'] = $option->color;
+                        }
+                    }
+                }
+
+            }
+
+            $d[$v_product->id] = $arr;
+        }
+        //dd($d);
+
         $product_attributes = $product->attribute_values;
 
         $result = [];
@@ -99,10 +120,12 @@ class ProductController extends Controller
                 if($item->attribute->type == 'select'){
                     if($item->integer_value == $option->id) {
                         if($item->attribute->code == 'size'){
-                            $result[$item->attribute->code] = $option->value;
+                            $result[$item->attribute->code]['attribute'] = $item->attribute->name;
+                            $result[$item->attribute->code]['option'] = $option->value;
                         }
                         else {
-                            $result[$item->attribute->code] = $option->label;
+                            $result[$item->attribute->code]['option'] = $option->label;
+                            $result[$item->attribute->code]['attribute'] = $item->attribute->name;
                         }
                     }
 
