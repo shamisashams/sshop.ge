@@ -105,7 +105,7 @@ class ProductController extends Controller
 
             }
 
-            $d[$v_product->id] = $arr;
+            $d[$v_product->slug] = $arr;
         }
         //dd($d);
 
@@ -320,6 +320,7 @@ class ProductController extends Controller
         ]);*/
         return Inertia::render('SingleProduct',[
             'category_last' => end($path),
+            'variants' => $d,
             'product' => $product,
             'category_path' => $path,
             'similar_products' => $similar_products,

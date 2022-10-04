@@ -16,9 +16,9 @@ const SingleProduct = ({seo}) => {
   const [favorite, setFavorite] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
-  const {product,category_path, product_images} = usePage().props;
+  const {product,category_path, product_images, variants} = usePage().props;
 
-  console.log(product)
+  console.log(product,variants)
     let discount;
     discount = product.special_price ? (100 - ((product.special_price * 100) / product.price).toFixed()) : null;
 
@@ -109,7 +109,22 @@ const SingleProduct = ({seo}) => {
                               </select>
                               <div className="mb-4">
                                   <div className="bold mb-2 text-lg">Choose color</div>
-                                  <ColorPick attribute={{options:[]}} />
+                                  {/*<ColorPick attribute={{options:[]}} />*/}
+
+                                  {Object.keys(variants).map((item,index) => {
+                                      return (<Link className={`inline-block rounded mr-3 mb-2 border-2 border-solid transition-all ${
+                                          product.slug === item
+                                              ? "border-custom-blue"
+                                              : "border-transparent"
+                                      }`} href={route('client.product.show',item)}>
+                                          <div
+                                              style={{
+                                                  background: variants[item].color.option,
+                                              }}
+                                              className=" w-5 h-5"
+                                          ></div>
+                                      </Link>)
+                                  })}
                               </div>
                               {discount ? <div className="text-sm">
                                   <span className="text-xs text-white bg-custom-red rounded py-0.5 px-2 mr-2">

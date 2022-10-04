@@ -168,7 +168,7 @@ const Products = ({seo}) => {
                           <RangeSlider />
                           <div className="my-5">
                               <div className="opacity-50 text-sm mb-3">Choose Color</div>
-                              <ColorPick attribute={filter.color} />
+                              <ColorPick attribute={filter.color ?? {options:[]}} />
                           </div>
                           {filter.attributes.map((item, index) => {
                               return (
