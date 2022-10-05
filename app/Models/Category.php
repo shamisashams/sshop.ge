@@ -143,6 +143,10 @@ class Category extends Model
         return $this->belongsToMany(Product::class,'product_categories');
     }
 
+    public function attributes(){
+        return $this->belongsToMany(Attribute::class,'category_attributes');
+    }
+
     public function collections(): BelongsToMany
     {
         return $this->belongsToMany(ProductSet::class,'collection_categories');

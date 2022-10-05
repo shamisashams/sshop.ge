@@ -205,10 +205,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
 
-    public function getMaxPrice(){
+    public function getMaxPrice($category = null){
         //dd($category);
 
 
+        if($category !== null){
+            return $this->model->leftJoin('product_categories','product_categories.product_id','products.id')->where('product_categories.category_id',$category->id)->max('price');
+        }
 
             return $this->model->max('price');
 

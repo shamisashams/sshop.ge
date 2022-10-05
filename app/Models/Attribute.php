@@ -49,4 +49,8 @@ class Attribute extends Model
     {
         return $this->hasMany(AttributeOption::class)->orderBy('value')->OrderByTranslation('label');
     }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class,'category_attributes');
+    }
 }

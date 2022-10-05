@@ -73,6 +73,7 @@ Route::prefix('{locale?}')
                 Route::get('product/{product}/{product_color}/edit_color',[\App\Http\Controllers\Admin\ProductController::class,'editColor'])->name('product.edit_color');
                 Route::put('product/{product}/{product_color}/update_color',[\App\Http\Controllers\Admin\ProductController::class,'updateColor'])->name('product.update_color');
                 Route::get('product/{product}/{product_color}/delete_color',[\App\Http\Controllers\Admin\ProductController::class,'deleteColor'])->name('product.delete_color');
+                Route::post('product/import',[\App\Http\Controllers\Admin\ProductController::class,'import'])->name('product.import');
 //
 
                 Route::post('product/search',[\App\Http\Controllers\Admin\NewsController::class,'getProducts'])->name('product.search.ajax');

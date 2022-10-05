@@ -238,6 +238,33 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
             </div>
         </div>
 
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h6 class="card-title mb-1">@lang('admin.filter_attributes')</h6>
+                    </div>
+                    <div class="mb-4">
+                        <p class="mg-b-10">@lang('admin.filter_attributes')</p>
+
+                        <?php
+                        $attr_id = $category->attributes->pluck('id')->toArray();
+                        //dd($attr_id);
+                        ?>
+
+                        @foreach($attributes as $attribute)
+                        <div class="form-group">
+                            <label class="ckbox"><input name="attributes[]" {{in_array($attribute->id,$attr_id) ? 'checked':''}} type="checkbox" value="{{$attribute->id}}"><span>{{$attribute->code}}</span></label>
+                        </div>
+                        @endforeach
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- /row -->

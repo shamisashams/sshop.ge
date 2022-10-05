@@ -30,6 +30,25 @@
                         <h4 class="card-title mg-b-0">@lang('admin.products')</h4>
                     </div>
                     <a href="{{locale_route('product.create')}}" class="btn ripple btn-primary" type="button">@lang('admin.createbutt')</a>
+
+                    <form enctype="multipart/form-data" action="{{route('product.import')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <input class="form-control" type="file" name="file">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">@lang('admin.import')</button>
+                        </div>
+                        @error('file')
+                        <small class="text-danger">
+                            <div class="error">
+                                {{$message}}
+                            </div>
+                        </small>
+                        @enderror
+
+                    </form>
+
                     {{--<p class="tx-12 tx-gray-500 mb-2">Example of Nowa Simple Table. <a href="">Learn more</a></p>--}}
                 </div>
                 <div class="card-body">

@@ -6,6 +6,7 @@ import { ColorPick, FilterOptions } from "../components/Shared";
 import { TbAdjustments } from "react-icons/tb";
 import Layout from "@/Layouts/Layout";
 import { Link, usePage } from '@inertiajs/inertia-react'
+import {Inertia} from "@inertiajs/inertia";
 
 const Products = ({seo}) => {
 
@@ -20,6 +21,33 @@ const Products = ({seo}) => {
 
     console.log(filter);
 
+
+    function choseColor(color){
+
+
+
+            appliedFilters['color'] = [color.id] ;
+
+
+        let params = [];
+
+        for (let key in appliedFilters) {
+            params.push(key + "=" + appliedFilters[key].join(","));
+        }
+
+        Inertia.visit("?" + params.join("&"));
+    }
+
+    function clearFilter(){
+        appliedFilters = [];
+        let params = [];
+
+        for (let key in appliedFilters) {
+            params.push(key + "=" + appliedFilters[key].join(","));
+        }
+
+        Inertia.visit("?" + params.join("&"));
+    }
 
     let links = function (links) {
         let rows = [];
@@ -165,10 +193,31 @@ const Products = ({seo}) => {
                   <div className="flex justify-start items-start relative ">
                       <div className="bg-white rounded mr-10 p-7 shrink-0 filterBox">
                           <div className="bold text-lg mb-5">Price</div>
-                          <RangeSlider />
+                          <RangeSlider appliedFilters={appliedFilters} />
                           <div className="my-5">
                               <div className="opacity-50 text-sm mb-3">Choose Color</div>
-                              <ColorPick attribute={filter.color ?? {options:[]}} />
+                              {/*<ColorPick attribute={filter.color ?? {options:[]}} />*/}
+
+                              {filter.color.options.map((item,index) => {
+                                  return (
+                                      <button
+                                          onClick={() => choseColor(item)}
+                                          key={index}
+                                          className={`inline-block rounded mr-3 mb-2 border-2 border-solid transition-all ${
+                                              (appliedFilters.hasOwnProperty('color') ? appliedFilters['color'].includes(item.id.toString()): false)
+                                                  ? "border-custom-blue"
+                                                  : "border-transparent"
+                                          } `}
+                                      >
+                                          <div
+                                              style={{
+                                                  background: item.color,
+                                              }}
+                                              className=" w-5 h-5"
+                                          ></div>
+                                      </button>
+                                  )
+                              })}
                           </div>
                           {filter.attributes.map((item, index) => {
                               return (
@@ -181,8 +230,8 @@ const Products = ({seo}) => {
                                   />
                               );
                           })}
-                          <button className="bg-custom-blue text-white rounded-md p-4 w-full bold">
-                              Search products
+                          <button onClick={clearFilter} className="bg-custom-blue text-white rounded-md p-4 w-full bold">
+                              Clear Filter
                           </button>
                       </div>
                       <div>

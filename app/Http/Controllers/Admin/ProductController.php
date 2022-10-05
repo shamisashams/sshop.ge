@@ -34,10 +34,14 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use ReflectionException;
 use App\Repositories\Eloquent\AttributeRepository;
 use function Symfony\Component\Translation\t;
 use Illuminate\Database\Eloquent\Builder as Builder_;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ProductController extends Controller
 {
@@ -756,5 +760,32 @@ class ProductController extends Controller
         }
 
         return $li;
+    }
+
+    public function import(Request $request){
+
+        $request->validate([
+           'file' => 'required'
+        ]);
+        $f = $request->file('file')->getRealPath();
+
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($f);
+
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $rowIterator = $worksheet->getRowIterator();
+
+        echo '<pre>';
+        foreach ($rowIterator as $row){
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(true);
+            $data = [];
+            foreach ($cellIterator as $cell) { $data[] = $cell->getValue(); }
+
+            // (C2) INSERT INTO DATABASE
+            print_r($data);
+
+        }
+        echo '</pre>';
     }
 }

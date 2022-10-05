@@ -92,7 +92,7 @@ class CategoryController extends Controller
             'products' => $products,
             'category' => $category,
             'images' => $images,
-            'filter' => $this->getAttributes2($category->id),
+            'filter' => $this->getAttributes($category),
             "seo" => [
                 "title"=>$page->meta_title,
                 "description"=>$page->meta_description,
@@ -113,11 +113,14 @@ class CategoryController extends Controller
     }
 
     private function getAttributes($category = null):array{
+        if($category !== null){
+            $attrs = $category->attributes()->with('options')->orderBy('position')->get();
+        } else
         $attrs = $this->attributeRepository->model->with('options')->orderBy('position')->get();
         $result['attributes'] = [];
         $key = 0;
         foreach ($attrs as $item){
-            $result['attributes'][$key]['id'] = $item->id;
+            /*$result['attributes'][$key]['id'] = $item->id;
             $result['attributes'][$key]['name'] = $item->name;
             $result['attributes'][$key]['code'] = $item->code;
             $result['attributes'][$key]['type'] = $item->type;
@@ -128,7 +131,36 @@ class CategoryController extends Controller
                 $_options[$_key]['label'] = $option->label;
                 $_key++;
             }
-            $result['attributes'][$key]['options'] = $_options;
+            $result['attributes'][$key]['options'] = $_options;*/
+
+            if($item->code !== 'color'){
+                $result['attributes'][$key]['id'] = $item->id;
+                $result['attributes'][$key]['name'] = $item->name;
+                $result['attributes'][$key]['code'] = $item->code;
+                $result['attributes'][$key]['type'] = $item->type;
+                $_key = 0;
+                foreach ($item->options as $option){
+                    $_options[$_key]['id'] = $option->id;
+                    $_options[$_key]['label'] = $option->label;
+                    $_options[$_key]['color'] = $option->color;
+                    $_key++;
+                }
+                $result['attributes'][$key]['options'] = $_options;
+            } else {
+                $result['color']['id'] = $item->id;
+                $result['color']['name'] = $item->name;
+                $result['color']['code'] = $item->code;
+                $result['color']['type'] = $item->type;
+                $_key = 0;
+                foreach ($item->options as $option){
+                    $_options[$_key]['id'] = $option->id;
+                    $_options[$_key]['label'] = $option->label;
+                    $_options[$_key]['color'] = $option->color;
+                    $_key++;
+                }
+                $result['color']['options'] = $_options;
+            }
+
             $key++;
         }
         $result['price']['max'] = $this->productRepository->getMaxprice($category);
@@ -145,6 +177,7 @@ class CategoryController extends Controller
         if ($categoryId) {
             $query->whereIn('product_categories.category_id', explode(',', $categoryId));
         }
+        $query->groupBy('attribute_id');
 
         $products = $query->get();
 

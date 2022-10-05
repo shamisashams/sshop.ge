@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\CategoryColor;
 use App\Models\Language;
@@ -135,6 +136,7 @@ class CategoryController extends Controller
             $category = $this->categoryRepository->saveFiles($category->id, $request);
         }
 
+        $this->categoryRepository->model->attributes()->sync($saveData['attributes'] ?? []);
 
         return redirect(locale_route('category.index', $category->id))->with('success', __('admin.create_successfully'));
 
@@ -176,7 +178,8 @@ class CategoryController extends Controller
             'category' => $category,
             'url' => $url,
             'method' => $method,
-            'categories' => $categories
+            'categories' => $categories,
+            'attributes' => Attribute::all()
         ]);
     }
 
@@ -236,6 +239,8 @@ class CategoryController extends Controller
         }
 
         $this->categoryRepository->update($category->id, $saveData);
+
+        $this->categoryRepository->model->attributes()->sync($saveData['attributes'] ?? []);
 
 
 

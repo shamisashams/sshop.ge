@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { Link, usePage } from '@inertiajs/inertia-react'
 
 function valuetext(value) {
   return `${value}°C`;
 }
-export default function RangeSlider() {
-  const [value, setValue] = useState([20, 37]);
+export default function RangeSlider({appliedFilters}) {
+
+    const { filter } = usePage().props;
+    let min, max;
+
+    if(appliedFilters.hasOwnProperty('price')){
+        min = appliedFilters['price'][0];
+        max = appliedFilters['price'][1];
+    } else {
+        min = 0;
+        max = filter.price.max
+    }
+
+
+    const [value, setValue] = useState([min, max]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
