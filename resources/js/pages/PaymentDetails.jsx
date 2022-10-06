@@ -11,10 +11,14 @@ import { CartTabs, DirectionBtn } from "../components/Shared";
 //import { Link } from "react-router-dom";
 import { Link, usePage } from '@inertiajs/inertia-react'
 import Layout from "@/Layouts/Layout";
+import {Inertia} from "@inertiajs/inertia";
+
 
 const PaymentDetails = ({seo}) => {
     const {cart,promocode, shipping, city, localizations} = usePage().props;
-  const [bankSelect, setBankSelect] = useState(0);
+  const [bankSelect, setBankSelect] = useState(null);
+
+    const [bank,setBank] = useState(null);
   //const [chooseCity, setChooseCity] = useState(false);
   //const [city, setCity] = useState("Choose city");
   const cityOptions = [
@@ -23,6 +27,21 @@ const PaymentDetails = ({seo}) => {
     "Kutaisi",
     "Gori",
   ];
+
+
+    function makeOrder(){
+        if(bankSelect == null){
+            alert('select bank');
+            return;
+        }
+        Inertia.post(route('client.checkout.order'),{payment_type:bank})
+    }
+
+
+    function selectBank(bank){
+        setBank(bank);
+    }
+
   /*const handleClick = (item) => {
     setCity(item);
     setChooseCity(false);
@@ -90,7 +109,10 @@ const PaymentDetails = ({seo}) => {
                                       <div className="text-left">Choose bank for payment</div>
                                       <div className="grid grid-cols-2 gap-4 mt-6">
                                           <button
-                                              onClick={() => setBankSelect(0)}
+                                              onClick={() => {
+                                                  setBankSelect(0)
+                                                  selectBank('tbc');
+                                              }}
                                               className={` text-center mb-3 rounded-xl bg-white  border-solid border-2 w-full h-16   transition-all shadow-lg  hover:border-zinc-300  ${
                                                   bankSelect === 0
                                                       ? "!border-custom-blue"
@@ -101,7 +123,10 @@ const PaymentDetails = ({seo}) => {
                                                    alt=""/>
                                           </button>
                                           <button
-                                              onClick={() => setBankSelect(1)}
+                                              onClick={() => {
+                                                  setBankSelect(1)
+                                                  selectBank('bog');
+                                              }}
                                               className={` text-center mb-3 rounded-xl bg-white  border-solid border-2 w-full h-16   transition-all  shadow-lg hover:border-zinc-300  ${
                                                   bankSelect === 1
                                                       ? "!border-custom-blue"
@@ -147,7 +172,7 @@ const PaymentDetails = ({seo}) => {
                                               </Link>
                                           </label>
                                       </div>
-                                      <button className="w-full bold text-white bg-custom-blue rounded-xl py-5">
+                                      <button onClick={makeOrder} className="w-full bold text-white bg-custom-blue rounded-xl py-5">
                                           Make a payment now
                                       </button>
                                   </div>

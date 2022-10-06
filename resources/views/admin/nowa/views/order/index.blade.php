@@ -34,37 +34,54 @@
                     {{--<p class="tx-12 tx-gray-500 mb-2">Example of Nowa Simple Table. <a href="">Learn more</a></p>--}}
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="main-content-label mg-b-5">
-                                        From
-                                    </div>
-                                    <div class="input-group">
 
-                                        <input class="form-control " placeholder="MM/DD/YYYY" type="date">
-                                    </div><!-- input-group -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="main-content-label mg-b-5">
-                                        To
-                                    </div>
-                                    <div class="input-group">
-
-                                        <input class="form-control" placeholder="MM/DD/YYYY" type="date" id="dp1665046923130">
-                                    </div><!-- input-group -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="table-responsive">
                         <form class="mr-0 p-0">
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="main-content-label mg-b-5">
+                                                From
+                                            </div>
+                                            <div class="input-group">
+
+                                                <input onchange="this.form.submit()" name="from" class="form-control " placeholder="MM/DD/YYYY" type="date" value="{{Request::get('from')}}">
+                                            </div><!-- input-group -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="main-content-label mg-b-5">
+                                                To
+                                            </div>
+                                            <div class="input-group">
+
+                                                <input onchange="this.form.submit()" class="form-control" name="to" placeholder="MM/DD/YYYY" type="date" id="dp1665046923130" value="{{Request::get('to')}}">
+                                            </div><!-- input-group -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="main-content-label mg-b-5">
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <a class="btn btn-primary" href="{{route('order.export')}}">Export</a>
+                                            </div><!-- input-group -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <table class="table mg-b-0 text-md-nowrap">
                                 <thead>
                                 <tr>
