@@ -86,7 +86,14 @@ const SingleProduct = ({seo}) => {
                               <SingleSlider images={product_images} />
                           </div>
                           <div>
-                              <div className="bold text-3xl mb-2">{product.title}</div>
+                              <div className="bold text-3xl mb-3">{product.title}</div>
+                              <div className="bold mb-2">
+                                <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/checked.png" alt="" />
+                                <span>In stock</span>
+                                
+                                {/* <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/cancel.png" alt="" />
+                                <span>Out of stock</span> */}
+                              </div>
                               <div className="mb-5 text-sm text-black/[0.5]">
                                   Made By: <span className="bold text-lg text-black">{product.attributes.brand.option}</span>
                               </div>

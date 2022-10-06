@@ -126,6 +126,9 @@ const PaymentDetails = ({seo}) => {
                                           placeholder="--------"
                                           name="promocode"
                                       />
+                                      <button className="mb-5">
+                                      <img className="" src="/client/assets/images/icons/enter.png" alt="" />
+                                      </button>
                                       <div className="flex items-center justify-center mb-6">
                                           <input
                                               className="hidden"

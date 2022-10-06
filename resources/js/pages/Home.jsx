@@ -34,6 +34,7 @@ const Home = ({seo}) => {
                       <DirectionBtn text="Go to page" link="products" />
                   </div>
                   <ProductSlider products={products.special_price_tag} />
+                  <ProductSlider products={products.special_price_tag} />
               </section>
               <section className="wrapper py-10">
                   <CategoryBox categories={categories_} />
