@@ -293,6 +293,15 @@ trait ScopeFilter
         return $query->where('parent_id','!=',null);
     }
 
+    public function scopeGroup($query, $value){
+
+        return $query->where('group','like','%' . $value . '%');
+    }
+    public function scopeModel($query, $value){
+
+        $query->where('model','like','%' . $value . '%');
+    }
+
 
     public function scopeCategoryId($query, $category_id){
         return $query->whereHas('categories', function ($query) use ($category_id) {

@@ -170,6 +170,11 @@ class ProductController extends Controller
 
         //dd($matras_new);
 
+        if(isset($saveData['term'])){
+            $saveData['group'] = $saveData['term'];
+            unset($saveData['term']);
+        }
+
         $product = $this->productRepository->create($saveData);
         $product->categories()->sync($saveData['categories']);
 
@@ -353,7 +358,10 @@ class ProductController extends Controller
 
 
         //dd($request->file('images'));
-
+        if(isset($saveData['term'])){
+           $saveData['group'] = $saveData['term'];
+            unset($saveData['term']);
+        }
 
 
         $this->productRepository->update($product->id, $saveData);
@@ -453,23 +461,7 @@ class ProductController extends Controller
             }
         }
 
-        if(isset($saveData['term'])){
-            $attribute = Attribute::query()->where('code','size')->first();
-            $option = $attribute->options()->create([
-                'value' => $saveData['term']
-            ]);
-            $data = [];
 
-            $data['product_id'] = $product->id;
-            $data['attribute_id'] = $attribute->id;
-            $data['type'] = $attribute->type;
-
-           $data['value'] = $option->id;
-
-            //dd($data);
-            $this->productAttributeValueRepository->create($data);
-
-        }
 
 
 
@@ -737,24 +729,24 @@ class ProductController extends Controller
         return redirect(locale_route('product.edit', $product->id))->with('success', __('admin.delete_message'));
     }
 
-    public function getSizes(Request $request){
+    public function getGroups(Request $request){
         $params = $request->all();
         if(isset($params['term'])){
-            $query = AttributeOption::query()
-                ->select('attribute_options.*')
-            ->join('attributes','attributes.id','=','attribute_options.attribute_id')
-            ->where('attribute_options.value','like', $params['term'] . '%');
+            $query = Product::query()
+                ->select('group')
+            ->where('group','like', $params['term'] . '%');
 
         }
 
+        $query->groupBy('group');
 
         $data = $query->limit(10)->get();
 
         $li = '';
         foreach ($data as $item){
             $li .= '<li>';
-            $li .= '<a href="javascript:void(0)" data-sel_product="'. $item->id .'">';
-            $li .= $item->value;
+            $li .= '<a href="javascript:void(0)" data-sel_product="'. $item->group .'">';
+            $li .= $item->group;
             $li .= '</a>';
             $li .= '</li>';
         }

@@ -272,7 +272,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         {!! Form::label('group',__('admin.group'),['class' => 'form-label']) !!}
                         {!! Form::text('group',$product->group ?? old('group'),['class' => 'form-control']) !!}
 
@@ -283,7 +283,32 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                             </div>
                         </small>
                         @enderror
+                    </div>--}}
+
+
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.group')</label>
+                        <ul id="selected_products">
+
+
+                                @if($product->group)
+                                    <li>
+                                        <span>{{$product->group}}</span>
+                                        <input type="hidden" name="group" value="{{$product->group}}">
+                                        <a href="javascript:;" class="delete_product">delete</a>
+                                    </li>
+                                @else
+                                    {{--<input type="hidden" name="attribute[{{$item->id}}]" value="">--}}
+                                @endif
+
+                        </ul>
+                        <input class="form-control" type="text" id="search_product" name="term" value="" placeholder="Add search group">
+                        <ul id="product_list">
+
+                        </ul>
                     </div>
+
+
 
                     {{--@if($product->created_at and $product->parent_id !== null)--}}
                     <div class="form-group">
@@ -669,7 +694,8 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
             </div>
         </div>--}}
         <!-- row -->
-
+    <input type="hidden" id="inputFile" accept="image/png, image/jpeg">
+    <input id="cropBtn" type="hidden">
 
     <!-- /row -->
     <!-- row -->
@@ -959,7 +985,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                 console.log(val.length);
                 if (val.length > 0) {
                     $.ajax({
-                        url: '{{route('size.search.ajax')}}',
+                        url: '{{route('search.group')}}',
                         type: 'post',
                         data: {
                             _token: '{{csrf_token()}}',
@@ -984,18 +1010,17 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
             $('#product_list').html('');
             let id = $(this).data('sel_product');
             let title =  $(this).text();
-            let attr_size_id = parseInt({{$attr_size_id}})
             let inp = `<li>
                     <span>${title}</span>
-                        <input type="hidden" name="attribute[${attr_size_id}]" value="${id}">
+                        <input type="hidden" name="group" value="${id}">
 <a href="javascript:;" class="delete_product">delete</a>
                         </li>`;
             $('#selected_products').html(inp)
         });
 
         $(document).on('click','.delete_product',function (e){
-            let attr_size_id = parseInt({{$attr_size_id}})
-            $(this).parents('li').html(`<input type="hidden" name="attribute[${attr_size_id}]" value="">`);
+
+            $(this).parents('li').html(`<input type="hidden" name="group" value="">`);
         });
 
 

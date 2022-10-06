@@ -93,7 +93,7 @@ const SingleProduct = ({seo}) => {
                               <div className="text-lg bold">Specification</div>
                               <div className="grid grid-cols-2 gap-y-2 gap-x-5 opacity-50 text-sm mb-5 mt-3">
                                   {Object.keys(product.attributes).map((item,index) => {
-                                      return <div>{product.attributes[item].attribute}: {product.attributes[item].option}</div>
+                                      return (item !== 'brand' ) ?<div>{product.attributes[item].attribute}: {product.attributes[item].option}</div>:null
                                   })}
                                   {/*<div>Cpu: Intel Core i3-12100</div>
                                   <div>SSD: 256GB</div>
@@ -117,12 +117,12 @@ const SingleProduct = ({seo}) => {
                                               ? "border-custom-blue"
                                               : "border-transparent"
                                       }`} href={route('client.product.show',item)}>
-                                          <div
+                                          {variants[item].color ? <div
                                               style={{
                                                   background: variants[item].color.option,
                                               }}
                                               className=" w-5 h-5"
-                                          ></div>
+                                          ></div>:null}
                                       </Link>)
                                   })}
                               </div>

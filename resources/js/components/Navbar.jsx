@@ -19,13 +19,16 @@ const Navbar = () => {
   const [subCatIndex, setSubCatIndex] = useState(0);
 
   const mainCatClick = (index) => {
+      //alert(index);
     setCatIndex(index + 1);
     setSubCatIndex(0);
   };
 
     const { locales, currentLocale, locale_urls, cart_count, wishlist_count, categories } = usePage().props;
 
-
+    let subCategories = [];
+    let subCategories2 = [];
+    let n = 0;
   return (
     <>
       <header className="fixed w-full left-0 top-0 bg-white/[0.9]  py-4 after:backdrop-blur-md after:left-0 after:top-0 after:w-full after:h-full after:z-0 z-50">
@@ -183,6 +186,10 @@ const Navbar = () => {
             <div className="wrapper flex items-start justify-start">
               <div className="scrollbar overflow-y-scroll md:pr-10 pr-5 md:mr-10 mr-5 ">
                 {categories.map((item, index) => {
+
+                        subCategories.push(item.children);
+
+                    console.log(subCategories);
                   return (
                     <button
                       onClick={() => mainCatClick(index)}
@@ -197,26 +204,29 @@ const Navbar = () => {
                 })}
               </div>
               <div className={catIndex === 0 ? "hidden" : "block"}>
-                {subCategory.map((cat, index) => {
+                {subCategories.map((cat, index) => {
+                    n++;
                   return (
                     <div
                       key={index}
                       className={`${
-                        catIndex === index ? "block" : "hidden"
+                        catIndex === index + 1 ? "block" : "hidden"
                       } md:mr-20 mr-10 `}
                     >
                       {cat.map((item, index) => {
+                          subCategories2.push(item.children);
+                          console.log(subCategories2);
                         return (
                           <button
                             key={index + 1}
                             onClick={() => setSubCatIndex(index + 1)}
                             className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all text-left ${
-                              index + 1 === subCatIndex
+                                index + 1 === subCatIndex
                                 ? "text-custom-blue fill-custom-blue"
                                 : ""
                             }`}
                           >
-                            {item}
+                            {item.title}
                             <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
                           </button>
                         );
@@ -226,12 +236,13 @@ const Navbar = () => {
                 })}
               </div>
               <div className={subCatIndex === 0 ? "hidden" : "block"}>
-                {catProducts.map((cat, index) => {
+                {subCategories2.map((cat, index) => {
+                    //alert(subCatIndex)
                   return (
                     <div
                       key={index}
                       className={`${
-                        subCatIndex === index ? "block" : "hidden"
+                        subCatIndex === index + 1 ? "block" : "hidden"
                       } `}
                     >
                       {cat.map((item, index) => {
@@ -241,7 +252,7 @@ const Navbar = () => {
                             href="/"
                             className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all `}
                           >
-                            {item}
+                            {item.title}
                           </Link>
                         );
                       })}

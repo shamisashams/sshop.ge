@@ -34,6 +34,35 @@
                     {{--<p class="tx-12 tx-gray-500 mb-2">Example of Nowa Simple Table. <a href="">Learn more</a></p>--}}
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="main-content-label mg-b-5">
+                                        From
+                                    </div>
+                                    <div class="input-group">
+
+                                        <input class="form-control " placeholder="MM/DD/YYYY" type="date">
+                                    </div><!-- input-group -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="main-content-label mg-b-5">
+                                        To
+                                    </div>
+                                    <div class="input-group">
+
+                                        <input class="form-control" placeholder="MM/DD/YYYY" type="date" id="dp1665046923130">
+                                    </div><!-- input-group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="table-responsive">
                         <form class="mr-0 p-0">
                             <table class="table mg-b-0 text-md-nowrap">
@@ -145,7 +174,9 @@
 
 @section('scripts')
 
-<script>
+
+
+    <script>
     $('[data-setting]').click(function (e){
         let $this = $(this);
        let id = $(this).data('setting');
@@ -169,5 +200,7 @@
         });
     });
 </script>
+
+
 
 @endsection
