@@ -101,4 +101,9 @@ class OrderController extends Controller
         //dd($request->all());
         Setting::where('id',$request->get('id'))->update(['active' => $request->get('active')]);
     }
+
+
+    public function export(Request $request){
+        dd($request->all());
+    }
 }

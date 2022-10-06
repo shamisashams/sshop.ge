@@ -107,6 +107,7 @@ Route::prefix('{locale?}')
 
                 Route::resource('order', \App\Http\Controllers\Admin\OrderController::class);
                 //Route::get('order/{order}/destroy', [\App\Http\Controllers\Admin\OrderController::class, 'destroy'])->name('order.destroy');
+                Route::get('order/export', [\App\Http\Controllers\Admin\OrderController::class, 'export'])->name('order.export');
 
                 // Password
                 Route::get('password', [\App\Http\Controllers\Admin\PasswordController::class, 'index'])->name('password.index');
