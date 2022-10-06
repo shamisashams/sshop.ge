@@ -139,6 +139,10 @@ const SingleProduct = ({seo}) => {
                                     </span>
                                   Discount for this product
                               </div>:null}
+                              <div className="opacity-70  mr-2 mb-0.5 bold relative w-fit h-fit">
+                                    <div className="h-px w-full bg-custom-dark absolute left-0 top-2 rotate-12 scale-110"></div>
+                                    ₾ 64300
+                                    </div>
                               <div className="text-2xl bold my-5">
                                   {" "}
                                   ₾ <span className="text-4xl">{product.price}</span>{" "}
