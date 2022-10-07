@@ -12,6 +12,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class OrderController extends Controller
 {
@@ -104,6 +106,29 @@ class OrderController extends Controller
 
 
     public function export(Request $request){
-        dd($request->all());
+
+        $orders  = Order::all();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle("Orders");
+        $i = 2;
+        $sheet->setCellValue("A1", 'id');
+        $sheet->setCellValue("B1", 'name');
+        $sheet->setCellValue("C1", 'email');
+        $sheet->setCellValue("D1", 'phone');
+        $sheet->setCellValue("E1", 'grand total');
+        foreach ($orders as $order){
+            $sheet->setCellValue("A".$i, $order["id"]);
+            $sheet->setCellValue("B".$i, $order["name"]);
+            $sheet->setCellValue("C".$i, $order["email"]);
+            $sheet->setCellValue("D".$i, $order["phone"]);
+            $sheet->setCellValue("E".$i, $order["grand_total"]);
+            $i++;
+        }
+        //dd($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("orders.xlsx");
+        echo "OK";
+
     }
 }

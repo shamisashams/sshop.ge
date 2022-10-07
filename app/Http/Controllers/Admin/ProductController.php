@@ -767,17 +767,67 @@ class ProductController extends Controller
 
         $rowIterator = $worksheet->getRowIterator();
 
-        echo '<pre>';
-        foreach ($rowIterator as $row){
+        $chars = [
+          'A',
+          'B',
+          'C',
+          'D',
+          'E',
+          'F',
+          'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'R',
+            'S',
+            'T'
+        ];
+
+
+
+        $result = [];
+        foreach ($rowIterator as $key => $row){
+            if($key <= $request->post('skip_rows')) continue;
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(true);
             $data = [];
             foreach ($cellIterator as $cell) { $data[] = $cell->getValue(); }
 
-            // (C2) INSERT INTO DATABASE
-            print_r($data);
+            //echo '<pre>';
+            if($data[array_search($request->post('model'),$chars)]){
+                $result[] = [
+                    'model' => $data[array_search($request->post('model'),$chars)],
+                    'price' => $data[array_search($request->post('price'),$chars)],
+                    'quantity' => preg_replace('/[^0-9]/','',$data[array_search($request->post('quantity'),$chars)]),
+                    'title' => $data[array_search($request->post('name'),$chars)],
+                    'description' => $data[array_search($request->post('description'),$chars)],
+                    'slug' => str_replace(' ','-',$data[array_search($request->post('model'),$chars)])
+                ];
+            }
+
+            //print_r($data);
 
         }
-        echo '</pre>';
+
+        $n = 0;
+        foreach ($result as $item){
+
+
+            $product = Product::where('slug',$item['slug'])->first();
+            //dd($product);
+            if($product) {
+                $product->update($item);
+
+            } else {
+                $product = Product::create($item);
+            }
+        }
+        return redirect()->back()->with('success','imported products');
     }
 }

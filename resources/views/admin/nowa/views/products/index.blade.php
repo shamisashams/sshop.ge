@@ -29,15 +29,11 @@
                     <div class="d-flex justify-content-between">
                         <h4 class="card-title mg-b-0">@lang('admin.products')</h4>
                     </div>
-                    <a href="{{locale_route('product.create')}}" class="btn ripple btn-primary" type="button">@lang('admin.createbutt')</a>
 
                     <form enctype="multipart/form-data" action="{{route('product.import')}}" method="post">
                         @csrf
                         <div class="form-group">
                             <input class="form-control" type="file" name="file">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" type="submit">@lang('admin.import')</button>
                         </div>
                         @error('file')
                         <small class="text-danger">
@@ -46,8 +42,86 @@
                             </div>
                         </small>
                         @enderror
+                        <?php
+                        $chars = [
+                            'A',
+                            'B',
+                            'C',
+                            'D',
+                            'E',
+                            'F',
+                            'G',
+                            'H',
+                            'I',
+                            'J',
+                            'K',
+                            'L',
+                            'M',
+                            'N',
+                            'O',
+                            'P',
+                            'R',
+                            'S',
+                            'T'
+                        ];
+                        ?>
+                        <div class="form-group">
+                            <label class="form-label">skip rows</label>
+                            <input class="form-control" type="number" name="skip_rows" value="{{old('skip_rows') ?? 1}}">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">model cell</label>
+                            <select name="model" class="form-control">
+                                @foreach($chars as $key => $char)
+                                    <option value="{{$char}}" {{$key == 0 || old('model') == $char ? 'selected':''}}>{{$char}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">name cell</label>
+                            <select name="name" class="form-control">
+                                @foreach($chars as $key => $char)
+                                    <option value="{{$char}}" {{$key == 1 || old('name') == $char ? 'selected':''}}>{{$char}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">description cell</label>
+                            <select name="description" class="form-control">
+                                @foreach($chars as $key => $char)
+                                    <option value="{{$char}}" {{$key == 2 || old('description') == $char ? 'selected':''}}>{{$char}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">quantity cell</label>
+                            <select name="quantity" class="form-control">
+                                @foreach($chars as $key => $char)
+                                    <option value="{{$char}}" {{$key == 3 || old('quantity') == $char ? 'selected':''}}>{{$char}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">price cell</label>
+                            <select name="price" class="form-control">
+                                @foreach($chars as $key => $char)
+                                    <option value="{{$char}}" {{$key == 4 || old('price') == $char ? 'selected':''}}>{{$char}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">@lang('admin.import')</button>
+                        </div>
+
 
                     </form>
+
+                    <div class="form-group">
+                        <a href="{{locale_route('product.create')}}" class="btn ripple btn-primary" type="button">@lang('admin.createbutt')</a>
+                    </div>
+
+
+
 
                     {{--<p class="tx-12 tx-gray-500 mb-2">Example of Nowa Simple Table. <a href="">Learn more</a></p>--}}
                 </div>
@@ -194,22 +268,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <?php
-                                                $stock_ids = $item->stocks->pluck("id")->toArray();
-                                                $_stocks = '';
-
-
-                                                foreach ($stocks as $_stock){
-                                                    if(in_array($_stock->id,$stock_ids)) $_checked = 'checked';
-                                                    else $_checked = '';
-                                                    $_stocks .= '<div class="form-group"><label class="ckbox">
-                        <input onclick="return false" type="checkbox" name="stock_id[]" data-checkboxes="mygroup" class="custom-control-input" '. $_checked .' value="'.$_stock->id.'">
-                        <span style="margin-left: 5px">'.$_stock->title.'</span>
-
-                        </label></div>';
-                                                }
-                                                ?>
-                                                {!! $item->parent_id !== null ? $_stocks: '' !!}
+                                                {{$item->quantity}}
                                             </td>
                                             <td>
                                                 <?php

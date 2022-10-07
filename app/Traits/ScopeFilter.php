@@ -299,7 +299,17 @@ trait ScopeFilter
     }
     public function scopeModel($query, $value){
 
-        $query->where('model','like','%' . $value . '%');
+        return $query->where('model','like','%' . $value . '%');
+    }
+
+    public function scopeFrom($query, $value){
+
+        return $query->whereDate('created_at', '>=',$value);
+
+    }
+
+    public function scopeTo($query, $value){
+        return $query->whereDate('created_at', '<=',$value);
     }
 
 

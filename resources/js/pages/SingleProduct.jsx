@@ -88,11 +88,12 @@ const SingleProduct = ({seo}) => {
                           <div>
                               <div className="bold text-3xl mb-3">{product.title}</div>
                               <div className="bold mb-2">
-                                <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/checked.png" alt="" />
-                                <span>In stock</span>
-                                
-                                {/* <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/cancel.png" alt="" />
-                                <span>Out of stock</span> */}
+
+                                  {product.quantity > 0 ? <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/checked.png" alt="" />:null}
+                                  {product.quantity > 0 ? <span>In stock</span>:null}
+
+                                  {!product.quantity ? <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/cancel.png" alt="" />:null}
+                                  {!product.quantity ? <span>Out of stock</span> :null}
                               </div>
                               <div className="mb-5 text-sm text-black/[0.5]">
                                   Made By: <span className="bold text-lg text-black">{product.attributes.brand.option}</span>
@@ -139,13 +140,13 @@ const SingleProduct = ({seo}) => {
                                     </span>
                                   Discount for this product
                               </div>:null}
-                              <div className="opacity-70  mr-2 mb-0.5 bold relative w-fit h-fit">
-                                    <div className="h-px w-full bg-custom-dark absolute left-0 top-2 rotate-12 scale-110"></div>
-                                    ₾ 64300
-                                    </div>
+                              {product.special_price ?<div className="opacity-70  mr-2 mb-0.5 bold relative w-fit h-fit">
+                                  <div className="h-px w-full bg-custom-dark absolute left-0 top-2 rotate-12 scale-110"></div>
+                                    ₾  {product.price}
+                                    </div>: null}
                               <div className="text-2xl bold my-5">
                                   {" "}
-                                  ₾ <span className="text-4xl">{product.price}</span>{" "}
+                                  ₾ <span className="text-4xl">{product.special_price ? product.special_price : product.price}</span>{" "}
                               </div>
                               <button className="flex items-center judtify-start bold text-sm">
                                   <div className="flex items-center justify-center w-10 h-10 bg-white shadow-xl rounded-full mr-2">

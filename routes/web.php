@@ -104,10 +104,10 @@ Route::prefix('{locale?}')
                 Route::resource('setting', SettingController::class);
                 Route::get('setting/{setting}/destroy', [SettingController::class, 'destroy'])->name('setting.destroy');
 
-
+                Route::get('order/export', [\App\Http\Controllers\Admin\OrderController::class, 'export'])->name('order.export');
                 Route::resource('order', \App\Http\Controllers\Admin\OrderController::class);
                 //Route::get('order/{order}/destroy', [\App\Http\Controllers\Admin\OrderController::class, 'destroy'])->name('order.destroy');
-                Route::get('order/export', [\App\Http\Controllers\Admin\OrderController::class, 'export'])->name('order.export');
+
 
                 // Password
                 Route::get('password', [\App\Http\Controllers\Admin\PasswordController::class, 'index'])->name('password.index');

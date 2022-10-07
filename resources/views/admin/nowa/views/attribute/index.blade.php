@@ -112,10 +112,10 @@
                                                 </a>
                                                 <?php
                                                 $codes = [
-                                                    'corner',
+                                                    //'corner',
                                                     'size',
                                                     'color',
-                                                    'material',
+                                                    //'material',
                                                     'brand'
                                                 ];
                                                 ?>

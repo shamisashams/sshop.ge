@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="form-group">
 
-                                                <a class="btn btn-primary" href="{{route('order.export')}}">Export</a>
+                                                <a class="btn btn-primary" href="{{locale_route('order.export')}}">Export</a>
                                             </div><!-- input-group -->
                                         </div>
                                     </div>

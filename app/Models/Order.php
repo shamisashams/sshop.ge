@@ -58,6 +58,14 @@ class Order extends Model
                 'hasParam' => true,
                 'scopeMethod' => 'phone'
             ],
+            'from' => [
+                'hasParam' => true,
+                'scopeMethod' => 'from'
+            ],
+            'to' => [
+                'hasParam' => true,
+                'scopeMethod' => 'to'
+            ],
         ];
     }
 
