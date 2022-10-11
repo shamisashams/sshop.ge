@@ -27,7 +27,7 @@ const Navbar = () => {
     const { locales, currentLocale, locale_urls, cart_count, wishlist_count, categories } = usePage().props;
 
     let subCategories = [];
-    let subCategories2 = [];
+    let subCategories2 = {};
     let n = 0;
   return (
     <>
@@ -189,7 +189,7 @@ const Navbar = () => {
 
                         subCategories.push(item.children);
 
-                    console.log(subCategories);
+                    //console.log(subCategories);
                   return (
                     <button
                       onClick={() => mainCatClick(index)}
@@ -205,7 +205,8 @@ const Navbar = () => {
               </div>
               <div className={catIndex === 0 ? "hidden" : "block"}>
                 {subCategories.map((cat, index) => {
-                    n++;
+
+                    let children = [];
                   return (
                     <div
                       key={index}
@@ -214,14 +215,17 @@ const Navbar = () => {
                       } md:mr-20 mr-10 `}
                     >
                       {cat.map((item, index) => {
-                          subCategories2.push(item.children);
+                          subCategories2[item.id] = item.children;
                           console.log(subCategories2);
                         return (
                           <button
                             key={index + 1}
-                            onClick={() => setSubCatIndex(index + 1)}
+                            onClick={() => {
+                                setSubCatIndex(item.id)
+                                //alert(subCatIndex)
+                            }}
                             className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all text-left ${
-                                index + 1 === subCatIndex
+                                item.id === subCatIndex
                                 ? "text-custom-blue fill-custom-blue"
                                 : ""
                             }`}
@@ -236,20 +240,20 @@ const Navbar = () => {
                 })}
               </div>
               <div className={subCatIndex === 0 ? "hidden" : "block"}>
-                {subCategories2.map((cat, index) => {
-                    //alert(subCatIndex)
+                {Object.keys(subCategories2).map((cat, index) => {
+                    cat = parseInt(cat);
                   return (
                     <div
                       key={index}
                       className={`${
-                        subCatIndex === index + 1 ? "block" : "hidden"
+                        subCatIndex === cat ? "block" : "hidden"
                       } `}
                     >
-                      {cat.map((item, index) => {
+                      {subCategories2[cat].map((item, index) => {
                         return (
                           <Link
                             key={index}
-                            href="/"
+                            href={route('client.category.show',item.slug)}
                             className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all `}
                           >
                             {item.title}

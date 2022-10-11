@@ -28,6 +28,25 @@ const PaymentDetails = ({seo}) => {
     "Gori",
   ];
 
+    const [values, setValues] = useState({
+        promocode: "",
+
+    })
+
+    function handleChange(e) {
+        const key = e.target.name;
+        const value = e.target.value
+        setValues(values => ({
+            ...values,
+            [key]: value,
+        }))
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        Inertia.post(route('apply-promocode'), values)
+    }
+
 
     function makeOrder(){
         if(bankSelect == null){
@@ -69,6 +88,13 @@ const PaymentDetails = ({seo}) => {
       price: "249.90",
     },
   ];
+
+  let total = cart.total;
+
+  if(promocode){
+      total = total - ((promocode.reward * total) / 100);
+  }
+
   return (
       <Layout seo={seo}>
           <div className="bg-custom-zinc-200 py-20">
@@ -146,12 +172,13 @@ const PaymentDetails = ({seo}) => {
                                       <div className="opacity-50 mt-10">Enter a promo code</div>
                                       <input
                                           type="text"
-                                          maxLength="8"
+                                          maxLength="9"
                                           className="text-center border-none"
-                                          placeholder="--------"
+                                          placeholder="---------"
                                           name="promocode"
+                                          onChange={handleChange}
                                       />
-                                      <button className="mb-5">
+                                      <button onClick={handleSubmit} className="mb-5">
                                       <img className="" src="/client/assets/images/icons/enter.png" alt="" />
                                       </button>
                                       <div className="flex items-center justify-center mb-6">
@@ -226,9 +253,10 @@ const PaymentDetails = ({seo}) => {
                                       <div>Shipping</div>
                                       <div>₾ {shipping.ship_price}</div>
                                   </div>
+                                  <div>{promocode ? 'discount %' + promocode.reward :null}</div>
                                   <div className="flex justify-between items-center py-5 mt-14 bold text-xl">
                                       <span>Total</span>
-                                      <span className="text-3xl">₾ {parseFloat(cart.total) + parseFloat(shipping.ship_price)}</span>
+                                      <span className="text-3xl">₾ {parseFloat(total) + parseFloat(shipping.ship_price)}</span>
                                   </div>
                               </div>
                           </div>

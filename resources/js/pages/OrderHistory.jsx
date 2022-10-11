@@ -91,6 +91,10 @@ const OrderHistory = ({seo}) => {
                                           <th>Price</th>
                                       </tr>
                                       {orders.data.map((item,index) => {
+                                          let grand_total = item.grand_total;
+                                          if (item.discount){
+                                              grand_total = grand_total - ((item.discount * grand_total) / 100);
+                                          }
                                           return (
                                               <tr>
                                                   <td>
@@ -100,7 +104,7 @@ const OrderHistory = ({seo}) => {
                                                       {item.id}
                                                   </td>
                                                   <td className="opacity-h">{item.formatted_date}</td>
-                                                  <td className="bold">₾{item.grand_total}</td>
+                                                  <td className="bold">₾{grand_total}</td>
                                               </tr>
                                           )
                                       })}

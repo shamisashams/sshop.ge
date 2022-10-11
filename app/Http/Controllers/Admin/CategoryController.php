@@ -137,7 +137,7 @@ class CategoryController extends Controller
             $category = $this->categoryRepository->saveFiles($category->id, $request);
         }
 
-        $this->categoryRepository->model->attributes()->sync($saveData['attributes'] ?? []);
+        $category->attributes()->sync($saveData['attributes'] ?? []);
 
         return redirect(locale_route('category.index', $category->id))->with('success', __('admin.create_successfully'));
 

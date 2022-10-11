@@ -376,14 +376,14 @@ class OrderController extends Controller
 
                 $_promocode = \App\Models\PromoCode::query()->where('type','cart')->first();
                 //dd($promocode);
-                if ($_promocode && $product_promocode){
+                if ($_promocode){
                     if($_promocode->status){
                         $promo_gen = new Promocode();
                         $gen = $promo_gen->generateCode();
 
                         $request->user()->promocode()->create(['promocode_id' => $_promocode->id, 'promocode' => $gen]);
                         $data['product'] = null;
-                        $data['text'] = MailTemplate::query()->first()->promocode_cart;
+                        $data['text'] = 'cart promocode';
                         $data['code'] = $gen;
                         Mail::to($request->user())->send(new PromocodeProduct($data));
                     }

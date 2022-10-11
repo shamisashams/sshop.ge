@@ -84,11 +84,11 @@ class ProductController extends Controller
         $product = Product::query()->where(['status' => true, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
 
-        })->with(['latestImage','video','attribute_values','colors.file'])->firstOrFail();
+        })->with(['latestImage','video','attribute_values.attribute.translation','attribute_values.attribute.options.translation','colors.file'])->firstOrFail();
 
         $productImages = $product->files()->orderBy('id','desc')->get();
 
-        $gpouped = $product->grouped()->with('attribute_values.attribute')->get();
+        $gpouped = $product->grouped()->with(['attribute_values.attribute.translation','attribute_values.attribute.options'])->get();
 
         $arr = [];
         $d =[];
@@ -141,7 +141,7 @@ class ProductController extends Controller
         $config = [];
         $prices = [];
         $v_c = 0;
-        foreach ($product->variants()->with(['video','attribute_values','latestImage','files','stocks','stocks.translation'])->get() as $variant){
+        foreach ($product->variants()->with(['video','attribute_values.attribute.options','latestImage','files','stocks','stocks.translation'])->get() as $variant){
             $product_attributes = $variant->attribute_values;
 
             $result = [];
