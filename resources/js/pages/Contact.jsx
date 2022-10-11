@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 //import Location from "../assets/images/contact/1.png";
 //import Phone from "../assets/images/contact/2.png";
 //import Email from "../assets/images/contact/3.png";
@@ -6,8 +6,34 @@ import React from "react";
 //import Fb from "../assets/images/contact/5.png";
 //import Inst from "../assets/images/contact/6.png";
 import Layout from "@/Layouts/Layout";
+import { Link, usePage } from "@inertiajs/inertia-react";
+import { Inertia } from "@inertiajs/inertia";
 
 const Contact = ({seo}) => {
+
+    const { errors, info } = usePage().props;
+
+    const [values, setValues] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+    });
+
+    function handleChange(e) {
+        const key = e.target.name;
+        const value = e.target.value;
+        setValues((values) => ({
+            ...values,
+            [key]: value,
+        }));
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        Inertia.post(route("client.contact.mail"), values);
+    }
+
   return (
       <Layout seo={seo}>
           <div className="batman">
@@ -23,7 +49,7 @@ const Contact = ({seo}) => {
                               <div className="text">
                                   <div className="name bold">Address</div>
                                   <div className="target bold">
-                                      Name of the street #13. Tbilisi, georgia
+                                      {info.address}
                                   </div>
                               </div>
                           </div>
@@ -33,7 +59,7 @@ const Contact = ({seo}) => {
                               </div>
                               <div className="text">
                                   <div className="name bold">Phone number</div>
-                                  <div className="target bold">+995 032 2 00 00 00</div>
+                                  <div className="target bold">{info.phone}</div>
                               </div>
                           </div>
                           <div className="sub-item flex">
@@ -42,7 +68,7 @@ const Contact = ({seo}) => {
                               </div>
                               <div className="text">
                                   <div className="name bold">Email</div>
-                                  <div className="target bold">example@mail.com</div>
+                                  <div className="target bold">{info.email}</div>
                               </div>
                           </div>
                       </div>
@@ -53,16 +79,21 @@ const Contact = ({seo}) => {
                           <div className="title-text bold">Write to us</div>
                           <div className="contact-form">
                               <form action="#">
-                                  <input type="text" id="name" placeholder="Name" />
-                                  <input type="text" id="surname" placeholder="Surname" />
-                                  <input type="text" id="phone" placeholder="Phone Number" />
-                                  <input type="text" id="email" placeholder="Email address" />
+                                  <input onChange={handleChange} type="text" name="name" placeholder="Name" />
+                                  {errors.name && <div>{errors.name}</div>}
+                                  <input onChange={handleChange} type="text" name="surname" placeholder="Surname" />
+                                  {errors.surname && <div>{errors.surname}</div>}
+                                  <input onChange={handleChange} type="text" name="phone" placeholder="Phone Number" />
+                                  {errors.phone && <div>{errors.phone}</div>}
+                                  <input onChange={handleChange} type="text" name="email" placeholder="Email address" />
+                                  {errors.email && <div>{errors.email}</div>}
                                   <textarea
                                       name="message"
-                                      id="subject"
+                                      onChange={handleChange}
                                       placeholder="Your message"></textarea>
+                                  {errors.message && <div>{errors.message}</div>}
                               </form>
-                              <a href="#">
+                              <a onClick={handleSubmit} href="javascript:;">
                                   <button className="main-btn bold">Send message</button>
                               </a>
                           </div>
@@ -88,10 +119,10 @@ const Contact = ({seo}) => {
                   <div className="smedia-contact">
                       <div className="title-text bold">Social media</div>
                       <div className="sm-icons flex">
-                          <a href="#">
+                          <a href={info.facebook}>
                               <img src="/client/assets/images/contact/5.png" alt="facebook" />
                           </a>
-                          <a href="#">
+                          <a href={info.instagram}>
                               <img src="/client/assets/images/contact/6.png" alt="Instagram" />
                           </a>
                       </div>

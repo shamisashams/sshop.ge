@@ -1,8 +1,10 @@
 //import Cart from "../assets/images/about/1.png";
 import React from "react";
 import Layout from "@/Layouts/Layout";
+import { Link, usePage } from '@inertiajs/inertia-react'
 
 const About = ({seo}) => {
+    const {images} = usePage().props;
   return (
       <Layout seo={seo}>
           <div className="batman about-us-background">
@@ -44,7 +46,7 @@ const About = ({seo}) => {
                           </div>
                       </div>
                       <div className="cart-image">
-                          <img src="/client/assets/images/about/1.png" alt="" />
+                          <img src={images[0]} alt="" />
                       </div>
                   </div>
               </div>

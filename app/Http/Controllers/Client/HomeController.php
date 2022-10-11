@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\Page;
 use App\Models\Partner;
+use App\Models\Product;
 use App\Models\ProductSet;
 use App\Models\Slider;
 use Illuminate\Support\Facades\App;
@@ -43,6 +44,7 @@ class HomeController extends Controller
         $products['day_price'] = [];
         $products['special_price_tag'] = [];
         $products['popular'] = [];
+        $products['rand_products'] = [];
         foreach ($_products as $product){
             $product_attributes = $product->attribute_values;
 
@@ -71,6 +73,32 @@ class HomeController extends Controller
             if($product->popular) $products['popular'][] = $product;
         }
 
+        $rand_products =  Product::with(['latestImage','variants','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
+            $query->where('status',1);
+        })->inRandomOrder()->limit(18)->get();
+
+        foreach ($rand_products as $product){
+            $product_attributes = $product->attribute_values;
+
+            $_result = [];
+
+            foreach ($product_attributes as $item){
+                $options = $item->attribute->options;
+                $value = '';
+                foreach ($options as $option){
+                    if($item->attribute->type == 'select'){
+                        if($item->integer_value == $option->id) {
+                            $_result[$item->attribute->code] = $option->label;
+                        }
+
+                    }
+                }
+
+            }
+            $product['attributes'] = $_result;
+        }
+
+        $products['rand_products'] = $rand_products;
         //dd($products);
 
         return Inertia::render('Home', ["sliders" => $sliders,

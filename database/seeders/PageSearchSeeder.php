@@ -21,7 +21,7 @@ class PageSearchSeeder extends Seeder
                 'key' => 'search'
             ],*/
             [
-                'key' => 'blogs'
+                'key' => 'news'
             ]
 
         ];

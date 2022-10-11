@@ -13,7 +13,7 @@ import Layout from "@/Layouts/Layout";
 
 const Home = ({seo}) => {
 
-    const {categories, products} = usePage().props;
+    const {categories, products, images} = usePage().props;
 
 
     let categories_ = [];
@@ -31,10 +31,10 @@ const Home = ({seo}) => {
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
                       <div className="text-lg bold">Best Price</div>
-                      <DirectionBtn text="Go to page" link="products" />
+                      <DirectionBtn text="Go to page" link={route('client.category.special')} />
                   </div>
                   <ProductSlider products={products.special_price_tag} />
-                  <ProductSlider products={products.special_price_tag} />
+
               </section>
               <section className="wrapper py-10">
                   <CategoryBox categories={categories_} />
@@ -46,13 +46,13 @@ const Home = ({seo}) => {
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
                       <div className="text-lg bold">Popular</div>
-                      <DirectionBtn text="Go to page" link="products" />
+                      <DirectionBtn text="Go to page" link={route('client.category.popular')} />
                   </div>
                   <ProductSlider products={products.popular} />
               </section>
               <section className="bg-custom-yellow py-10 mb-10">
                   <div className="wrapper flex justify-between items-center flex-col md:flex-row">
-                      <img className="xl:ml-40 md:w-1/2 lg:w-auto" src="/client/assets/images/products/14.png" alt="" />
+                      <img className="xl:ml-40 md:w-1/2 lg:w-auto" src={images[0]} alt="" />
                       <div className="max-w-lg text-right">
                           <div className="text-custom-blue mb-3">Product of a week</div>
                           <div className="lg:text-4xl text-2xl bold mb-6">
@@ -70,7 +70,7 @@ const Home = ({seo}) => {
                       <div className="text-lg bold">You may like</div>
                       <DirectionBtn text="Go to page" link="products" />
                   </div>
-                  <ProductSlider products={[]} />
+                  <ProductSlider products={products.rand_products} />
               </section>
           </>
       </Layout>

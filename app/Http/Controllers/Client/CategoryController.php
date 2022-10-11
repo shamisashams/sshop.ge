@@ -133,17 +133,22 @@ class CategoryController extends Controller
 
         }
 
-        $res = ProductAttributeValue::query()->selectRaw('COUNT(product_attribute_values.product_id) as count, integer_value as option_id')
-            ->join('product_categories','product_categories.product_id','product_attribute_values.product_id')
-            ->where('product_categories.category_id',$category->id)
-            ->whereIn('integer_value',$opt_id)->groupBy('integer_value')->get();
+        $res_q = ProductAttributeValue::query()->selectRaw('COUNT(product_attribute_values.product_id) as count, integer_value as option_id')
+            ->join('product_categories','product_categories.product_id','product_attribute_values.product_id');
+
+        if($category){
+            $res_q->where('product_categories.category_id',$category->id);
+        }
+        $res_q->whereIn('integer_value',$opt_id)->groupBy('integer_value')->get();
+
+        $res = $res_q->get();
 
         $data = [];
         foreach ($res as $item){
             $data[$item->option_id] = $item->count;
         }
         //dd($data);
-
+        $result['color']['options'] = [];
         foreach ($attrs as $item){
             /*$result['attributes'][$key]['id'] = $item->id;
             $result['attributes'][$key]['name'] = $item->name;
@@ -164,6 +169,7 @@ class CategoryController extends Controller
                 $result['attributes'][$key]['code'] = $item->code;
                 $result['attributes'][$key]['type'] = $item->type;
                 $_key = 0;
+                $_options = [];
                 foreach ($item->options as $option){
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
@@ -178,6 +184,7 @@ class CategoryController extends Controller
                 $result['color']['code'] = $item->code;
                 $result['color']['type'] = $item->type;
                 $_key = 0;
+                $_options = [];
                 foreach ($item->options as $option){
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;

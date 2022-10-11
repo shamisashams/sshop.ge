@@ -115,7 +115,7 @@ const SingleProduct = ({seo}) => {
                                   <option value="2">asdf drgf adrg</option>
                                   <option value="3">uilh l vhjkfhjk</option>
                               </select>
-                              <div className="mb-4">
+                              {Object.keys(variants).length > 0 ? <div className="mb-4">
                                   <div className="bold mb-2 text-lg">Choose color</div>
                                   {/*<ColorPick attribute={{options:[]}} />*/}
 
@@ -133,7 +133,7 @@ const SingleProduct = ({seo}) => {
                                           ></div>:null}
                                       </Link>)
                                   })}
-                              </div>
+                              </div>:null}
                               {discount ? <div className="text-sm">
                                   <span className="text-xs text-white bg-custom-red rounded py-0.5 px-2 mr-2">
                                       {discount}%

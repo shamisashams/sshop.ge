@@ -5,7 +5,7 @@ import { Link, usePage } from '@inertiajs/inertia-react'
 import { LocationMap, SocialMedia } from "../components/Shared";
 
 const Footer = () => {
-    const {localizations} = usePage().props;
+    const {localizations, info} = usePage().props;
   return (
     <div className="py-10 border-t">
       <div className="wrapper flex justify-between items-start flex-wrap text-sm sm:text-base">
@@ -27,13 +27,13 @@ const Footer = () => {
           </Link>
         </div>
         <div className="md:mx-5 mx-3 mb-5">
-          <Link className="bold mb-4 block" href="/products">
+          <Link className="bold mb-4 block" href={route('search.index')}>
             All Products
           </Link>
-          <Link className="bold mb-4 block" href="/products">
+          <Link className="bold mb-4 block" href={route('client.category.popular')}>
             Popular now
           </Link>
-          <Link className="bold mb-4 block" href="/products">
+          <Link className="bold mb-4 block" href={route('client.category.special')}>
             Best Price
           </Link>
           <Link className="bold mb-4 block" href="/you-may-like">
@@ -45,10 +45,10 @@ const Footer = () => {
         </div>
         <div className="text-right">
           <Link className="bold mb-4 block" href="/">
-            +995 032 2 000 000
+              {info.phone}
           </Link>
           <Link className="bold mb-10 block" href="/">
-            Example@mail.com
+              {info.email}
           </Link>
 
           <SocialMedia />
