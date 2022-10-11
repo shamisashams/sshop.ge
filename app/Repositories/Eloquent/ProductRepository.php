@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Repositories\Eloquent\Base\BaseRepository;
 use App\Repositories\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class LanguageRepository
@@ -88,6 +89,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
             ->leftJoin('product_attribute_values','product_attribute_values.product_id','products.id');
 
+        $query->whereHas('categories', function (Builder $query) {
+            $query->where('status', 1);
+
+        });
 
 
         if(isset($params['subcategory'])){
@@ -151,8 +156,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
             //dd($priceRange);
             $query->where(function ($pQ) use ($priceRange){
-                $pQ->where('products.min_price', '>=', $priceRange[0])
-                    ->where('products.min_price', '<=', end($priceRange));
+                $pQ->where('products.price', '>=', $priceRange[0])
+                    ->where('products.price', '<=', end($priceRange));
             });
 
         }
@@ -213,7 +218,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             return $this->model->leftJoin('product_categories','product_categories.product_id','products.id')->where('product_categories.category_id',$category->id)->max('price');
         }
 
-            return $this->model->max('price');
+            return $this->model->whereHas('categories', function (Builder $query) {
+                $query->where('status', 1);
+
+            })->max('price');
 
 
         //dd($this->model->where('parent_id','!=',null)->max('price'));

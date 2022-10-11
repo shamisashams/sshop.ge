@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
+use App\Models\ProductAttributeValue;
 use App\Repositories\Eloquent\AttributeRepository;
 use App\Repositories\Eloquent\ProductRepository;
 use Illuminate\Contracts\Foundation\Application;
@@ -119,6 +120,30 @@ class CategoryController extends Controller
         $attrs = $this->attributeRepository->model->with('options')->orderBy('position')->get();
         $result['attributes'] = [];
         $key = 0;
+
+        $attr_id = [];
+        foreach ($attrs as $attr){
+            $attr_id[$attr->id] = $attr->options->pluck('id')->toArray();
+        }
+        $opt_id = [];
+        foreach ($attr_id as $item){
+            foreach ($item as $o){
+                $opt_id[] = $o;
+            }
+
+        }
+
+        $res = ProductAttributeValue::query()->selectRaw('COUNT(product_attribute_values.product_id) as count, integer_value as option_id')
+            ->join('product_categories','product_categories.product_id','product_attribute_values.product_id')
+            ->where('product_categories.category_id',$category->id)
+            ->whereIn('integer_value',$opt_id)->groupBy('integer_value')->get();
+
+        $data = [];
+        foreach ($res as $item){
+            $data[$item->option_id] = $item->count;
+        }
+        //dd($data);
+
         foreach ($attrs as $item){
             /*$result['attributes'][$key]['id'] = $item->id;
             $result['attributes'][$key]['name'] = $item->name;
@@ -143,6 +168,7 @@ class CategoryController extends Controller
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
                     $_options[$_key]['color'] = $option->color;
+                    $_options[$_key]['count'] = isset($data[$option->id]) ? $data[$option->id] : 0;
                     $_key++;
                 }
                 $result['attributes'][$key]['options'] = $_options;
@@ -156,6 +182,7 @@ class CategoryController extends Controller
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
                     $_options[$_key]['color'] = $option->color;
+                    $_options[$_key]['count'] = isset($data[$option->id]) ? $data[$option->id] : 0;
                     $_key++;
                 }
                 $result['color']['options'] = $_options;

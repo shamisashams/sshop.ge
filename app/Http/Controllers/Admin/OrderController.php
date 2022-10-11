@@ -107,7 +107,21 @@ class OrderController extends Controller
 
     public function export(Request $request){
 
-        $orders  = Order::all();
+        //dd($request->all());
+        $query = Order::query();
+        if($request->get('from')){
+
+            $query->whereDate('created_at', '>=',$request->get('from'));
+        }
+        if($request->get('to')){
+            //dd(4);
+            $query->whereDate('created_at', '<=',$request->get('to'));
+        }
+
+        $orders = $query->get();
+
+        //dd($orders);
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setTitle("Orders");
@@ -128,7 +142,8 @@ class OrderController extends Controller
         //dd($spreadsheet);
         $writer = new Xlsx($spreadsheet);
         $writer->save("orders.xlsx");
-        echo "OK";
+
+        return response()->download('orders.xlsx');
 
     }
 }

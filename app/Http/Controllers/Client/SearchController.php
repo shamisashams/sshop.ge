@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
+use App\Models\ProductAttributeValue;
 use App\Models\Translations\ProductTranslation;
 use App\Repositories\Eloquent\AttributeRepository;
 use App\Repositories\Eloquent\ProductRepository;
@@ -129,6 +130,27 @@ class SearchController extends Controller
         $attrs = $this->attributeRepository->model->with('options')->orderBy('position')->get();
         $result['attributes'] = [];
         $key = 0;
+
+
+        $attr_id = [];
+        foreach ($attrs as $attr){
+            $attr_id[$attr->id] = $attr->options->pluck('id')->toArray();
+        }
+        $opt_id = [];
+        foreach ($attr_id as $item){
+            foreach ($item as $o){
+                $opt_id[] = $o;
+            }
+
+        }
+
+        $res = ProductAttributeValue::query()->selectRaw('COUNT(product_id) as count, integer_value as option_id')->whereIn('integer_value',$opt_id)->groupBy('integer_value')->get();
+
+        $data = [];
+        foreach ($res as $item){
+            $data[$item->option_id] = $item->count;
+        }
+
         foreach ($attrs as $item){
             /*$result['attributes'][$key]['id'] = $item->id;
             $result['attributes'][$key]['name'] = $item->name;
@@ -157,6 +179,7 @@ class SearchController extends Controller
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
                     $_options[$_key]['color'] = $option->color;
+                    $_options[$_key]['count'] = isset($data[$option->id]) ? $data[$option->id] : 0;
                     $_key++;
                 }
                 $result['attributes'][$key]['options'] = $_options;
@@ -170,6 +193,7 @@ class SearchController extends Controller
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
                     $_options[$_key]['color'] = $option->color;
+                    $_options[$_key]['count'] = isset($data[$option->id]) ? $data[$option->id] : 0;
                     $_key++;
                 }
                 $result['color']['options'] = $_options;

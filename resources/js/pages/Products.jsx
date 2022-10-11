@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { productSliderData } from "../components/Data";
-import RangeSlider from "../components/PriceRange";
+//import RangeSlider from "../components/PriceRange";
 import ProductBox from "../components/ProductBox";
 import { ColorPick, FilterOptions } from "../components/Shared";
 import { TbAdjustments } from "react-icons/tb";
 import Layout from "@/Layouts/Layout";
 import { Link, usePage } from '@inertiajs/inertia-react'
 import {Inertia} from "@inertiajs/inertia";
+import RangeSlider from "../components/PriceRange/PriceRange";
 
 const Products = ({seo}) => {
 
