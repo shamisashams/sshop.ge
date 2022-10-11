@@ -74,7 +74,8 @@ class CategoryController extends Controller
             'category' => $category,
             'url' => $url,
             'method' => $method,
-            'categories' => $categories
+            'categories' => $categories,
+            'attributes' => Attribute::all()
         ]);
     }
 

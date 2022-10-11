@@ -16,7 +16,7 @@ const SingleProduct = ({seo}) => {
   const [favorite, setFavorite] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
-  const {product,category_path, product_images, variants} = usePage().props;
+  const {product,category_path, product_images, variants, similar_products} = usePage().props;
 
   console.log(product,variants)
     let discount;
@@ -95,9 +95,9 @@ const SingleProduct = ({seo}) => {
                                   {!product.quantity ? <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/cancel.png" alt="" />:null}
                                   {!product.quantity ? <span>Out of stock</span> :null}
                               </div>
-                              <div className="mb-5 text-sm text-black/[0.5]">
+                              {product.attributes.brand ? <div className="mb-5 text-sm text-black/[0.5]">
                                   Made By: <span className="bold text-lg text-black">{product.attributes.brand.option}</span>
-                              </div>
+                              </div>:null}
                               <div className="text-lg bold">Specification</div>
                               <div className="grid grid-cols-2 gap-y-2 gap-x-5 opacity-50 text-sm mb-5 mt-3">
                                   {Object.keys(product.attributes).map((item,index) => {
@@ -289,10 +289,10 @@ const SingleProduct = ({seo}) => {
               <div className="bg-custom-zinc-200 py-10 pb-20">
                   <div className="wrapper">
                       <div className="bold text-lg mb-10">You may also like</div>
-                      <ProductSlider products={[]} />
+                      <ProductSlider products={similar_products} />
                   </div>
               </div>
-              <Installment show={showPopup} hide={() => setShowPopup(false)} />
+              <Installment product={product} show={showPopup} hide={() => setShowPopup(false)} />
           </>
       </Layout>
 

@@ -107,7 +107,7 @@ class UserController extends Controller
         //dd($files);
 
         return Inertia::render('OrderHistory', [
-            "orders" => auth()->user()->orders()->orderBy('created_at','desc')->paginate(3),
+            "orders" => auth()->user()->orders()->orderBy('created_at','desc')->paginate(1),
             "page" => $page, "seo" => [
             "title"=>$page->meta_title,
             "description"=>$page->meta_description,

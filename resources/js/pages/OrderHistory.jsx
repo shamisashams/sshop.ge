@@ -1,10 +1,78 @@
 import React from "react";
 //import { Link } from "react-router-dom";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 import CabinetNav from "../components/CabinetNav";
 import Layout from "@/Layouts/Layout";
 
 const OrderHistory = ({seo}) => {
+
+    const {orders} = usePage().props;
+
+
+    let links = function (links) {
+        let rows = [];
+        //links.shift();
+        //links.splice(-1);
+        {
+            links.map(function (item, index) {
+                if (index > 0 && index < links.length - 1) {
+                    rows.push(
+                        <li>
+                        <Link
+                            href={item.url}
+                            className={
+                                item.active
+                                    ? "bold mx-2 underline"
+                                    : "bold mx-2"
+                            }
+                        >
+                            <span className="visuallyhidden"> </span>{item.label}
+                        </Link>
+                        </li>
+                    );
+                }
+            });
+        }
+        return <div className="nums"> {rows.length > 1 ? rows : null} </div>;
+    };
+
+    let linksPrev = function (links) {
+        let rowCount = 0;
+        links.map(function (item, index) {
+            if (index > 0 && index < links.length - 1) {
+                rowCount++;
+            }
+        });
+        return rowCount > 1 ? (
+            <li>
+            <Link href={links[0].url}>
+                <span aria-hidden="true">«</span>
+                <span className="visuallyhidden">
+                          This takes you to the first page
+                        </span>
+            </Link>
+        </li>
+        ) : null;
+    };
+    let linksNext = function (links) {
+        let rowCount = 0;
+        links.map(function (item, index) {
+            if (index > 0 && index < links.length - 1) {
+                rowCount++;
+            }
+        });
+        return rowCount > 1 ? (
+            <li>
+            <Link href={links[links.length - 1].url}>
+                <span aria-hidden="true">»</span>
+                <span className="visuallyhidden">
+                          This takes you to the last page
+                        </span>
+            </Link>
+        </li>
+        ) : null;
+    };
+
   return (
       <Layout seo={seo}>
           <div className="batman" id="fio-page">
@@ -18,11 +86,25 @@ const OrderHistory = ({seo}) => {
                               <div className="table">
                                   <table>
                                       <tr>
-                                          <th>Product</th>
+                                          <th>Id</th>
                                           <th>Date</th>
                                           <th>Price</th>
                                       </tr>
-                                      <tr>
+                                      {orders.data.map((item,index) => {
+                                          return (
+                                              <tr>
+                                                  <td>
+                                                      {/*<p>Small Chair</p>
+                                                      <p>Color: gray</p>
+                                                      <p>Quantity: 1</p>*/}
+                                                      {item.id}
+                                                  </td>
+                                                  <td className="opacity-h">{item.formatted_date}</td>
+                                                  <td className="bold">₾{item.grand_total}</td>
+                                              </tr>
+                                          )
+                                      })}
+                                      {/*<tr>
                                           <td>
                                               <p>Small Chair</p>
                                               <p>Color: gray</p>
@@ -57,21 +139,15 @@ const OrderHistory = ({seo}) => {
                                           </td>
                                           <td className="opacity-h">15.05.2022</td>
                                           <td className="bold">₾318.00</td>
-                                      </tr>
+                                      </tr>*/}
                                   </table>
                               </div>
                               <div className="history-pagination">
                                   <nav aria-label="pagination">
                                       <ul className="pagination">
-                                          <li>
-                                              <Link href="/">
-                                                  <span aria-hidden="true">«</span>
-                                                  <span className="visuallyhidden">
-                          This takes you to the first page
-                        </span>
-                                              </Link>
-                                          </li>
-                                          <li>
+
+                                          {linksPrev(orders.links)}
+                                          {/*<li>
                                               <Link href="/">
                                                   <span className="visuallyhidden"> </span>1
                                               </Link>
@@ -90,15 +166,17 @@ const OrderHistory = ({seo}) => {
                                               <Link href="/">
                                                   <span className="visuallyhidden"> </span>4
                                               </Link>
-                                          </li>
-                                          <li>
+                                          </li>*/}
+                                          {links(orders.links)}
+                                          {/*<li>
                                               <Link href="/">
                                                   <span aria-hidden="true">»</span>
                                                   <span className="visuallyhidden">
                           This takes you to the last page
                         </span>
                                               </Link>
-                                          </li>
+                                          </li>*/}
+                                          {linksNext(orders.links)}
                                       </ul>
                                   </nav>
                               </div>

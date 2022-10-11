@@ -9,7 +9,7 @@ import DiscreteSlider from "./Duration";
 import { Quantity } from "./Shared";
 import { IoCloseSharp } from "react-icons/io5";
 
-const Installment = ({ show, hide }) => {
+const Installment = ({ show, hide,  product}) => {
   const banks = ["/client/assets/images/banks/1.png", "/client/assets/images/banks/2.png", "/client/assets/images/banks/3.png", "/client/assets/images/banks/4.png", "/client/assets/images/banks/5.png"];
   const [bankSelect, setBankSelect] = useState(0);
 
@@ -96,16 +96,16 @@ const Installment = ({ show, hide }) => {
                 </tr>
                 <tr>
                   <td>
-                    <img className="w-32" src="/client/assets/images/products/2.png" alt="" />
+                    <img className="w-32" src={product.latest_image ? product.latest_image.file_full_url : null} alt="" />
                   </td>
                   <td>
-                    <div className="md:text-lg">KITCHENAID 5KSM185PSBFT</div>
-                    <div className="opacity-50">Manufacturer Name</div>
+                    <div className="md:text-lg">{product.title}</div>
+                      {product.attributes.brand ? <div className="opacity-50">{product.attributes.brand.option}</div>:null}
                   </td>
                   <td>
                     <Quantity />
                   </td>
-                  <td> ₾ 3255.00</td>
+                  <td> ₾ {product.special_price ? product.special_price : product.price}</td>
                 </tr>
               </table>
             </div>
