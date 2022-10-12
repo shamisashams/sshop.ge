@@ -235,7 +235,7 @@ class Cart
         //dd($cart);
         if ($cart !== null) {
             foreach ($cart as $_item) {
-                $product = Product::with(['translation','latestImage','attribute_values','parent.latestImage'])->where(['id' => $_item->product_id])->first();
+                $product = Product::with(['translation','latestImage','attribute_values.attribute.options.translation','parent.latestImage'])->where(['id' => $_item->product_id])->first();
                 $product_attributes = $product->attribute_values;
 
                 $result = [];
