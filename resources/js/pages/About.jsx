@@ -4,16 +4,23 @@ import Layout from "@/Layouts/Layout";
 import { Link, usePage } from '@inertiajs/inertia-react'
 
 const About = ({seo}) => {
-    const {images} = usePage().props;
+    const {images, localizations} = usePage().props;
+
+    const renderHTML = (rawHTML) =>
+        React.createElement("p", {
+            dangerouslySetInnerHTML: { __html: rawHTML },
+        });
+
   return (
       <Layout seo={seo}>
           <div className="batman about-us-background">
               <div className="wrapper">
                   <div id="about-us">
                       <div className="text">
-                          <div className="title bold">About Us</div>
+                          <div className="title bold">{__('client.about_h',localizations)}</div>
                           <div className="paragraphs">
-                              <p>
+                              {renderHTML(__('client.about_t',localizations).newLineToBr())}
+                              {/*<p>
                                   Unlike Privacy Policies, which are required by laws such as the
                                   GDPR, CalOPPA and many others, there's no law or regulation on
                                   Terms and Conditions.
@@ -42,7 +49,7 @@ const About = ({seo}) => {
                                   users that they are not allowed to choose usernames that may
                                   infringe trademarks, i.e. usernames like Google, Facebook, and
                                   so on.
-                              </p>
+                              </p>*/}
                           </div>
                       </div>
                       <div className="cart-image">

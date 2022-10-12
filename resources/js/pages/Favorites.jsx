@@ -12,7 +12,7 @@ import {Inertia} from "@inertiajs/inertia";
 
 const Favorites = ({seo}) => {
 
-    const {wishlist,localizations} = usePage().props;
+    const {wishlist,localizations, urlPrev, products} = usePage().props;
 
 
 
@@ -65,8 +65,8 @@ const Favorites = ({seo}) => {
       <Layout seo={seo}>
           <div className="bg-custom-zinc-200 py-10">
               <div className="wrapper">
-                  <DirectionBtn text="Back to shopping" back />
-                  <div className="text-2xl my-5 bold ">Favorites</div>
+                  <DirectionBtn link={urlPrev} text={__('client.favorites_back', localizations)} back />
+                  <div className="text-2xl my-5 bold ">{__('client.favorites', localizations)}</div>
                   <div className="bg-white p-5 rounded w-full mb-10 overflow-x-scroll scrollbar lg:overflow-x-hidden">
                       <table className="w-full ">
                           {wishlist.map((item, index) => {
@@ -91,8 +91,8 @@ const Favorites = ({seo}) => {
                       </table>
                   </div>
                   <div className="py-10">
-                      <div className="bold mb-4 text-lg">You may like</div>
-                      <ProductSlider products={[]} />
+                      <div className="bold mb-4 text-lg">{__('client.you_may_like', localizations)}</div>
+                      <ProductSlider products={products} />
                   </div>
               </div>
           </div>

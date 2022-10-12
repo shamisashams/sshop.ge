@@ -1,6 +1,6 @@
 import React from "react";
 //import { Link } from "react-router-dom";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 //import { ReactComponent as HeartIcon } from "../assets/images/icons/header/heart.svg";
 //import { ReactComponent as CartIcon } from "../assets/images/icons/header/cart.svg";
 import { useState } from "react";
@@ -9,6 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Inertia } from '@inertiajs/inertia';
 
 const ProductBox = (props) => {
+
+    const {localizations} = usePage().props;
+
   const [favorite, setFavorite] = useState(false);
   const [addToCart, setAddToCart] = useState(false);
 
@@ -106,7 +109,7 @@ const ProductBox = (props) => {
           </div>
         </div>
         <Link href={props.link} className="underline text-custom-blue ">
-          See details
+            {__('client.see_details',localizations)}
         </Link>
         {/*<ToastContainer
           position="top-center"

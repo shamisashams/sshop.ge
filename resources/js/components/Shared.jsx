@@ -99,6 +99,7 @@ export const ColorPick = ({attribute}) => {
 };
 
 export const FilterOptions = ({ title, options, attribute, appliedFilters }) => {
+    const {localizations} = usePage().props;
   const [showMore, setShowMore] = useState(false);
 
     function removeA(arr) {
@@ -182,15 +183,15 @@ export const FilterOptions = ({ title, options, attribute, appliedFilters }) => 
           );
         })}
       </div>
-      <button
+        {options.length > 4 ? <button
         onClick={() => setShowMore(!showMore)}
         className="text-custom-blue bold mt-5"
       >
-        {showMore ? "Show less" : "Show more"}{" "}
+        {showMore ? __('client.filter_less',localizations) : __('client.filter_more',localizations)}{" "}
         <BiChevronDown
           className={`inline-block w-5 h-5 ${showMore ? "rotate-180" : ""}`}
         />{" "}
-      </button>
+      </button>:null}
     </div>
   );
 };
@@ -238,6 +239,7 @@ export const Quantity = (props) => {
 };
 
 export const CartTabs = ({ active }) => {
+    const {localizations} = usePage().props;
   return (
     <div className="w-full border-b border-solid flex justify-between text-xs sm:text-sm lg:text-base">
       <Link
@@ -248,7 +250,7 @@ export const CartTabs = ({ active }) => {
             : ""
         }`}
       >
-        1. Cart
+        1. {__('client.nav_cart', localizations)}
       </Link>
       <Link
         href={route('client.shipping.index')}
@@ -258,7 +260,7 @@ export const CartTabs = ({ active }) => {
             : ""
         }`}
       >
-        2. Shipping details
+        2. {__('client.nav_shipping', localizations)}
       </Link>
       <Link
         href={route('client.payment.index')}
@@ -268,13 +270,14 @@ export const CartTabs = ({ active }) => {
             : ""
         }`}
       >
-        3. Payment details
+        3. {__('client.nav_payment', localizations)}
       </Link>
     </div>
   );
 };
 
 export const CartItem = (props) => {
+    const {localizations} = usePage().props;
   const [remove, setRemove] = useState(false);
 
     function removeFromWishlist(id){
@@ -328,14 +331,14 @@ export const CartItem = (props) => {
               qty = qty ? qty.value : 1;
               buyNow(props.id,qty);
           }} className="bg-custom-blue text-white rounded-md bold border-custom-blue  border border-solid py-4 px-10 mr-3 mb-2">
-            Buy now
+              {__('client.buy_now', localizations)}
           </button>
           <button onClick={() => {
               let qty = document.getElementById('inp_product_' + props.id);
               qty = qty ? qty.value : 1;
               addToCart(props.id,qty)
           }} className=" rounded-md bold border-custom-blue text-custom-blue border border-solid py-4 px-10 mr-3 mb-2">
-            Add to cart
+              {__('client.add_to_cart', localizations)}
           </button>
         </td>
       )}

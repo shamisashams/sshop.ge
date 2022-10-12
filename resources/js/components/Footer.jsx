@@ -28,16 +28,16 @@ const Footer = () => {
         </div>
         <div className="md:mx-5 mx-3 mb-5">
           <Link className="bold mb-4 block" href={route('search.index')}>
-            All Products
+              {__('client.nav_products',localizations)}
           </Link>
           <Link className="bold mb-4 block" href={route('client.category.popular')}>
-            Popular now
+              {__('client.nav_popular',localizations)}
           </Link>
           <Link className="bold mb-4 block" href={route('client.category.special')}>
-            Best Price
+              {__('client.nav_best_price',localizations)}
           </Link>
           <Link className="bold mb-4 block" href="/you-may-like">
-            You may like
+              {__('client.nav_product_like',localizations)}
           </Link>
         </div>
         <div className="rounded overflow-hidden md:w-1/3 w-1/2 md:mx-5 mx-3 mb-5">

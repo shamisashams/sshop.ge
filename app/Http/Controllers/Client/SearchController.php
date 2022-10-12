@@ -127,7 +127,7 @@ class SearchController extends Controller
     }
 
     private function getAttributes():array{
-        $attrs = $this->attributeRepository->model->with('options')->orderBy('position')->get();
+        $attrs = $this->attributeRepository->model->with(['translation','options.translation'])->orderBy('position')->get();
         $result['attributes'] = [];
         $key = 0;
 

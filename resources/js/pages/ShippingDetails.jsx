@@ -104,7 +104,7 @@ const ShippingDetails = ({seo}) => {
                               <div className="bg-white p-5 md:py-20 rounded text-center ">
                                   <div className="max-w-md mx-auto">
                                       <div className="bold md::text-3xl text-xl mb-8">
-                                          Pick location where we should deliver items
+                                          {__('client.shipping_form_h', localizations)}
                                       </div>
                                       <div className="relative w-fill h-16 mb-3 bg-custom-blue rounded">
                                           {/*<Flag className="fill-white absolute top-1/2 left-4 -translate-y-1/2 z-20" />*/}
@@ -158,7 +158,7 @@ const ShippingDetails = ({seo}) => {
                                           <input
                                               type="text"
                                               className="w-full h-full text-center "
-                                              placeholder="Enter your address"
+                                              placeholder={__('client.ship_form_address', localizations)}
                                               name="address"
                                               onChange={handleChange}
                                               value={values.address}
@@ -178,7 +178,7 @@ const ShippingDetails = ({seo}) => {
                                           <input
                                               type="text"
                                               className="w-full h-full text-center "
-                                              placeholder="Enter phone number"
+                                              placeholder={__('client.ship_form_phone', localizations)}
                                               onChange={handleChange}
                                               name="phone"
                                               value={values.phone}
@@ -203,7 +203,7 @@ const ShippingDetails = ({seo}) => {
                                           <input
                                               type="text"
                                               className="w-full h-full text-center "
-                                              placeholder="Leave a comment"
+                                              placeholder={__('client.ship_form_comment', localizations)}
                                               onChange={handleChange}
                                               name="comment"
                                               value={values.comment}
@@ -218,8 +218,8 @@ const ShippingDetails = ({seo}) => {
                           </div>
                           <div className="lg:w-1/3 lg:ml-10 mx-auto lg:mx-0">
                               <div className="max-w-md">
-                                  <div className="bold text-lg">Summary</div>
-                                  <div className="opacity-50 my-4">({cart.count} items)</div>
+                                  <div className="bold text-lg">{__('client.summary', localizations)}</div>
+                                  <div className="opacity-50 my-4">({cart.count} {__('client.items', localizations)})</div>
                                   {cart.products.map((item, index) => {
                                       return (
                                           <div
@@ -244,7 +244,7 @@ const ShippingDetails = ({seo}) => {
                                                           Color: {item.color}
                                                       </div>*/}
                                                       <div className="text-sm opacity-50">
-                                                          Quantity: {item.quantity}
+                                                          {__('client.quantity', localizations)}: {item.quantity}
                                                       </div>
                                                   </div>
                                               </div>
@@ -253,21 +253,21 @@ const ShippingDetails = ({seo}) => {
                                       );
                                   })}
                                   <div className="flex justify-between items-center py-5 mt-10 border-t border-b border-solid">
-                                      <div>Subtotal</div>
+                                      <div>{__('client.subtotal', localizations)}</div>
                                       <div>₾ {cart.total}</div>
                                   </div>
                                   <div className="flex justify-between items-center py-5 mb-5">
-                                      <div>Shipping</div>
+                                      <div>{__('client.shipping', localizations)}</div>
                                       <div>₾ {shipPrice}</div>
                                   </div>
                                   <button onClick={proceedToPayment} className="w-full bold text-white bg-custom-blue rounded-xl py-5">
-                                      Proceed to payment
+                                      {__('client.to_payment', localizations)}
                                   </button>
                               </div>
                           </div>
                       </div>
                       <div className="mt-10">
-                          <DirectionBtn text="Back to shopping" back link={route('client.cart.index')} />
+                          <DirectionBtn text={__('client.back_to_shop', localizations)} back link={route('client.home.index')} />
                       </div>
                   </div>
               </div>

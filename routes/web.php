@@ -229,6 +229,8 @@ Route::prefix('{locale?}')
             // About Page
             Route::get('about', [AboutUsController::class, 'index'])->name('client.about.index');
 
+            Route::get('terms-conditions', [\App\Http\Controllers\Client\TermController::class, 'index'])->name('client.terms');
+
             Route::get('partner-join', [\App\Http\Controllers\Client\PartnerController::class, 'index'])->name('partner.join');
             Route::post('partner-join', [\App\Http\Controllers\Client\PartnerController::class, 'store'])->name('partner.store');
 

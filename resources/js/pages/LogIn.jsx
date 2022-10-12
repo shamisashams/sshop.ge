@@ -33,14 +33,14 @@ const LogIn = ({seo}) => {
           <div className="batman">
               <div className="wrapper">
                   <div className="sign-in">
-                      <div className="title-text bold">Log in</div>
+                      <div className="title-text bold">{__('client.login',localizations)}</div>
                       <form action="#" className="auth-form">
                           {errors.email && <div>{errors.email}</div>}
-                          <input name="email" type="email" placeholder="Email" onChange={handleChange} />
-                          <input type="password" name="password" placeholder="Password" onChange={handleChange} />
+                          <input name="email" type="email" placeholder={__('client.form_email',localizations)} onChange={handleChange} />
+                          <input type="password" name="password" placeholder={__('client.form_password',localizations)} onChange={handleChange} />
                       </form>
                       <a onClick={handleSubmit} href="javascript:;">
-                          <div className="main-btn bold">Sign In</div>
+                          <div className="main-btn bold">{__('client.login_btn',localizations)}</div>
                       </a>
                       <div className="or">
                           <hr className="hr-text" data-content="Or" />
@@ -64,9 +64,9 @@ const LogIn = ({seo}) => {
                       {/* Registration */}
                       <div className="acoount-alternative">
                           <p>
-                              Don't have an account?
+                              {__('client.dont_have_account',localizations)}
                               <Link href={route('client.registration.index')}>
-                                  <span> Sign up</span>
+                                  <span> {__('client.signup_link',localizations)}</span>
                               </Link>
                           </p>
                       </div>

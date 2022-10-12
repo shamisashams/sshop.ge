@@ -42,26 +42,26 @@ const SignUp = ({seo}) => {
           <div className="batman">
               <div className="wrapper">
                   <div className="sign-up">
-                      <div className="title-text bold">Create account</div>
+                      <div className="title-text bold">{__('client.signup',localizations)}</div>
                       <form onSubmit={handleSubmit} className="auth-form">
-                          <input name="name" type="name" placeholder="Name" onChange={handleChange} />
+                          <input name="name" type="name" placeholder={__('client.form_name',localizations)} onChange={handleChange} />
                           {errors.name && <div>{errors.name}</div>}
-                          <input name="surname" type="surname" placeholder="Surname" onChange={handleChange} />
+                          <input name="surname" type="surname" placeholder={__('client.form_surname',localizations)} onChange={handleChange} />
                           {errors.surname && <div>{errors.surname}</div>}
-                          <input name="id_number" type="id" placeholder="ID" onChange={handleChange} />
+                          <input name="id_number" type="id" placeholder={__('client.form_id',localizations)} onChange={handleChange} />
                           {errors.id_number && <div>{errors.id_number}</div>}
-                          <input name="email" type="email" placeholder="Email" onChange={handleChange} />
+                          <input name="email" type="email" placeholder={__('client.form_email',localizations)} onChange={handleChange} />
                           {errors.email && <div>{errors.email}</div>}
-                          <input type="password" name="password" placeholder="Password" onChange={handleChange} />
+                          <input type="password" name="password" placeholder={__('client.form_password',localizations)} onChange={handleChange} />
                           {errors.password && <div>{errors.password}</div>}
                           <input
                               type="password"
                               name="password_repeat"
-                              placeholder="Repeat Password"
+                              placeholder={__('client.form_password_repeat',localizations)}
                               onChange={handleChange}
                           />
                           {errors.password_repeat && <div>{errors.password_repeat}</div>}
-                          <input name="phone" type="numbers" placeholder="Phone Number" onChange={handleChange} />
+                          <input name="phone" type="numbers" placeholder={__('client.form_phone',localizations)} onChange={handleChange} />
                           {errors.phone && <div>{errors.phone}</div>}
                           <div className="flex items-center !justify-start mb-6">
                               <input
@@ -76,22 +76,22 @@ const SignUp = ({seo}) => {
                                   htmlFor="term_conditions"
                               ></label>
                               <label>
-                                  I accept{" "}
-                                  <Link className="text-custom-blue pl-1" href="/terms-conditions">
-                                      terms and conditions
+                                  {__('client.i_accept',localizations)}{" "}
+                                  <Link className="text-custom-blue pl-1" href={route('client.terms')}>
+                                      {__('client.term_conditions',localizations)}
                                   </Link>
                               </label>
                           </div>
                           {errors.agree && <div>{errors.agree}</div>}
                       </form>
                       <a onClick={handleSubmit} href="javascript:;">
-                          <div className="main-btn bold">Sign Up</div>
+                          <div className="main-btn bold">{__('client.signup_btn',localizations)}</div>
                       </a>
                       <div className="acoount-alternative">
                           <p>
-                              Already have an account?
+                              {__('client.already_have_account',localizations)}
                               <Link href={route('client.login.index')}>
-                                  <span> Sign In</span>
+                                  <span> {__('client.login_link',localizations)}</span>
                               </Link>
                           </p>
                       </div>

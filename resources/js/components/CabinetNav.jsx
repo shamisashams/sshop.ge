@@ -8,7 +8,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 const CabinetNav = ({ active }) => {
 
-    const {user} = usePage().props;
+    const {user,localizations} = usePage().props;
 
     function sendVerificationLink(e){
         e.preventDefault();
@@ -18,17 +18,17 @@ const CabinetNav = ({ active }) => {
   return (
     <div className="cabinet-nav">
       <div className="cabinet-nav-wrapper">
-        <div className="location-name">Partner Cabinet</div>
+        <div className="location-name">{__('client.cabinet', localizations)}</div>
         <div className="fio">{user.name} {user.surname}</div>
         <div className="mb-10">
-          <div className="location-name">Status</div>
+          <div className="location-name">{__('client.status', localizations)}</div>
             {!user.email_verified_at ? <div className="text-red-300">
-            Email not verified{" "}
+                {__('client.not_verified', localizations)}{" "}
             <Link onClick={sendVerificationLink} className="text-custom-blue underline">
-              Verify now!
+                {__('client.verify_now', localizations)}
             </Link>{" "}
           </div>:<div className="text-green-300">
-                Email verified{" "}
+                {__('client.verified', localizations)}{" "}
             </div>}
         </div>
         <div className="fio-buttons-wrapper">
@@ -40,7 +40,7 @@ const CabinetNav = ({ active }) => {
                 }`}
               >
                 <IoSettingsOutline className="w-6 h-6  mr-4" />
-                Account settings
+                  {__('client.account_settings', localizations)}
               </div>
             </Link>
             <Link href={route('client.orders')}>
@@ -50,7 +50,7 @@ const CabinetNav = ({ active }) => {
                 }`}
               >
                 <RiHistoryFill className="w-6 h-6  mr-4" />
-                Order history
+                  {__('client.order_history', localizations)}
               </div>
             </Link>
           </div>
@@ -58,7 +58,7 @@ const CabinetNav = ({ active }) => {
         <Link href={route("logout")}>
           <div className="main-btn bold sign-out-btn">
             <img src="/client/assets/images/cabinet/3.png" alt="" />
-            Sign out
+              {__('client.logout', localizations)}
           </div>
         </Link>
       </div>

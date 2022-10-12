@@ -15,7 +15,7 @@ const HeroSlider = () => {
             dangerouslySetInnerHTML: { __html: rawHTML },
         });
 
-    const {sliders} = usePage().props;
+    const {sliders, localizations} = usePage().props;
 
   return (
     <>
@@ -42,7 +42,7 @@ const HeroSlider = () => {
                     <div className="bold my-3 text-xl ">{item.title_2}</div>
                     <div className="opacity-50 text-sm mb-5">{renderHTML(item.description)}</div>
                     <Link className="text-sm" href={item.youtube_url}>
-                      Learn More
+                        {__('client.learn_more',localizations)}
                       <img className="inline-block ml-2" src="/client/assets/images/icons/arrow.svg" alt="" />
                     </Link>
                   </div>

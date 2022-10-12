@@ -455,7 +455,7 @@ class OrderController extends Controller
 
     public function statusSuccess($order_id){
         $order = Order::query()->where('id',$order_id)->with('items')->first();
-        return Inertia::render('Success',['order' => $order])->withViewData([
+        return Inertia::render('PaymentSuccess',['order' => $order])->withViewData([
             'meta_title' => 'success',
             'meta_description' => 'success',
             'meta_keyword' => 'success',
@@ -466,7 +466,7 @@ class OrderController extends Controller
     }
 
     public function statusFail($order_id){
-        return Inertia::render('Success/Failure',[])->withViewData([
+        return Inertia::render('PaymentFail',[])->withViewData([
             'meta_title' => 'success',
             'meta_description' => 'success',
             'meta_keyword' => 'success',

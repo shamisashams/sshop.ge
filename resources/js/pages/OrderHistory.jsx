@@ -6,7 +6,7 @@ import Layout from "@/Layouts/Layout";
 
 const OrderHistory = ({seo}) => {
 
-    const {orders} = usePage().props;
+    const {orders,localizations} = usePage().props;
 
 
     let links = function (links) {
@@ -82,13 +82,13 @@ const OrderHistory = ({seo}) => {
                   <div className="batman">
                       <div id="order-history">
                           <div className="fio-details">
-                              <div className="fio-title">Order history</div>
+                              <div className="fio-title">{__('client.order_history', localizations)}</div>
                               <div className="table">
                                   <table>
                                       <tr>
-                                          <th>Id</th>
-                                          <th>Date</th>
-                                          <th>Price</th>
+                                          <th>{__('client.order_id', localizations)}</th>
+                                          <th>{__('client.order_date', localizations)}</th>
+                                          <th>{__('client.order_price', localizations)}</th>
                                       </tr>
                                       {orders.data.map((item,index) => {
                                           let grand_total = item.grand_total;

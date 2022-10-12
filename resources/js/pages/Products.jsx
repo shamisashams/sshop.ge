@@ -18,7 +18,7 @@ const Products = ({seo}) => {
         appliedFilters[index] = value.split(",");
     });
 
-    const {category,products, filter} = usePage().props;
+    const {category,products, filter, localizations} = usePage().props;
 
     console.log(filter);
 
@@ -189,14 +189,14 @@ const Products = ({seo}) => {
                       className="bold text-lg  whitespace-nowrap"
                   >
                       <TbAdjustments className="w-6 h-6 inline-block mb-1" />
-                      Filter
+                      {__('client.filter',localizations)}
                   </button>
                   <div className="flex justify-start items-start relative ">
                       <div className="bg-white rounded mr-10 p-7 shrink-0 filterBox">
-                          <div className="bold text-lg mb-5">Price</div>
+                          <div className="bold text-lg mb-5">{__('client.filter_price',localizations)}</div>
                           <RangeSlider appliedFilters={appliedFilters} />
                           <div className="my-5">
-                              <div className="opacity-50 text-sm mb-3">Choose Color</div>
+                              <div className="opacity-50 text-sm mb-3">{__('client.filter_color',localizations)}</div>
                               {/*<ColorPick attribute={filter.color ?? {options:[]}} />*/}
 
                               {filter.color.options.map((item,index) => {
@@ -232,7 +232,7 @@ const Products = ({seo}) => {
                               );
                           })}
                           <button onClick={clearFilter} className="bg-custom-blue text-white rounded-md p-4 w-full bold">
-                              Clear Filter
+                              {__('client.filter_clear',localizations)}
                           </button>
                       </div>
                       <div>

@@ -10,7 +10,7 @@ import { Inertia } from '@inertiajs/inertia'
 
 const ShoppingCart = ({seo}) => {
 
-    const {cart, promocode, localizations} = usePage().props;
+    const {cart, promocode, localizations, products} = usePage().props;
 
     function removeItem(id){
         Inertia.get(route('remove-from-cart'), {id:id})
@@ -46,7 +46,7 @@ const ShoppingCart = ({seo}) => {
               <div className="wrapper">
                   <CartTabs active={0} />
                   <div className="pt-8">
-                      <div className="text-2xl mb-5 bold">Shopping cart</div>
+                      <div className="text-2xl mb-5 bold">{__('client.nav_cart', localizations)}</div>
                       <div className="flex items-start justify-between flex-col lg:flex-row">
                           <div className="bg-white p-5 rounded lg:w-2/3 w-full mb-10 overflow-x-scroll scrollbar lg:overflow-x-hidden">
                               <table className="w-full ">
@@ -74,21 +74,21 @@ const ShoppingCart = ({seo}) => {
                           </div>
                           <div className="bg-white p-5 rounded lg:w-1/3 lg:ml-10 w-full">
                               <div className="flex items-center justify-between mb-5">
-                                  <div className="text-sm">Product quantity</div>
+                                  <div className="text-sm">{__('client.product_qty', localizations)}</div>
                                   <div className="bold text-lg">{cart.count}</div>
                               </div>
                               <div className="flex items-center justify-between mb-5">
-                                  <div className="bold text-lg">Subtotal</div>
+                                  <div className="bold text-lg">{__('client.subtotal', localizations)}</div>
                                   <div className="bold text-lg text-custom-blue">₾ {cart.total}</div>
                               </div>
                               <button onClick={proceedToPayment} className="w-full bold text-white bg-custom-blue rounded-xl py-5">
-                                  Proceed to payment
+                                  {__('client.to_shipping', localizations)}
                               </button>
                           </div>
                       </div>
                       <div className="py-10">
-                          <div className="bold mb-4 text-lg">Special offers</div>
-                          <ProductSlider products={[]} />
+                          <div className="bold mb-4 text-lg">{__('client.special_offer', localizations)}</div>
+                          <ProductSlider products={products} />
                       </div>
                   </div>
               </div>

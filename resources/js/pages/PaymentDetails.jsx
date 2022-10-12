@@ -105,25 +105,25 @@ const PaymentDetails = ({seo}) => {
                           <div className=" lg:w-1/2 w-full mb-10">
                               <div className="bg-white p-5 md:py-20 rounded text-center ">
                                   <div className="max-w-md mx-auto">
-                                      <div className="bold text-lg mb-5">Shipping details</div>
+                                      <div className="bold text-lg mb-5">{__('client.shipping_detais', localizations)}</div>
                                       <div
                                           className="flex items-center justify-start text-sm border border-solid w-full h-14 px-4 mb-2 rounded">
-                                          <div className="w-1/4 text-left">Ship to:</div>
+                                          <div className="w-1/4 text-left">{__('client.ship_to', localizations)}:</div>
                                           <div className="opacity-50 pl-1">
                                               {city.title}, {shipping.address}
                                           </div>
                                       </div>
                                       <div
                                           className="flex items-center justify-start text-sm border border-solid w-full h-14 px-4 mb-5 rounded">
-                                          <div className="w-1/4 text-left">Contact:</div>
+                                          <div className="w-1/4 text-left">{__('client.ship_contact', localizations)}:</div>
                                           <div className="opacity-50 pl-1">{shipping.phone}</div>
                                       </div>
                                       <div className="flex items-center justify-between mb-6">
                                           <div className="bold text-lg whitespace-nowrap">
-                                              Payment details
+                                              {__('client.payment_details', localizations)}
                                           </div>
                                           <div>
-                                              <span className="opacity-50 ">Cards we accept</span>
+                                              <span className="opacity-50 ">{__('client.cards_we_accept', localizations)}</span>
                                               <img className="inline-block ml-1"
                                                    src="/client/assets/images/banks/1c.png" alt=""/>
                                               <img className="inline-block ml-1"
@@ -132,7 +132,7 @@ const PaymentDetails = ({seo}) => {
                                                    src="/client/assets/images/banks/3c.png" alt=""/>
                                           </div>
                                       </div>
-                                      <div className="text-left">Choose bank for payment</div>
+                                      <div className="text-left">{__('client.choose_bank', localizations)}</div>
                                       <div className="grid grid-cols-2 gap-4 mt-6">
                                           <button
                                               onClick={() => {
@@ -169,7 +169,7 @@ const PaymentDetails = ({seo}) => {
                                       >
                                           Make an installment
                                       </button>
-                                      <div className="opacity-50 mt-10">Enter a promo code</div>
+                                      <div className="opacity-50 mt-10">{__('client.enter_promocode', localizations)}</div>
                                       <input
                                           type="text"
                                           maxLength="9"
@@ -193,24 +193,24 @@ const PaymentDetails = ({seo}) => {
                                               htmlFor="term_conditions"
                                           ></label>
                                           <label>
-                                              I accept{" "}
+                                              {__('client.i_accept', localizations)}{" "}
                                               <Link
                                                   className="text-custom-blue pl-1"
-                                                  href="/terms-conditions"
+                                                  href={route('client.terms')}
                                               >
-                                                  terms and conditions
+                                                  {__('client.terms_conditions', localizations)}
                                               </Link>
                                           </label>
                                       </div>
                                       <button onClick={makeOrder} className="w-full bold text-white bg-custom-blue rounded-xl py-5">
-                                          Make a payment now
+                                          {__('client.make_payment', localizations)}
                                       </button>
                                   </div>
                               </div>
                           </div>
                           <div className="lg:w-1/3 lg:ml-10 mx-auto lg:mx-0">
                               <div className="max-w-md">
-                                  <div className="bold text-lg">Summary</div>
+                                  <div className="bold text-lg">{__('client.summary', localizations)}</div>
                                   <div className="opacity-50 my-4">({cart.count} items)</div>
                                   {cart.products.map((item, index) => {
                                       return (
@@ -236,7 +236,7 @@ const PaymentDetails = ({seo}) => {
                                                           Color: {item.color}
                                                       </div>*/}
                                                       <div className="text-sm opacity-50">
-                                                          Quantity: {item.quantity}
+                                                          {__('client.quantity', localizations)}: {item.quantity}
                                                       </div>
                                                   </div>
                                               </div>
@@ -246,16 +246,16 @@ const PaymentDetails = ({seo}) => {
                                   })}
                                   <div
                                       className="flex justify-between items-center py-5 mt-10 border-t border-b border-solid">
-                                      <div>Subtotal</div>
+                                      <div>{__('client.subtotal', localizations)}</div>
                                       <div>₾ {cart.total}</div>
                                   </div>
                                   <div className="flex justify-between items-center py-5 mb-5">
-                                      <div>Shipping</div>
+                                      <div>{__('client.shipping', localizations)}</div>
                                       <div>₾ {shipping.ship_price}</div>
                                   </div>
                                   <div>{promocode ? 'discount %' + promocode.reward :null}</div>
                                   <div className="flex justify-between items-center py-5 mt-14 bold text-xl">
-                                      <span>Total</span>
+                                      <span>{__('client.total', localizations)}</span>
                                       <span className="text-3xl">₾ {parseFloat(total) + parseFloat(shipping.ship_price)}</span>
                                   </div>
                               </div>
@@ -263,9 +263,9 @@ const PaymentDetails = ({seo}) => {
                       </div>
                       <div className="mt-10">
                           <DirectionBtn
-                              text="Back to shipping"
+                              text={__('client.back_to_shipping', localizations)}
                               back
-                              link="/shipping-details"
+                              link={route('client.shipping.index')}
                           />
                       </div>
                   </div>

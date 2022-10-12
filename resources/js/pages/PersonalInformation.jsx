@@ -8,7 +8,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 const PersonalInformation = ({seo}) => {
 
-    const { errors, user } = usePage().props;
+    const { errors, user, localizations } = usePage().props;
 
     const [values, setValues] = useState({
         name: user.name ?? "",
@@ -34,42 +34,42 @@ const PersonalInformation = ({seo}) => {
 
     const inputs = [
     {
-      label: "First Name",
+      label: __('client.form_name',localizations),
       type: "text",
       id: "name",
     },
     {
-      label: "Last Name",
+      label: __('client.form_last_name',localizations),
       type: "text",
       id: "surname",
     },
     {
-      label: "ID Number",
+      label: __('client.form_id',localizations),
       type: "number",
       id: "id_number",
     },
     {
-      label: "Address",
+      label: __('client.form_address',localizations),
       type: "text",
       id: "address",
     },
     {
-      label: "Phone Number",
+      label: __('client.form_phone',localizations),
       type: "number",
       id: "phone",
     },
     {
-      label: "Email Address",
+      label: __('client.form_email',localizations),
       type: "email",
       id: "email",
     },
     {
-      label: "New Password",
+      label: __('client.form_new_password',localizations),
       type: "password",
       id: "password",
     },
     {
-      label: "Repeat New Password",
+      label: __('client.form_new_password_repeat',localizations),
       type: "password",
       id: "repeat_password",
     },
@@ -82,7 +82,7 @@ const PersonalInformation = ({seo}) => {
                   <CabinetNav active={1} />
                   <div className="batman">
                       <div className="fio-details">
-                          <div className="fio-title">Personal information</div>
+                          <div className="fio-title">{__('client.personal_info',localizations)}</div>
                           <div className="fio-form">
                               {inputs.map((item, index) => {
                                   return (
@@ -92,10 +92,10 @@ const PersonalInformation = ({seo}) => {
 
                               <div className="buttons flex">
                                   <Link href="/">
-                                      <div className="main-btn cancel bold">Cancel</div>
+                                      <div className="main-btn cancel bold">{__('client.cancel_btn',localizations)}</div>
                                   </Link>
                                   <Link onClick={handleSubmit} href="javascript:;">
-                                      <div className="main-btn save bold">Save changes</div>
+                                      <div className="main-btn save bold">{__('client.save_btn',localizations)}</div>
                                   </Link>
                               </div>
                           </div>

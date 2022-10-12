@@ -1,8 +1,9 @@
 import React from "react";
 //import { Link } from "react-router-dom";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 
 const NewsBox = (props) => {
+    const {localizations} = usePage().props;
   return (
     <div className="news-s">
       <div className="news-s-box">
@@ -15,7 +16,7 @@ const NewsBox = (props) => {
           <div className="news-s-text">{props.paragraph}</div>
           <div className="btn-style">
             <Link className="main-btn bold" href={props.link}>
-              Details
+                {__('client.details', localizations)}
             </Link>
           </div>
         </div>

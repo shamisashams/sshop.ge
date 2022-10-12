@@ -13,7 +13,7 @@ import Layout from "@/Layouts/Layout";
 
 const Home = ({seo}) => {
 
-    const {categories, products, images} = usePage().props;
+    const {categories, products, images, localizations} = usePage().props;
 
 
     let categories_ = [];
@@ -30,8 +30,8 @@ const Home = ({seo}) => {
               <HeroSlider />
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
-                      <div className="text-lg bold">Best Price</div>
-                      <DirectionBtn text="Go to page" link={route('client.category.special')} />
+                      <div className="text-lg bold">{__('client.nav_best_price',localizations)}</div>
+                      <DirectionBtn text={__('client.goto_page',localizations)} link={route('client.category.special')} />
                   </div>
                   <ProductSlider products={products.special_price_tag} />
 
@@ -40,13 +40,13 @@ const Home = ({seo}) => {
                   <CategoryBox categories={categories_} />
               </section>
               <section className="py-10 wrapper">
-                  <div className="text-lg bold mb-5">Popular Now</div>
+                  <div className="text-lg bold mb-5">{__('client.partners',localizations)}</div>
                   <PartnerSlider />
               </section>
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
-                      <div className="text-lg bold">Popular</div>
-                      <DirectionBtn text="Go to page" link={route('client.category.popular')} />
+                      <div className="text-lg bold">{__('client.nav_popular',localizations)}</div>
+                      <DirectionBtn text={__('client.goto_page',localizations)} link={route('client.category.popular')} />
                   </div>
                   <ProductSlider products={products.popular} />
               </section>
@@ -54,12 +54,12 @@ const Home = ({seo}) => {
                   <div className="wrapper flex justify-between items-center flex-col md:flex-row">
                       <img className="xl:ml-40 md:w-1/2 lg:w-auto" src={images[0]} alt="" />
                       <div className="max-w-lg text-right">
-                          <div className="text-custom-blue mb-3">Product of a week</div>
+                          <div className="text-custom-blue mb-3">{__('client.home_sec_h', localizations)}</div>
                           <div className="lg:text-4xl text-2xl bold mb-6">
-                              Bluetooth JBL Speaker for listening music.
+                              {__('client.home_sec_t', localizations)}
                           </div>
                           <Link className="text-sm" href="/">
-                              Learn More
+                              {__('client.learn_more',localizations)}
                               <img className="inline-block ml-2" src="/client/assets/images/icons/arrow.svg" alt="" />
                           </Link>
                       </div>
@@ -67,8 +67,8 @@ const Home = ({seo}) => {
               </section>
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
-                      <div className="text-lg bold">You may like</div>
-                      <DirectionBtn text="Go to page" link="products" />
+                      <div className="text-lg bold">{__('client.nav_product_like',localizations)}</div>
+                      <DirectionBtn text={__('client.goto_page',localizations)} link="products" />
                   </div>
                   <ProductSlider products={products.rand_products} />
               </section>

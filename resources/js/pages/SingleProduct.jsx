@@ -16,8 +16,9 @@ const SingleProduct = ({seo}) => {
   const [favorite, setFavorite] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
-  const {product,category_path, product_images, variants, similar_products} = usePage().props;
+  const {product,category_path, product_images, variants, similar_products, urlPrev, localizations} = usePage().props;
 
+  //alert(urlPrev);
   console.log(product,variants)
     let discount;
     discount = product.special_price ? (100 - ((product.special_price * 100) / product.price).toFixed()) : null;
@@ -47,7 +48,7 @@ const SingleProduct = ({seo}) => {
               <div className="bg-custom-zinc-200 py-10">
                   <div className="wrapper">
                       <div className="flex justify-start ">
-                          <DirectionBtn text="Back to Categorie" back />
+                          <DirectionBtn link={urlPrev} text={__('client.product_back',localizations)} back />
                       </div>
                       <div className="flex items-center justify-start flex-wrap mt-4 text-sm">
                           {category_path.map((item,index) => {
@@ -90,15 +91,15 @@ const SingleProduct = ({seo}) => {
                               <div className="bold mb-2">
 
                                   {product.quantity > 0 ? <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/checked.png" alt="" />:null}
-                                  {product.quantity > 0 ? <span>In stock</span>:null}
+                                  {product.quantity > 0 ? <span>{__('client.in_stock',localizations)}</span>:null}
 
                                   {!product.quantity ? <img className="inline-block mr-2 mb-1" src="/client/assets/images/icons/cancel.png" alt="" />:null}
-                                  {!product.quantity ? <span>Out of stock</span> :null}
+                                  {!product.quantity ? <span>{__('client.out_of_stock',localizations)}</span> :null}
                               </div>
                               {product.attributes.brand ? <div className="mb-5 text-sm text-black/[0.5]">
-                                  Made By: <span className="bold text-lg text-black">{product.attributes.brand.option}</span>
+                                  {__('client.made_by', localizations)}: <span className="bold text-lg text-black">{product.attributes.brand.option}</span>
                               </div>:null}
-                              <div className="text-lg bold">Specification</div>
+                              <div className="text-lg bold">{__('client.product_specifications',localizations)}</div>
                               <div className="grid grid-cols-2 gap-y-2 gap-x-5 opacity-50 text-sm mb-5 mt-3">
                                   {Object.keys(product.attributes).map((item,index) => {
                                       return (item !== 'brand' ) ?<div>{product.attributes[item].attribute}: {product.attributes[item].option}</div>:null
@@ -116,7 +117,7 @@ const SingleProduct = ({seo}) => {
                                   <option value="3">uilh l vhjkfhjk</option>
                               </select>
                               {Object.keys(variants).length > 0 ? <div className="mb-4">
-                                  <div className="bold mb-2 text-lg">Choose color</div>
+                                  <div className="bold mb-2 text-lg">{__('client.choose_color',localizations)}</div>
                                   {/*<ColorPick attribute={{options:[]}} />*/}
 
                                   {Object.keys(variants).map((item,index) => {
@@ -138,7 +139,7 @@ const SingleProduct = ({seo}) => {
                                   <span className="text-xs text-white bg-custom-red rounded py-0.5 px-2 mr-2">
                                       {discount}%
                                     </span>
-                                  Discount for this product
+                                  {__('client.product_discount',localizations)}
                               </div>:null}
                               {product.special_price ?<div className="opacity-70  mr-2 mb-0.5 bold relative w-fit h-fit">
                                   <div className="h-px w-full bg-custom-dark absolute left-0 top-2 rotate-12 scale-110"></div>
@@ -152,18 +153,18 @@ const SingleProduct = ({seo}) => {
                                   <div className="flex items-center justify-center w-10 h-10 bg-white shadow-xl rounded-full mr-2">
                                       <BsPlay className="w-6 h-6 " />
                                   </div>
-                                  <span>Watch the video</span>
+                                  <span>{__('client.product_video',localizations)}</span>
                               </button>
                               <div className="flex justify-start items-center  my-6 flex-wrap">
                                   <button onClick={() => {
                                       buyNow(product,1)
                                   }} className="bg-custom-blue text-white rounded-md bold border-custom-blue  border border-solid py-4 px-10 mr-3 mb-2">
-                                      Buy now
+                                      {__('client.buy_now',localizations)}
                                   </button>
                                   <button onClick={() => {
                                       addToCart(product,1)
                                   }} className=" rounded-md bold border-custom-blue text-custom-blue border border-solid py-4 px-10 mr-3 mb-2">
-                                      Add to cart
+                                      {__('client.add_to_cart',localizations)}
                                   </button>
                                   <button
                                       onClick={() => {
@@ -191,7 +192,7 @@ const SingleProduct = ({seo}) => {
                                   onClick={() => setShowPopup(true)}
                                   className="bold underline text-custom-blue"
                               >
-                                  Make an installment
+                                  {__('client.make_installment',localizations)}
                               </button>
                           </div>
                       </div>
@@ -199,7 +200,7 @@ const SingleProduct = ({seo}) => {
               </div>
               <div className="bg-white py-10">
                   <div className="wrapper text-sm pb-20">
-                      <div className="text-custom-blue mb-6">More details</div>
+                      <div className="text-custom-blue mb-6">{__('client.more_details',localizations)}</div>
                       <div className="lg:columns-3 sm:columns-2 w-full leading-relaxed gap-10">
                           {/*<div className="break-inside-avoid mb-7">
                               <p>processor</p>
@@ -288,7 +289,7 @@ const SingleProduct = ({seo}) => {
               </div>
               <div className="bg-custom-zinc-200 py-10 pb-20">
                   <div className="wrapper">
-                      <div className="bold text-lg mb-10">You may also like</div>
+                      <div className="bold text-lg mb-10">{__('client.you_may_like',localizations)}</div>
                       <ProductSlider products={similar_products} />
                   </div>
               </div>

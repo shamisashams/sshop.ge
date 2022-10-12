@@ -24,7 +24,7 @@ const Navbar = () => {
     setSubCatIndex(0);
   };
 
-    const { locales, currentLocale, locale_urls, cart_count, wishlist_count, categories } = usePage().props;
+    const { locales, currentLocale, locale_urls, cart_count, wishlist_count, categories, localizations } = usePage().props;
 
     let subCategories = [];
     let subCategories2 = {};
@@ -47,13 +47,13 @@ const Navbar = () => {
             </div>
             <div className="text-left text-sm">
               <div className="opacity-50 text-xs -mb-1">
-                {openMenu ? "Select" : "Close"}
+                {openMenu ? __('client.nav_select',localizations) : __('client.nav_close',localizations)}
                 <BiChevronDown
                   className="inline-block align-middle w-4 h-4  transition-all duration-300 "
                   style={{ rotate: openMenu ? "180deg" : "" }}
                 />
               </div>
-              Categories
+                {__('client.nav_categories',localizations)}
             </div>
           </button>
           <div className="h-10 w-1/3 mx-5 relative text-sm  hidden md:inline-block">
@@ -61,7 +61,7 @@ const Navbar = () => {
                   <input
                       className="w-full h-full bg-custom-zinc-100 text-center border-none placeholder:opacity-40"
                       type="text"
-                      placeholder="Search here"
+                      placeholder={__('client.search_here',localizations)}
                       name="term"
                   />
               </form>

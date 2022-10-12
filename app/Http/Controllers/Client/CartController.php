@@ -33,9 +33,7 @@ class CartController extends Controller
     public function index(string $locale, Request $request)
     {
         $page = Page::where('key', 'products')->firstOrFail();
-        $products = Product::with(['files'])->whereHas('categories',function (Builder $query){
-            $query->where('status', 1);
-        })->paginate(16);
+
 
         $images = [];
         foreach ($page->sections as $sections){
@@ -47,9 +45,34 @@ class CartController extends Controller
 
         }
 
+        $rand_products =  Product::with(['latestImage','variants','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
+            $query->where('status',1);
+        })->inRandomOrder()->limit(18)->get();
+
+        foreach ($rand_products as $product){
+            $product_attributes = $product->attribute_values;
+
+            $_result = [];
+
+            foreach ($product_attributes as $item){
+                $options = $item->attribute->options;
+                $value = '';
+                foreach ($options as $option){
+                    if($item->attribute->type == 'select'){
+                        if($item->integer_value == $option->id) {
+                            $_result[$item->attribute->code] = $option->label;
+                        }
+
+                    }
+                }
+
+            }
+            $product['attributes'] = $_result;
+        }
+
         //dd(Cart::getCart());
         return Inertia::render('ShoppingCart',[
-            'products' => $products,
+            'products' => $rand_products,
             'images' => $images,
             'page' => $page,
             'cart' => Cart::getCart(),
