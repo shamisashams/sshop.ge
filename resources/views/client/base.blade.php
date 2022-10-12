@@ -116,6 +116,39 @@
     }(document, 'script', 'facebook-jssdk'));*/
 </script>
 @inertia
+
+<script src="https://webstatic.bog.ge/bog-sdk/bog-sdk.js?client_id=28642"></script>
+<div class="bog-smart-button"></div>
+    <script>
+        const button = BOG.SmartButton.render(document.querySelector('.bog-smart-button'), {
+            text: 'მოითხოვე სესხი',
+            onClick: () => {
+                // Open Installment Calculator Here
+                BOG.Calculator.open({
+                    amount: 1000,
+                    onClose: () => {
+                        // Modal close callback
+                    },
+                    onRequest: (selected, successCb, closeCb) => {
+                        const {
+                            amount, month, discount_code, order_id
+                        } = selected;
+                        console.log(selected);
+                        fetch('{{route('bogInstallment')}}', {
+                            method: 'POST',
+                            body: JSON.stringify(selected)
+                        })
+                            .then(response => response.json())
+                            .then(data => successCb(data.orderId))
+                            .catch(err => closeCb());
+                    },
+                    onComplete: ({redirectUrl}) => {
+                    return false;
+                }
+            })
+            }
+        })
+    </script>
 </body>
 
 </html>
