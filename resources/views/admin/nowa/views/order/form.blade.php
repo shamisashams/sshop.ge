@@ -26,7 +26,7 @@
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">T{{ __('admin.setting-update') }}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">T{{ __('admin.order-update') }}</span>
         </div>
         <div class="justify-content-center mt-2">
             @include('admin.nowa.views.layouts.components.breadcrump')
@@ -35,16 +35,26 @@
     <!-- /breadcrumb -->
 
     <!-- row -->
-    {!! Form::model($setting,['url' => $url, 'method' => $method,'files' => true]) !!}
+    {!! Form::model($order,['url' => $url, 'method' => $method,'files' => true]) !!}
     <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div>
-                        <h6 class="card-title mb-1">@lang('admin.tranlationssection')</h6>
+                        <h6 class="card-title mb-1">@lang('admin.order')</h6>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.order_id')</label>
+                        <input class="form-control" type="text" value="{{$order->id}}" disabled readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.order_date')</label>
+                        <input class="form-control" type="text" value="{{$order->created_at}}" disabled readonly>
+                    </div>
+
+                    {{--<div class="mb-4">
                         <p class="mg-b-10">@lang('admin.titleintrans')</p>
                         <div class="panel panel-primary tabs-style-2">
                             <div class=" tab-menu-heading">
@@ -93,8 +103,12 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div>--}}
 
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.status_text')</label>
+                        <textarea class="form-control" name="status_text">{{$order->status_text}}</textarea>
+                    </div>
 
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>

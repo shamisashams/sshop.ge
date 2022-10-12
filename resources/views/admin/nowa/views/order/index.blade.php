@@ -86,11 +86,14 @@
                                 <thead>
                                 <tr>
                                     <th>@lang('admin.id')</th>
+                                    <th>@lang('admin.locale')</th>
                                     <th>@lang('admin.status')</th>
+                                    <th>@lang('admin.status_text')</th>
                                     <th>@lang('admin.grand_total')</th>
                                     <th>@lang('admin.name')</th>
                                     <th>@lang('admin.email')</th>
                                     <th>@lang('admin.phone')</th>
+
                                     <th>@lang('admin.created_at')</th>
                                 </tr>
                                 </thead>
@@ -103,6 +106,8 @@
                                                class="validate {{$errors->has('id') ? '' : 'valid'}}">
                                     </th>
 
+                                    <th></th>
+
                                     <th>
                                         <select class="form-control" name="status" onchange="this.form.submit()">
                                             <option value="" {{Request::get('status') === '' ? 'selected' :''}}>@lang('admin.any')</option>
@@ -110,6 +115,7 @@
                                             <option value="complete" {{Request::get('status') === 'complete' ? 'selected' :''}}>@lang('admin.complete')</option>
                                         </select>
                                     </th>
+                                    <th></th>
                                     <th>
                                         <input class="form-control" type="number" step="0.01" name="price" onchange="this.form.submit()"
                                                value="{{Request::get('price')}}"
@@ -139,6 +145,7 @@
                                     @foreach($orders as $order)
                                         <tr>
                                             <td>{{$order->id}}</td>
+                                            <td>{{$order->locale}}</td>
 
                                                 <?php
                                                     switch ($order->status){
@@ -154,13 +161,17 @@
                                                     }
                                                 ?>
                                             <td><span style="color: {{$color}};font-weight: bold">{{$order->status}}</span></td>
+                                            <td>{{$order->status_text}}</td>
                                             <td>{{$order->grand_total}}₾</td>
                                             <td>{{$order->first_name .', '.$order->last_name}}</td>
                                             <td>{{$order->email}}</td>
                                             <td>{{$order->phone}}</td>
                                             <td>{{$order->created_at}}</td>
                                             <td>
-
+                                                <a href="{{locale_route('order.edit',$order->id)}}"
+                                                   class="pl-3">
+                                                    <i class="fa fa-edit">რედაქტირება</i>
+                                                </a>
 
                                                 <a href="{{locale_route('order.show',$order->id)}}"
                                                    class="pl-3">

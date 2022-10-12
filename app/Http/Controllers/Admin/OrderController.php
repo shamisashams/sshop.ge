@@ -59,14 +59,10 @@ class OrderController extends Controller
     }
 
 
-    /**
-     * @param string $locale
-     * @param Setting $setting
-     * @return Application|Factory|View
-     */
-    public function edit(string $locale, Setting $setting)
+
+    public function edit(string $locale, Order $order)
     {
-        $url = locale_route('setting.update', $setting->id, false);
+        $url = locale_route('order.update', $order->id, false);
         $method = 'PUT';
 
         /*return view('admin.pages.setting.form', [
@@ -75,27 +71,22 @@ class OrderController extends Controller
             'method' => $method,
         ]);*/
 
-        return view('admin.nowa.views.setting.form', [
-            'setting' => $setting,
+        return view('admin.nowa.views.order.form', [
+            'order' => $order,
             'url' => $url,
             'method' => $method,
         ]);
     }
 
 
-    /**
-     * @param SettingRequest $request
-     * @param string $locale
-     * @param Setting $setting
-     * @return Application|RedirectResponse|Redirector
-     */
-    public function update(Request $request,string $locale, Setting $setting)
+
+    public function update(Request $request,string $locale, Order $order)
     {
         $saveData = Arr::except($request->except('_token'), []);
-        $this->orderRepository->update($setting->id,$saveData);
+        $this->orderRepository->update($order->id,$saveData);
 
 
-        return redirect(locale_route('setting.index', $setting->id))->with('success', __('admin.update_successfully'));
+        return redirect(locale_route('order.index', $order->id))->with('success', __('admin.update_successfully'));
     }
 
 

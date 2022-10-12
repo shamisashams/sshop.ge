@@ -29,7 +29,8 @@ class Order extends Model
         'payment_type',
         'user_id',
         'discount',
-        'ship_price'
+        'ship_price',
+        'status_text'
     ];
 
     protected $appends = [
