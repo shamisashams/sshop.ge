@@ -137,7 +137,7 @@ const PaymentDetails = ({seo}) => {
                                           <button
                                               onClick={() => {
                                                   setBankSelect(0)
-                                                  selectBank('tbc');
+                                                  selectBank('terra');
                                               }}
                                               className={` text-center mb-3 rounded-xl bg-white  border-solid border-2 w-full h-16   transition-all shadow-lg  hover:border-zinc-300  ${
                                                   bankSelect === 0

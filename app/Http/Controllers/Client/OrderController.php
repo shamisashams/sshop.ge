@@ -18,6 +18,7 @@ use App\Models\ProductSet;
 use App\Models\Setting;
 use App\Promocode\Promocode;
 use App\SpacePay\SpacePay;
+use App\TerraPay\TerraPay;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -385,7 +386,7 @@ class OrderController extends Controller
                         $data['product'] = null;
                         $data['text'] = 'cart promocode';
                         $data['code'] = $gen;
-                        Mail::to($request->user())->send(new PromocodeProduct($data));
+                        //Mail::to($request->user())->send(new PromocodeProduct($data));
                     }
 
                 }
@@ -408,6 +409,25 @@ class OrderController extends Controller
                     return app(BogPaymentController::class)->make_order($order->id,$order->grand_total);
                 } elseif($order->payment_method == 1 && $order->payment_type == 'tbc'){
                     return redirect(locale_route('order.failure',$order->id));
+                }
+                elseif($order->payment_method == 1 && $order->payment_type == 'terra'){
+
+                    $terra = new TerraPay('204546045');
+
+                    $terra_products = [];
+
+                    //dd($order->items);
+                    foreach ($order->items as $key => $item){
+                        $terra_products[$key]['name'] = $item->name;
+                        $terra_products[$key]['code'] = '';
+                        $terra_products[$key]['quantity'] = $item->qty_ordered;
+                        $terra_products[$key]['amount'] = $item->qty_ordered * $item->price;
+                        $terra_products[$key]['cashAmount'] = $item->qty_ordered * $item->price;
+                    }
+                    //dd($terra_products);
+
+                    $data = $terra->makeOrder($order->id,$terra_products);
+                    dd($data);
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'space_bank'){
                     $space = new SpacePay('pantsilion.ge','2f6ea5f1-78f6-4d50-a666-b7e9a0b46791');
