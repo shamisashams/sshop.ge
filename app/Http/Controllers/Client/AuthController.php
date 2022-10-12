@@ -142,7 +142,8 @@ class AuthController extends Controller
         }
 
 
-        return redirect()->back()->with('success',__('client.successful_registration'));
+        //return redirect()->back()->with('success',__('client.successful_registration'));
+        return redirect()->route('client.register.success');
     }
 
     public function partnerLoginView(){
@@ -209,5 +210,41 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('client.home.index');
+    }
+
+    public function registerSuccess(){
+        $page = Page::where('key', 'about')->firstOrFail();
+
+        $images = [];
+        foreach ($page->sections as $sections){
+            if($sections->file){
+                $images[] = asset($sections->file->getFileUrlAttribute());
+            } else {
+                $images[] = null;
+            }
+
+        }
+
+        $files = [];
+        if($page->images) $files = $page->files;
+
+        //dd($files);
+
+        return Inertia::render('AccountSuccess', ["page" => $page, "seo" => [
+            "title"=>$page->meta_title,
+            "description"=>$page->meta_description,
+            "keywords"=>$page->meta_keyword,
+            "og_title"=>$page->meta_og_title,
+            "og_description"=>$page->meta_og_description,
+//            "image" => "imgg",
+//            "locale" => App::getLocale()
+        ], 'gallery_img' => $files,'images' => $images])->withViewData([
+            'meta_title' => $page->meta_title,
+            'meta_description' => $page->meta_description,
+            'meta_keyword' => $page->meta_keyword,
+            "image" => $page->file,
+            'og_title' => $page->meta_og_title,
+            'og_description' => $page->meta_og_description
+        ]);
     }
 }

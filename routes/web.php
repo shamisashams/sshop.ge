@@ -165,6 +165,8 @@ Route::prefix('{locale?}')
         Route::get('registration',[\App\Http\Controllers\Client\AuthController::class,'registrationView'])->name('client.registration.index');
         Route::post('registration',[\App\Http\Controllers\Client\AuthController::class,'createAccount'])->name('client.register');
 
+        Route::get('registration/success',[\App\Http\Controllers\Client\AuthController::class,'registerSuccess'])->name('client.register.success');
+
         Route::get('logout',[\App\Http\Controllers\Client\AuthController::class,'logout'])->name('logout');
 
 
