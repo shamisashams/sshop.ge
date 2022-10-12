@@ -67,7 +67,14 @@
                         ?>
                         <div class="form-group">
                             <label class="form-label">skip rows</label>
-                            <input class="form-control" type="number" name="skip_rows" value="{{old('skip_rows') ?? 1}}">
+                            <input class="form-control" min="0" type="number" name="skip_rows" value="{{old('skip_rows') ?? 1}}">
+                            @error('skip_rows')
+                            <small class="text-danger">
+                                <div class="error">
+                                    {{$message}}
+                                </div>
+                            </small>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label class="form-label">model cell</label>

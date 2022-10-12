@@ -757,7 +757,8 @@ class ProductController extends Controller
     public function import(Request $request){
 
         $request->validate([
-           'file' => 'required'
+           'file' => 'required',
+            'skip_rows' => 'numeric'
         ]);
         $f = $request->file('file')->getRealPath();
 
