@@ -32,10 +32,9 @@ class BogInstallmentController extends Controller
     }
 
 
-    public function make_order(Request $request){
+    public function make_order($order_id,$request){
 
         //dd($request->json()->all());
-        $order_id = 1;
         $locale = 'ka';
         if(app()->getLocale() !== 'ge') $locale = 'en';
 
@@ -50,6 +49,7 @@ class BogInstallmentController extends Controller
 
         $data = json_decode($data,true);
 
+        dd($data);
         //Order::where('id', '=', $order_id)->update(['transaction_id' => $data['order_id'],'payment_hash'=> $data['payment_hash']]);
         //dd($data);
         return Inertia::location($data['links'][1]['href']);

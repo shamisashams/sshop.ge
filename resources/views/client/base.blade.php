@@ -10,12 +10,14 @@
     <meta name="keywords" content="{{ $meta_keyword }}">
     <meta property="og:title" content="{{ $og_title }}">
     <meta property="og:description" content="{{ $og_description }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @if($image)
         <meta property="og:image" content={{"/".$image->path."/".$image->title}}>
     @endif
     <meta property="og:url" content="{{ request()->fullUrl() }}">
     <meta property="og:type" content="page">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet"/>
+    <script src="https://webstatic.bog.ge/bog-sdk/bog-sdk.js?client_id=28642"></script>
 {{--    @if(app()->getLocale()=="ge")--}}
 {{--        <link href="{{ mix('/css/AppGeo.css') }}" rel="stylesheet"/>--}}
 {{--    @elseif(app()->getLocale()=="en")--}}
@@ -117,38 +119,8 @@
 </script>
 @inertia
 
-<script src="https://webstatic.bog.ge/bog-sdk/bog-sdk.js?client_id=28642"></script>
-<div class="bog-smart-button"></div>
-    <script>
-        const button = BOG.SmartButton.render(document.querySelector('.bog-smart-button'), {
-            text: 'მოითხოვე სესხი',
-            onClick: () => {
-                // Open Installment Calculator Here
-                BOG.Calculator.open({
-                    amount: 1000,
-                    onClose: () => {
-                        // Modal close callback
-                    },
-                    onRequest: (selected, successCb, closeCb) => {
-                        const {
-                            amount, month, discount_code, order_id
-                        } = selected;
-                        console.log(selected);
-                        fetch('{{route('bogInstallment')}}', {
-                            method: 'POST',
-                            body: JSON.stringify(selected)
-                        })
-                            .then(response => response.json())
-                            .then(data => successCb(data.orderId))
-                            .catch(err => closeCb());
-                    },
-                    onComplete: ({redirectUrl}) => {
-                    return false;
-                }
-            })
-            }
-        })
-    </script>
+
+
 </body>
 
 </html>

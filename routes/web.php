@@ -33,7 +33,7 @@ Route::any('bog/callback/refund',[\App\BogPay\BogCallbackController::class, 'ref
 Route::any('space/callback/status', [\App\SpacePay\SpaceCallbackController::class, 'status'])->withoutMiddleware('web')->name('spaceCallbackStatus');
 
 
-Route::any('bog/installment',[\App\BogInstallment\BogInstallmentController::class,'make_order'])->withoutMiddleware('web')->name('bogInstallment');
+
 
 Route::redirect('', config('translatable.fallback_locale'));
 Route::prefix('{locale?}')
@@ -214,7 +214,7 @@ Route::prefix('{locale?}')
 
         Route::get('payment',[\App\Http\Controllers\Client\PaymentController::class,'index'])->name('client.payment.index');
 
-
+        Route::any('bog/installment',[\App\Http\Controllers\Client\OrderController::class,'order'])->name('bogInstallment');
 
         Route::middleware(['active'])->group(function () {
 

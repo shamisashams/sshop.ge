@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\BogInstallment\BogInstallmentController;
 use App\BogPay\BogPay;
 use App\BogPay\BogPaymentController;
 use App\Cart\Facade\Cart;
@@ -225,7 +226,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function order(Request $request){
+    public function order(Request $request,$locale){
         //dd($request->all());
         /*$request->validate([
             'first_name' => 'required',
@@ -244,6 +245,7 @@ class OrderController extends Controller
 
 
         $data = $request->all();
+        //if ($bogInstallment) $data['payment_type'] = 'bog_installment';
         $cart = Arr::pull($data,'cart');
         $cart = Cart::getCart();
         $data['locale'] = app()->getLocale();
@@ -262,6 +264,8 @@ class OrderController extends Controller
         $data['ship_price'] = session('shipping.ship_price');
 
         $grand_t = $data['grand_total'];
+
+        //dd($data);
 
         $delete_promocode = false;
         $product_promocode = false;
@@ -428,6 +432,13 @@ class OrderController extends Controller
 
                     $data = $terra->makeOrder($order->id,$terra_products);
                     dd($data);
+                }
+                elseif($order->payment_method == 1 && $order->payment_type == 'bog_installment'){
+
+                    //dd($order->payment_type);
+
+                    return app(BogInstallmentController::class)->make_order($order->id,$request);
+
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'space_bank'){
                     $space = new SpacePay('pantsilion.ge','2f6ea5f1-78f6-4d50-a666-b7e9a0b46791');

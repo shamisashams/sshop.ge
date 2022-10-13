@@ -59,6 +59,39 @@ const PaymentDetails = ({seo}) => {
 
     function selectBank(bank){
         setBank(bank);
+
+        if (bank == 'bog_installment'){
+            let csrf = document.querySelectorAll('meta[name="csrf-token"]');
+            console.log(csrf);
+            BOG.Calculator.open({
+                amount: cart.total,
+                onClose: () => {
+                    // Modal close callback
+                },
+                onRequest: (selected, successCb, closeCb) => {
+                    const {
+                        amount, month, discount_code, order_id
+                    } = selected;
+                    console.log(selected);
+                    selected.payment_type = 'bog_installment'
+                    /*fetch(route('bogInstallment'), {
+                        headers: {
+                            'X-CSRF-TOKEN': csrf[0].content,
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify(selected)
+                    }).then(response => response.json())
+                        .then(data => successCb(data.orderId))
+                        .catch(err => closeCb());*/
+                    Inertia.post(route('bogInstallment'),selected);
+                },
+                onComplete: ({redirectUrl}) => {
+                    return false;
+                }
+            })
+        }
+
     }
 
   /*const handleClick = (item) => {
@@ -146,6 +179,21 @@ const PaymentDetails = ({seo}) => {
                                               }`}
                                           >
                                               <img className={`  mx-auto `} src="/client/assets/images/banks/1.png"
+                                                   alt=""/>
+                                          </button>
+
+                                          <button
+                                              onClick={() => {
+                                                  setBankSelect(2)
+                                                  selectBank('bog_installment');
+                                              }}
+                                              className={` text-center mb-3 rounded-xl bg-white  border-solid border-2 w-full h-16   transition-all shadow-lg  hover:border-zinc-300  ${
+                                                  bankSelect === 2
+                                                      ? "!border-custom-blue"
+                                                      : "border-white"
+                                              }`}
+                                          >
+                                              <img className={`  mx-auto `} src="/client/assets/images/banks/2.png"
                                                    alt=""/>
                                           </button>
                                           <button

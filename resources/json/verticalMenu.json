@@ -52,25 +52,11 @@
                     "slug": "attribute"
                 },
                 {
-                    "url": "stock.index",
-                    "name": "3) მარაგი",
-                    "i18n": "stock",
-                    "icon": "stock",
-                    "slug": "stock"
-                },
-                {
                     "url": "product.index",
                     "name": "4) პროდუქცია",
                     "i18n": "product",
                     "icon": "language",
                     "slug": "product"
-                },
-                {
-                    "url": "collection.index",
-                    "name": "5) კოლექცია",
-                    "i18n": "collection",
-                    "icon": "collection",
-                    "slug": "collection"
                 }
             ]
         },
@@ -81,13 +67,6 @@
             "icon": "brightness_low",
             "slug": "user",
             "submenu": [
-                {
-                    "url": "partner.index",
-                    "name": "პარტნიორი",
-                    "i18n": "partner",
-                    "icon": "partner",
-                    "slug": "partner"
-                },
                 {
                     "url": "user.index",
                     "name": "მომხმარებელი",
@@ -119,20 +98,6 @@
                     "slug": "page"
                 },
                 {
-                    "url": "team.index",
-                    "name": "გუნდი",
-                    "i18n": "team",
-                    "icon": "team",
-                    "slug": "team"
-                },
-                {
-                    "url": "contact.index",
-                    "name": "კონტაქტი",
-                    "i18n": "contact",
-                    "icon": "contact",
-                    "slug": "contact"
-                },
-                {
                     "url": "news.index",
                     "name": "სიახლები",
                     "i18n": "blog",
@@ -140,11 +105,11 @@
                     "slug": "blog"
                 },
                 {
-                    "url": "gallery.index",
-                    "name": "გალერია",
-                    "i18n": "gallery",
-                    "icon": "gallery",
-                    "slug": "gallery"
+                    "url": "partner.index",
+                    "name": "პარტნიორი",
+                    "i18n": "partner",
+                    "icon": "partner",
+                    "slug": "partner"
                 }
             ]
         },
