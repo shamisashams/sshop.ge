@@ -72,7 +72,7 @@ class BogInstallment
         $json['success_redirect_url'] = $success_redirect_url;
         $json['fail_redirect_url'] = $fail_redirect_url;
         $json['reject_redirect_url'] = $reject_redirect_url;
-        $json['validate_items'] = true;
+        $json['validate_items'] = false;
         $json['locale'] = 'ka';
         $json['purchase_units'] = [
             ['amount' => [
