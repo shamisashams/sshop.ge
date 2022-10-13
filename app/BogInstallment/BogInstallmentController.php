@@ -17,9 +17,9 @@ class BogInstallmentController extends Controller
     //
     private $bog_pay;
 
-    private $client_id = '28642';
+    private $client_id = '16021';
 
-    private $secret_key = '5e6daf50f65a575e873c6abf085c23f1';
+    private $secret_key = '09ae1c2addd6a52df6a5c0c28b1cccba';
 
 
 

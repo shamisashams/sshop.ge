@@ -10,6 +10,7 @@ import Installment from "../components/Installment";
 import Layout from "@/Layouts/Layout";
 import { Link, usePage } from '@inertiajs/inertia-react'
 import { Inertia } from "@inertiajs/inertia";
+import {toast} from "react-toastify";
 
 
 const SingleProduct = ({seo}) => {
@@ -26,16 +27,26 @@ const SingleProduct = ({seo}) => {
 
     function addToCart(product, qty) {
 
-        Inertia.post(route("add-to-cart"), { id: product.id, qty: qty });
+        if (product.quantity >= qty){
+            Inertia.post(route("add-to-cart"), { id: product.id, qty: qty });
+        } else {
+            toast.warn(__('client.out_of_stock',localizations));
+        }
+
     }
 
     function buyNow(product, qty) {
 
-        Inertia.post(route("add-to-cart"), {
-            id: product.id,
-            qty: qty,
-            buy_now: true,
-        });
+        if (product.quantity >= qty){
+            Inertia.post(route("add-to-cart"), {
+                id: product.id,
+                qty: qty,
+                buy_now: true,
+            });
+        } else {
+            toast.warn(__('client.out_of_stock',localizations));
+        }
+
     }
 
     function addToWishlist(id) {

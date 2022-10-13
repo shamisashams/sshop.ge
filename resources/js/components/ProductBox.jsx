@@ -17,7 +17,9 @@ const ProductBox = (props) => {
 
   const toCart = () => {
     setAddToCart(!addToCart);
-    toast.success("Product is added to cart");
+      if(props.qty >= 1) {
+          toast.success("Product is added to cart");
+      }
   };
 
   const toFavorites = () => {
@@ -31,7 +33,12 @@ const ProductBox = (props) => {
     }
 
     function addToCartF(id){
-        Inertia.post(route('add-to-cart'), {id:id,qty:1});
+        if(props.qty >= 1){
+            Inertia.post(route('add-to-cart'), {id:id,qty:1});
+        } else {
+            toast.warn(__('client.out_of_stock',localizations));
+        }
+
     }
 
   return (

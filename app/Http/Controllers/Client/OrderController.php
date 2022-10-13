@@ -263,6 +263,9 @@ class OrderController extends Controller
         $data['user_id'] = $user->id;
         $data['ship_price'] = session('shipping.ship_price');
 
+        $data['phone'] = session('shipping.phone');
+
+
         $grand_t = $data['grand_total'];
 
         //dd($data);

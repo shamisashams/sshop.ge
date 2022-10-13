@@ -58,6 +58,7 @@ const ProductSlider = ({products}) => {
                 discount={discount}
                 link={route('client.product.show',item.slug)}
                 id={item.id}
+                qty={item.quantity}
               />
             </SwiperSlide>
           );
