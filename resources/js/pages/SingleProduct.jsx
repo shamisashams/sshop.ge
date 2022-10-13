@@ -199,12 +199,12 @@ const SingleProduct = ({seo}) => {
 
                                   </button>
                               </div>
-                              <button
+                              {/*<button
                                   onClick={() => setShowPopup(true)}
                                   className="bold underline text-custom-blue"
                               >
                                   {__('client.make_installment',localizations)}
-                              </button>
+                              </button>*/}
                           </div>
                       </div>
                   </div>

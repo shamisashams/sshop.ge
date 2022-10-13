@@ -177,6 +177,41 @@ const Products = ({seo}) => {
       ],
     },
   ];
+
+
+    const sort = function (data) {
+
+
+        appliedFilters["sort"] = data.sort;
+        appliedFilters["order"] = data.order;
+
+        console.log(appliedFilters);
+        let params = [];
+
+        for (let key in appliedFilters) {
+            if (Array.isArray(appliedFilters[key])) {
+                params.push(key + "=" + appliedFilters[key].join(","));
+            } else {
+                params.push(key + "=" + appliedFilters[key]);
+            }
+        }
+
+        Inertia.visit("?" + params.join("&"));
+    };
+
+    let sort_f, order;
+    sort_f = 'created_at';
+    order = 'desc';
+    if(appliedFilters.hasOwnProperty('sort')){
+
+        sort_f =  appliedFilters['sort'][0];
+        order = appliedFilters['order'][0];
+
+
+
+    }
+
+    //alert(sort_f);
   return (
       <Layout seo={seo}>
           <div className="bg-custom-zinc-300 py-12">
@@ -235,7 +270,21 @@ const Products = ({seo}) => {
                               {__('client.filter_clear',localizations)}
                           </button>
                       </div>
-                      <div>
+                      <div className=" w-full lg:w-auto">
+                          <div className="block text-sm mb-5">
+                              <button onClick={() => {
+                                  sort({sort: 'price', order: 'asc'});
+                              }} className={`inline-block bold mr-3 ${sort_f === 'price' && order === 'asc' ? 'opacity-100' : 'opacity-20'}`}>{__('client.filter_price_asc',localizations)}</button>
+                              <button onClick={() => {
+                                  sort({sort: 'price', order: 'desc'});
+                              }} className={`inline-block bold mr-3 ${sort_f === 'price' && order === 'desc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_price_desc',localizations)}</button>
+                              <button onClick={() => {
+                                  sort({sort: 'created_at', order: 'desc'});
+                              }} className={`inline-block bold mr-3 ${sort_f === 'created_at' && order === 'desc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_date_desc',localizations)}</button>
+                              <button onClick={() => {
+                                  sort({sort: 'created_at', order: 'asc'});
+                              }} className={`inline-block bold mr-3 ${sort_f === 'created_at' && order === 'asc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_date_asc',localizations)}</button>
+                          </div>
                           <div className="grid xl:grid-cols-3 grid-cols-2 gap-8">
                               {products.data.map((item, index) => {
                                   let discount;
