@@ -32,7 +32,7 @@ class BogInstallmentController extends Controller
     }
 
 
-    public function make_order($order_id,$request){
+    public function make_order($order_id,$products,$request){
 
         //dd($request->json()->all());
         $locale = 'ka';
@@ -41,7 +41,10 @@ class BogInstallmentController extends Controller
         $response = $this->bog_pay->makeOrder(
             $order_id,
             $request->json()->all(),
-            []
+            $products,
+            route('order.success'),
+            route('order.failure'),
+            route('order.failure'),
         );
         $data = $response;
 

@@ -306,6 +306,8 @@ class OrderController extends Controller
 
                 $data = [];
                 $insert = [];
+                $product_images = [];
+                $product_models = [];
                 foreach ($cart['products'] as $item){
 
                     $data['order_id'] = $order->id;
@@ -319,6 +321,8 @@ class OrderController extends Controller
                         $data['promocode_discount'] = $item['product']->discount;
                     }
                     $insert[] = $data;
+                    $product_images[$item['product']->id] = $item['product']->latestImage ? $item['product']->latestImage->file_full_url : '';
+                    $product_models[$item['product']->id] = $item['product']->model;
                 }
                 //dd($insert);
                 OrderItem::insert($insert);
@@ -435,9 +439,21 @@ class OrderController extends Controller
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'bog_installment'){
 
+                    $bog_products = [];
+
+                    //dd($order->items);
+                    foreach ($order->items as $key => $item){
+                        $bog_products[$key]['item_description'] = $item->name;
+                        $bog_products[$key]['item_vendor_code'] = $product_models[$item->product_id];
+                        $bog_products[$key]['total_item_qty'] = $item->qty_ordered;
+                        $bog_products[$key]['total_item_amount'] = $item->qty_ordered * $item->price;
+                        $bog_products[$key]['product_image_url'] = $product_images[$item->product_id];
+                        $bog_products[$key]['item_site_detail_url'] = route('client.product.show',$item->product_id);
+                    }
                     //dd($order->payment_type);
 
-                    return app(BogInstallmentController::class)->make_order($order->id,$request);
+
+                    return app(BogInstallmentController::class)->make_order($order->id,$bog_products,$request);
 
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'space_bank'){
