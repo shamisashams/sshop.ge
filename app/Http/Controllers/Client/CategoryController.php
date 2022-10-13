@@ -133,10 +133,11 @@ class CategoryController extends Controller
 
         }
 
-        $res_q = ProductAttributeValue::query()->selectRaw('COUNT(product_attribute_values.product_id) as count, integer_value as option_id')
-            ->join('product_categories','product_categories.product_id','product_attribute_values.product_id');
+        $res_q = ProductAttributeValue::query()->selectRaw('COUNT(product_attribute_values.product_id) as count, integer_value as option_id');
+
 
         if($category){
+            $res_q->join('product_categories','product_categories.product_id','product_attribute_values.product_id');
             $res_q->where('product_categories.category_id',$category->id);
         }
         $res_q->whereIn('integer_value',$opt_id)->groupBy('integer_value')->get();
