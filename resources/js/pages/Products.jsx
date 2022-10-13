@@ -256,6 +256,7 @@ const Products = ({seo}) => {
                               })}
                           </div>
                           {filter.attributes.map((item, index) => {
+
                               return (
                                   <FilterOptions
                                       key={index}

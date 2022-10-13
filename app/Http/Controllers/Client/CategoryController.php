@@ -140,6 +140,7 @@ class CategoryController extends Controller
             $res_q->where('product_categories.category_id',$category->id);
         }
         $res_q->whereIn('integer_value',$opt_id)->groupBy('integer_value')->get();
+        //$res_q->groupBy('product_categories.product_id');
 
         $res = $res_q->get();
 

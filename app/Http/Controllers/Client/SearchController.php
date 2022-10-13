@@ -175,6 +175,7 @@ class SearchController extends Controller
                 $result['attributes'][$key]['code'] = $item->code;
                 $result['attributes'][$key]['type'] = $item->type;
                 $_key = 0;
+                $_options = [];
                 foreach ($item->options as $option){
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
@@ -189,6 +190,7 @@ class SearchController extends Controller
                 $result['color']['code'] = $item->code;
                 $result['color']['type'] = $item->type;
                 $_key = 0;
+                $_options = [];
                 foreach ($item->options as $option){
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
