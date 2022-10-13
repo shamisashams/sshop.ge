@@ -45,17 +45,34 @@ export default function RangeSlider({appliedFilters}) {
     }
 
     return (
-        <Box>
-            <Slider
-                getAriaLabel={() => "Temperature range"}
-                value={value}
-                onChange={handleChange}
-                onChangeCommitted={handleCommit}
-                valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
-                min={0}
-                max={filter.price.max}
-            />
-        </Box>
+        <>
+            <div className="flex justify-between items-center mb-5">
+                <div>
+                    <p className="opacity-70 text-sm mb-2">Min</p>
+                    <div className="rounded bg-custom-zinc-300 w-24 text-center py-1 mr-5">
+                        {value[0]} ₾
+                    </div>
+                </div>
+                <div>
+                    <p className="opacity-70 text-sm mb-2">Max</p>
+                    <div className="rounded bg-custom-zinc-300 w-24 text-center py-1">
+                        {value[1]} ₾
+                    </div>
+                </div>
+            </div>
+            <Box>
+                <Slider
+                    getAriaLabel={() => "Temperature range"}
+                    value={value}
+                    onChange={handleChange}
+                    onChangeCommitted={handleCommit}
+                    valueLabelDisplay="auto"
+                    getAriaValueText={valuetext}
+                    min={0}
+                    max={filter.price.max}
+                />
+            </Box>
+        </>
+
     );
 }
