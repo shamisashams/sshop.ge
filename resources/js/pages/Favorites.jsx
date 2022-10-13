@@ -9,6 +9,7 @@ import ProductSlider from "../components/ProductSlider";
 import Layout from "@/Layouts/Layout";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
+import {toast} from "react-toastify";
 
 const Favorites = ({seo}) => {
 
@@ -18,14 +19,24 @@ const Favorites = ({seo}) => {
 
     function addToCart(product,qty){
 
+        if (product.quantity >= qty){
+            Inertia.post(route('add-to-cart'), {id: product.id,qty:qty});
+        } else {
+            toast.warn(__('client.remaining ' + product.quantity,localizations));
+        }
 
 
-        Inertia.post(route('add-to-cart'), {id: product.id,qty:qty});
     }
 
     function buyNow(product,qty){
 
-        Inertia.post(route('add-to-cart'), {id: product.id,qty:qty, buy_now:true});
+        if (product.quantity >= qty){
+            Inertia.post(route('add-to-cart'), {id: product.id,qty:qty, buy_now:true});
+        } else {
+            toast.warn(__('client.remaining ' + product.quantity,localizations));
+        }
+
+
     }
 
 
@@ -85,6 +96,7 @@ const Favorites = ({seo}) => {
                                       brand={brand}
                                       price={item.product.special_price ? item.product.special_price : item.product.price}
                                       id={item.product.id}
+                                      count={item.product.quantity}
                                   />
                               );
                           })}

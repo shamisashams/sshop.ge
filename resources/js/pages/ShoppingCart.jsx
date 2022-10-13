@@ -66,6 +66,7 @@ const ShoppingCart = ({seo}) => {
                                               price={item.product.special_price ? item.product.special_price : item.product.price}
                                               id={item.product.id}
                                               qty={item.quantity}
+                                              count={item.product.quantity}
                                               cart
                                           />
                                       );

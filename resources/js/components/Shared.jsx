@@ -10,6 +10,7 @@ import { colors } from "./Data";
 import { BiChevronDown } from "react-icons/bi";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
 import {Inertia} from "@inertiajs/inertia";
+import {toast} from "react-toastify";
 
 export const LocationMap = () => {
   return (
@@ -197,6 +198,7 @@ export const FilterOptions = ({ title, options, attribute, appliedFilters }) => 
 };
 
 export const Quantity = (props) => {
+    const {localizations} = usePage().props;
   const [number, setNumber] = useState(props.qty ? parseInt(props.qty) : 1);
 
   const decrease = () => {
@@ -213,7 +215,13 @@ export const Quantity = (props) => {
     setNumber(number + 1);
 
       if(props.cart)
-          Inertia.get(route('update_cart'), {id:props.id,qty: number + 1})
+          if(props.count >= number + 1){
+              Inertia.get(route('update_cart'), {id:props.id,qty: number + 1})
+          } else {
+              setNumber(number);
+              toast.warn(__('client.remaining_only',localizations) + ' ' + props.count);
+          }
+
   };
 
 
@@ -290,14 +298,24 @@ export const CartItem = (props) => {
 
     function addToCart(product,qty){
 
+        if (props.count >= qty){
+            Inertia.post(route('add-to-cart'), {id: product,qty:qty});
+        } else {
+            toast.warn(__('client.remaining_only',localizations)  + ' ' + props.count);
+        }
 
 
-        Inertia.post(route('add-to-cart'), {id: product,qty:qty});
     }
 
     function buyNow(product,qty){
 
-        Inertia.post(route('add-to-cart'), {id: product,qty:qty, buy_now:true});
+        if (props.count >= qty){
+            Inertia.post(route('add-to-cart'), {id: product,qty:qty, buy_now:true});
+        } else {
+            toast.warn(__('client.remaining_only',localizations) + ' ' + props.count);
+        }
+
+
     }
 
 
@@ -319,7 +337,7 @@ export const CartItem = (props) => {
         <div className="opacity-50 text-sm">{props.brand}</div>
       </td>
       <td className="p-4 border-b border-solid ">
-        <Quantity id={props.id} qty={props.qty} cart={props.cart} />
+        <Quantity id={props.id} qty={props.qty} cart={props.cart} count={props.count} />
       </td>
       <td className="p-4 border-b border-solid whitespace-nowrap">
         ₾ {props.price}
