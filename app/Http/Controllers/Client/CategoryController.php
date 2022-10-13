@@ -462,4 +462,66 @@ class CategoryController extends Controller
             'og_description' => $page->meta_og_description
         ]);
     }
+
+
+    public function youMayLike(){
+        $page = Page::where('key', 'products')->firstOrFail();
+
+        $images = [];
+        foreach ($page->sections as $sections){
+            if($sections->file){
+                $images[] = asset($sections->file->getFileUrlAttribute());
+            } else {
+                $images[] = null;
+            }
+
+        }
+
+        $products = $this->productRepository->getAll();
+
+        foreach ($products as $product){
+            $product_attributes = $product->attribute_values;
+
+            $_result = [];
+
+            foreach ($product_attributes as $item){
+                $options = $item->attribute->options;
+                $value = '';
+                foreach ($options as $option){
+                    if($item->attribute->type == 'select'){
+                        if($item->integer_value == $option->id) {
+                            $_result[$item->attribute->code] = $option->label;
+                        }
+
+                    }
+                }
+
+            }
+            $product['attributes'] = $_result;
+
+        }
+
+        return Inertia::render('Products',[
+            'products' => $products,
+            'category' => null,
+            'images' => $images,
+            'filter' => $this->getAttributes(),
+            "seo" => [
+                "title"=>$page->meta_title,
+                "description"=>$page->meta_description,
+                "keywords"=>$page->meta_keyword,
+                "og_title"=>$page->meta_og_title,
+                "og_description"=>$page->meta_og_description,
+//            "image" => "imgg",
+//            "locale" => App::getLocale()
+            ]
+        ])->withViewData([
+            'meta_title' => $page->meta_title,
+            'meta_description' => $page->meta_description,
+            'meta_keyword' => $page->meta_keyword,
+            "image" => $page->file,
+            'og_title' => $page->meta_og_title,
+            'og_description' => $page->meta_og_description
+        ]);
+    }
 }

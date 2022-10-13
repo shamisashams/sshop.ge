@@ -36,7 +36,7 @@ const Footer = () => {
           <Link className="bold mb-4 block" href={route('client.category.special')}>
               {__('client.nav_best_price',localizations)}
           </Link>
-          <Link className="bold mb-4 block" href="/you-may-like">
+          <Link className="bold mb-4 block" href={route('client.category.like')}>
               {__('client.nav_product_like',localizations)}
           </Link>
         </div>

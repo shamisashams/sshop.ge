@@ -250,6 +250,7 @@ Route::prefix('{locale?}')
             Route::get('special',[\App\Http\Controllers\Client\CategoryController::class,'special'])->name('client.category.special');
             Route::get('new',[\App\Http\Controllers\Client\CategoryController::class,'new'])->name('client.category.new');
             Route::get('sale',[\App\Http\Controllers\Client\CategoryController::class,'special'])->name('client.category.sale');
+            Route::get('you-may-like',[\App\Http\Controllers\Client\CategoryController::class,'youMayLike'])->name('client.category.like');
 
             //checkout
             Route::get('cart',[\App\Http\Controllers\Client\CartController::class,'index'])->name('client.cart.index');

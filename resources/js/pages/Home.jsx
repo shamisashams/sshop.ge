@@ -68,7 +68,7 @@ const Home = ({seo}) => {
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
                       <div className="text-lg bold">{__('client.nav_product_like',localizations)}</div>
-                      <DirectionBtn text={__('client.goto_page',localizations)} link="products" />
+                      <DirectionBtn text={__('client.goto_page',localizations)} link={route('client.category.like')} />
                   </div>
                   <ProductSlider products={products.rand_products} />
               </section>
