@@ -438,7 +438,14 @@ class OrderController extends Controller
                     //dd($terra_products);
 
                     $data = $terra->makeOrder($order->id,$terra_products);
-                    dd($data);
+
+
+
+                    $data = json_decode($data,true);
+                    if($data['success']){
+                        //dd($data);
+                        return Inertia::location($terra->redirectUrl($data['storeSessionId']));
+                    }
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'bog_installment'){
 
