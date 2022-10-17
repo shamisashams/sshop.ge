@@ -13,7 +13,7 @@ import Layout from "@/Layouts/Layout";
 
 const Home = ({seo}) => {
 
-    const {categories, products, images, localizations} = usePage().props;
+    const {categories, products, images, localizations, sections} = usePage().props;
 
 
     let categories_ = [];
@@ -23,7 +23,7 @@ const Home = ({seo}) => {
         categories_.push(item);
     });
 
-    console.log(categories_,categories, products)
+    //console.log(categories_,categories, products)
   return (
       <Layout seo={seo}>
           <>
@@ -54,11 +54,11 @@ const Home = ({seo}) => {
                   <div className="wrapper flex justify-between items-center flex-col md:flex-row">
                       <img className="xl:ml-40 md:w-1/2 lg:w-auto" src={images[0]} alt="" />
                       <div className="max-w-lg text-right">
-                          <div className="text-custom-blue mb-3">{__('client.home_sec_h', localizations)}</div>
+                          <div className="text-custom-blue mb-3">{sections[0].title}</div>
                           <div className="lg:text-4xl text-2xl bold mb-6">
-                              {__('client.home_sec_t', localizations)}
+                              {sections[0].text}
                           </div>
-                          <Link className="text-sm" href="/">
+                          <Link className="text-sm" href={sections[0].link}>
                               {__('client.learn_more',localizations)}
                               <img className="inline-block ml-2" src="/client/assets/images/icons/arrow.svg" alt="" />
                           </Link>

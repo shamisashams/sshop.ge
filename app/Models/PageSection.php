@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Translations\PageSectionTranslation;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -9,12 +11,20 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class PageSection extends Model
 {
-    use HasFactory;
+    use HasFactory,Translatable;
 
     protected $table = "page_sections";
 
     protected $fillable = [
         'page_id',
+        'link'
+    ];
+
+    protected $translationModel = PageSectionTranslation::class;
+
+    public $translatedAttributes = [
+        'title',
+        'text',
     ];
 
     //protected $with = 'file';

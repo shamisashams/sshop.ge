@@ -20,17 +20,20 @@ class HomeController extends Controller
     {
 
 
-        $page = Page::where('key', 'home')->firstOrFail();
+        $page = Page::with(['sections.translation'])->where('key', 'home')->firstOrFail();
 
         $images = [];
-        foreach ($page->sections as $sections){
-            if($sections->file){
-                $images[] = asset($sections->file->getFileUrlAttribute());
+        $sections = [];
+        foreach ($page->sections as $section){
+            if($section->file){
+                $images[] = asset($section->file->getFileUrlAttribute());
             } else {
                 $images[] = null;
             }
-
+            $sections[] = $section;
         }
+
+        //dd($sections);
 
         $sliders = Slider::query()->where("status", 1)->with(['file', 'translations'])->get();
 //        dd($page->file);
@@ -115,6 +118,7 @@ class HomeController extends Controller
         ],
             'products' => $products,
             'images' => $images,
+            'sections' => $sections,
             'collections' => ProductSet::with(['translation','latestImage'])->where('status',1)->get(),
             'collection' => ProductSet::with(['translation','latestImage','products','products.stocks'])->where('status',1)->inRandomOrder()->first(),
             'blogs' => News::with(['translation','latestImage'])->limit(4)->inRandomOrder()->get()

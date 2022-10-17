@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageRequest;
 use App\Models\Page;
+use App\Models\PageSection;
 use App\Repositories\Eloquent\PageSectionRepository;
 use App\Repositories\PageRepositoryInterface;
 use Illuminate\Contracts\Foundation\Application;
@@ -105,7 +106,7 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, string $locale, Page $page)
     {
-        //dd($request->files);
+        //dd($request->all());
         $saveData = Arr::except($request->except('_token'), []);
         $saveData['images'] = isset($saveData['images']) && (bool)$saveData['images'];
         $this->pageRepository->update($page->id,$saveData);
@@ -114,6 +115,13 @@ class PageController extends Controller
         $this->pageSectionRepository->saveFile($page->id, $request);
 
 
+        if ($page->key == 'home'){
+            foreach ($saveData['section'] as $id => $data){
+                $section = PageSection::find($id);
+
+                $section->update($data);
+            }
+        }
 
         return redirect(locale_route('page.index', $page->id))->with('success', __('admin.update_successfully'));
     }

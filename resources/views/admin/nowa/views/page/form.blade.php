@@ -238,9 +238,87 @@
             <div class="card">
                 <div class="card-body">
                     <div>
-                        <h6 class="card-title mb-1">@lang('admin.sectionimages')</h6>
+                        <h6 class="card-title mb-1">@lang('admin.sections')</h6>
                     </div>
                     @foreach($page->sections as $item)
+                        @if($page->key == 'home')
+                            <div class="form-group">
+                                <label class="form-label">@lang('admin.link')</label>
+                                <input class="form-control" type="text" name="section[{{$item->id}}][link]" value="{{$item->link}}">
+
+                            </div>
+
+
+                            <div class="mb-4">
+
+
+                                <div class="panel panel-primary tabs-style-2">
+                                    <div class=" tab-menu-heading">
+                                        <div class="tabs-menu1">
+                                            <!-- Tabs -->
+                                            <ul class="nav panel-tabs main-nav-line">
+                                                @foreach(config('translatable.locales') as $locale)
+                                                    <?php
+                                                    $active = '';
+                                                    if($loop->first) $active = 'active';
+                                                    ?>
+
+                                                    <li><a href="#slang-{{$locale}}" class="nav-link {{$active}}" data-bs-toggle="tab">{{$locale}}</a></li>
+                                                @endforeach
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body tabs-menu-body main-content-body-right border">
+                                        <div class="tab-content">
+
+                                            @foreach(config('translatable.locales') as $locale)
+
+                                                <?php
+                                                $active = '';
+                                                if($loop->first) $active = 'active';
+                                                ?>
+                                                <div class="tab-pane {{$active}}" id="slang-{{$locale}}">
+
+                                                    <div class="form-group">
+                                                        <label class="form-label">@lang('admin.title')</label>
+
+                                                        <input class="form-control" type="text" name="section[{{$item->id}}][{{$locale}}][title]" value="{{$item->translate($locale)->title ?? ''}}">
+
+
+                                                        @error('title.'. $item->id . '.' . $locale . '.title')
+                                                        <small class="text-danger">
+                                                            <div class="error">
+                                                                {{$message}}
+                                                            </div>
+                                                        </small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">@lang('admin.text')</label>
+
+                                                        <textarea class="form-control" name="section[{{$item->id}}][{{$locale}}][text]">{{$item->translate($locale)->text ?? ''}}</textarea>
+
+                                                        @error('text.'. $item->id . '.' . $locale . '.text')
+                                                        <small class="text-danger">
+                                                            <div class="error">
+                                                                {{$message}}
+                                                            </div>
+                                                        </small>
+                                                        @enderror
+                                                    </div>
+
+                                                </div>
+
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        @endif
                         <div class="form-group">
 
                             <input type="file" class="dropify" name="image[{{$item->id}}]" data-default-file="{{($item->file) ? asset($item->file->getFileUrlAttribute()) : ''}}" data-height="200"  />
