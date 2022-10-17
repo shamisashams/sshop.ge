@@ -19,7 +19,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $page = Page::where('key', 'blogs')->firstOrFail();
+        $page = Page::where('key', 'news')->firstOrFail();
 
         $images = [];
         foreach ($page->sections as $sections){
