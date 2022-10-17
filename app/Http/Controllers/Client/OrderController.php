@@ -423,7 +423,7 @@ class OrderController extends Controller
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'terra'){
 
-                    $terra = new TerraPay('204546045');
+                    $terra = new TerraPay('0J04');
 
                     $terra_products = [];
 
