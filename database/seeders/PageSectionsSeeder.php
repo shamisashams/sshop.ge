@@ -15,7 +15,7 @@ class PageSectionsSeeder extends Seeder
      */
     public function run()
     {
-        PageSection::truncate();
+        //PageSection::truncate();
         //
         $pages = [
             [
