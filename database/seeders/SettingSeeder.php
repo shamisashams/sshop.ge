@@ -20,12 +20,6 @@ class SettingSeeder extends Seeder
                 'key' => 'phone'
             ],
             [
-                'key' => 'city'
-            ],
-            [
-                'key' => 'country'
-            ],
-            [
                 'key' => 'email'
             ],
             [
@@ -36,17 +30,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'instagram'
-            ],
-            [
-                'key' => 'tiktok'
-            ],
-            [
-                'key' => 'linkedin'
-            ],
-            [
-                'key' => 'partner_reward'
             ]
-
         ];
 
         // Insert Settings
