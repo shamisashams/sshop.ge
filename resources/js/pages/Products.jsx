@@ -217,7 +217,7 @@ const Products = ({seo}) => {
           <div className="bg-custom-zinc-300 py-12">
               <div className="wrapper pb-10">
                   {category ? <div className="text-3xl bold mb-10">
-                      {category.title} <span className="text-xl opacity-20 pl-3">{category.product_count} products</span>
+                      {category.title} <span className="text-xl opacity-20 pl-3">{category.product_count} {__('client.products_count',localizations)}</span>
                   </div>:null}
                   <button
                       onClick={() => setShowFilters(true)}

@@ -131,7 +131,7 @@ const ShippingDetails = ({seo}) => {
                                               <input
                                                   className="w-full p-4 bg-white border-none rounded-none text-center placeholder:opacity-50"
                                                   type="text"
-                                                  placeholder="Search here..."
+                                                  placeholder={__('client.search_here_shipping',localizations)}
                                               />
                                               {cities.map((item, index) => {
                                                   return (

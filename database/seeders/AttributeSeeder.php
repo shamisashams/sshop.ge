@@ -20,10 +20,6 @@ class AttributeSeeder extends Seeder
         //
         $attributes = [
             [
-                'code' => 'corner',
-                'type' => 'select'
-            ],
-            [
                 'code' => 'size',
                 'type' => 'select'
             ],
@@ -34,11 +30,7 @@ class AttributeSeeder extends Seeder
             [
                 'code' => 'brand',
                 'type' => 'select'
-            ],
-            [
-                'code' => 'material',
-                'type' => 'select'
-            ],
+            ]
         ];
 
         foreach ($attributes as $item){

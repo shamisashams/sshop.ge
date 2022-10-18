@@ -167,6 +167,24 @@ const PaymentDetails = ({seo}) => {
                                       </div>
                                       <div className="text-left">{__('client.choose_bank', localizations)}</div>
                                       <div className="grid grid-cols-2 gap-4 mt-6">
+
+                                          <button
+                                              onClick={() => {
+                                                  setBankSelect(1)
+                                                  selectBank('bog');
+                                              }}
+                                              className={` text-center mb-3 rounded-xl bg-white  border-solid border-2 w-full h-16   transition-all  shadow-lg hover:border-zinc-300  ${
+                                                  bankSelect === 1
+                                                      ? "!border-custom-blue"
+                                                      : "border-white"
+                                              }`}
+                                          >
+                                              <img className={`  mx-auto `} src="/client/assets/images/banks/2.png"
+                                                   alt=""/>
+                                          </button>
+                                      </div>
+                                      <div className="my-5">{__('client.make_an_installment',localizations)}</div>
+                                      <div className="grid grid-cols-2 gap-4 mt-6">
                                           <button
                                               onClick={() => {
                                                   setBankSelect(0)
@@ -178,7 +196,7 @@ const PaymentDetails = ({seo}) => {
                                                       : "border-white"
                                               }`}
                                           >
-                                              <img className={`  mx-auto `} src="/client/assets/images/banks/1.png"
+                                              <img className={`  mx-auto `} src="/client/assets/images/banks/terra.png"
                                                    alt=""/>
                                           </button>
 
@@ -196,27 +214,8 @@ const PaymentDetails = ({seo}) => {
                                               <img className={`  mx-auto `} src="/client/assets/images/banks/2.png"
                                                    alt=""/>
                                           </button>
-                                          <button
-                                              onClick={() => {
-                                                  setBankSelect(1)
-                                                  selectBank('bog');
-                                              }}
-                                              className={` text-center mb-3 rounded-xl bg-white  border-solid border-2 w-full h-16   transition-all  shadow-lg hover:border-zinc-300  ${
-                                                  bankSelect === 1
-                                                      ? "!border-custom-blue"
-                                                      : "border-white"
-                                              }`}
-                                          >
-                                              <img className={`  mx-auto `} src="/client/assets/images/banks/2.png"
-                                                   alt=""/>
-                                          </button>
+
                                       </div>
-                                      <div className="my-5">Or</div>
-                                      <button
-                                          className={`block text-center mb-3 rounded-xl bg-white border-solid border-2 w-full h-16 transition-all shadow-lg border-white hover:border-zinc-300 bold text-lg`}
-                                      >
-                                          Make an installment
-                                      </button>
                                       <div className="opacity-50 mt-10">{__('client.enter_promocode', localizations)}</div>
                                       <input
                                           type="text"

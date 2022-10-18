@@ -43,20 +43,20 @@ const LogIn = ({seo}) => {
                           <div className="main-btn bold">{__('client.login_btn',localizations)}</div>
                       </a>
                       <div className="or">
-                          <hr className="hr-text" data-content="Or" />
+                          <hr className="hr-text" data-content={__('client.or_do_this',localizations)} />
                       </div>
                       {/* Alternative Sign in */}
                       <div className="alternative-sign">
                           <a href="#">
                               <div className="options flex center">
                                   <img src="/client/assets/images/signin/2.png" alt="" />
-                                  <p>Sing in with Google</p>
+                                  <p>{__('client.sign_in_with_google',localizations)}</p>
                               </div>
                           </a>
                           <a href="#">
                               <div className="options flex center">
                                   <img src="/client/assets/images/signin/1.png" alt="" />
-                                  <p>Sing in with Facebook</p>
+                                  <p>{__('client.sign_in_with_facebook',localizations)}</p>
                               </div>
                           </a>
                       </div>
