@@ -114,6 +114,7 @@ class CategoryController extends Controller
     }
 
     private function getAttributes($category = null):array{
+        $result = [];
         if($category !== null){
             $attrs = $category->attributes()->with('options')->orderBy('position')->get();
         } else

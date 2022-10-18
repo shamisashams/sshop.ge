@@ -335,7 +335,7 @@
     </div>
 
 
-    @if($page->key == 'about')
+    {{--@if($page->key == 'about')
 
         <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -362,7 +362,7 @@
             </div>
         </div>
 
-    @endif
+    @endif--}}
 
 
 
