@@ -31,11 +31,9 @@ export default function Layout({ children, seo = null }) {
     console.log(usePage().props);
     const { currentLocale, flash } = usePage().props;
 
-    // if (currentLocale == "ge") {
-    //     import("./AppGeo.css");
-    // } else if (currentLocale == "ru") {
-    //     import("./AppRus.css");
-    // }
+     if (currentLocale == "ge") {
+         import("./Geo.css");
+     }
     //console.log(flash);
 
     if(flash.success){

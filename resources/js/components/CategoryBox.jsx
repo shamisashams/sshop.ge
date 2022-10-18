@@ -9,6 +9,7 @@ import { DirectionBtn } from "./Shared";
 
 const CategoryBox = ({categories}) => {
 
+    const { localizations } = usePage().props;
   const categoryBoxes = [
     {
       title: "Computers",
@@ -153,7 +154,7 @@ const CategoryBox = ({categories}) => {
                     })}
                   </div>
                 </div>
-                <DirectionBtn link={route('client.category.show',item.slug)} text="Go to page" />
+                <DirectionBtn link={route('client.category.show',item.slug)} text={__('client.goto_page',localizations)} />
               </div>
               <img className="max-w-sm xl:w-auto w-1/2" src={item.file ? item.file.file_full_url:null} alt="" />
             </div>
