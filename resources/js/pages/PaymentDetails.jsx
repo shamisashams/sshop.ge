@@ -211,12 +211,7 @@ const PaymentDetails = ({seo}) => {
                                                    alt=""/>
                                           </button>
                                       </div>
-                                      <div className="my-5">Or</div>
-                                      <button
-                                          className={`block text-center mb-3 rounded-xl bg-white border-solid border-2 w-full h-16 transition-all shadow-lg border-white hover:border-zinc-300 bold text-lg`}
-                                      >
-                                          Make an installment
-                                      </button>
+                                      <div className="my-5">{__('client.make_an_installment',localizations)}</div>
                                       <div className="opacity-50 mt-10">{__('client.enter_promocode', localizations)}</div>
                                       <input
                                           type="text"
