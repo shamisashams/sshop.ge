@@ -18,13 +18,13 @@ const ProductBox = (props) => {
   const toCart = () => {
     setAddToCart(!addToCart);
       if(props.qty >= 1) {
-          toast.success("Product is added to cart");
+          toast.success(__('client.added_to_cart',localizations));
       }
   };
 
   const toFavorites = () => {
     setFavorite(!favorite);
-    toast.info("Product is added to Favorites");
+    toast.info(__('client.added_to_favorites',localizations));
   };
 
 
