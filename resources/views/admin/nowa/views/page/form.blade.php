@@ -248,6 +248,10 @@
 
                             </div>
 
+                            <div class="form-group">
+                                <label class="form-label">@lang('admin.bg_color')</label>
+                                <input class="form-control" name="section[{{$item->id}}][bg_color]" value="{{$item->bg_color}}" data-jscolor="{}">
+                            </div>
 
                             <div class="mb-4">
 
@@ -404,6 +408,7 @@
     <script src="{{asset('assets/plugins/telephoneinput/inttelephoneinput.js')}}"></script>
 
     <script src="{{asset('uploader/image-uploader.js')}}"></script>
+    <script src="{{asset('admin/assets/jscolor/jscolor.js')}}"></script>
 
     <script>
         let oldImages = $('#old_images').val();

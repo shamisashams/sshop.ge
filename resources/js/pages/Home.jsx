@@ -50,7 +50,7 @@ const Home = ({seo}) => {
                   </div>
                   <ProductSlider products={products.popular} />
               </section>
-              <section className="bg-custom-yellow py-10 mb-10">
+              {sections[0].title ? <section style={{backgroundColor:sections[0].bg_color}} className="py-10 mb-10">
                   <div className="wrapper flex justify-between items-center flex-col md:flex-row">
                       <img className="xl:ml-40 md:w-1/2 lg:w-auto" src={images[0]} alt="" />
                       <div className="max-w-lg text-right">
@@ -64,7 +64,7 @@ const Home = ({seo}) => {
                           </Link>
                       </div>
                   </div>
-              </section>
+              </section>:null}
               <section className="py-10 wrapper">
                   <div className="flex item-center justify-between mb-5">
                       <div className="text-lg bold">{__('client.nav_product_like',localizations)}</div>

@@ -17,7 +17,8 @@ class PageSection extends Model
 
     protected $fillable = [
         'page_id',
-        'link'
+        'link',
+        'bg_color'
     ];
 
     protected $translationModel = PageSectionTranslation::class;
