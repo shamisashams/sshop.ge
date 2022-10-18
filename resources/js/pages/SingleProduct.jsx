@@ -25,6 +25,14 @@ const SingleProduct = ({seo}) => {
     discount = product.special_price ? (100 - ((product.special_price * 100) / product.price).toFixed()) : null;
 
 
+    function goToVideo(video){
+
+        window.open(
+            video.path,
+            '_blank' // <- This is what makes it open in a new window.
+        );
+    }
+
     function addToCart(product, qty) {
 
         if (product.quantity >= qty){
@@ -252,7 +260,9 @@ const SingleProduct = ({seo}) => {
                                           : product.price}
                                   </span>{" "}
                               </div>
-                              <button className="flex items-center judtify-start bold text-sm">
+                              {product.video ? <button onClick={() => {
+                                  goToVideo(product.video);
+                              }} className="flex items-center judtify-start bold text-sm">
                                   <div className="flex items-center justify-center w-10 h-10 bg-white shadow-xl rounded-full mr-2">
                                       <BsPlay className="w-6 h-6 " />
                                   </div>
@@ -262,7 +272,7 @@ const SingleProduct = ({seo}) => {
                                           localizations
                                       )}
                                   </span>
-                              </button>
+                              </button>:null}
                               <div className="flex justify-start items-center  my-6 flex-wrap">
                                   <button
                                       onClick={() => {
