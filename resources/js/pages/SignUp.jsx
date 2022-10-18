@@ -96,7 +96,7 @@ const SignUp = ({seo}) => {
                           </p>
                       </div>
                       <div className="or">
-                          <hr className="hr-text" data-content="Or" />
+                          <hr className="hr-text" data-content={__('client.or_do_this',localizations)} />
                       </div>
                       {/* Alternative Sign in */}
                       <div className="alternative-sign-up">
