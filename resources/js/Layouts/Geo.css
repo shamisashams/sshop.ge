@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "bpg-mrgvlovani";
+    src: url(/client/assets/fonts/geo/bpg_mrgvlovani.ttf);
+}
+@font-face {
+    font-family: "bpg-glaho";
+    src: url(/client/assets/fonts/geo/bpg-glaho-arial-webfont.ttf);
+}
+
+body,
+*,
+*::after,
+*::before {
+    font-family: "bpg-mrgvlovani";
+}
+
+.bold {
+    font-family: "bpg-glaho";
+}
