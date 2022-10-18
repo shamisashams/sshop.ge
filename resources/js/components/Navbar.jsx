@@ -10,6 +10,7 @@ import { FiSearch } from "react-icons/fi";
 //import { ReactComponent as CartIcon } from "../assets/images/icons/header/cart.svg";
 import { useState } from "react";
 import { mainCategory, subCategory, catProducts } from "./Data";
+import { Inertia } from "@inertiajs/inertia";
 
 const Navbar = () => {
   const [showLang, setShowLang] = useState(false);
@@ -29,6 +30,11 @@ const Navbar = () => {
     let subCategories = [];
     let subCategories2 = {};
     let n = 0;
+
+    function toSubCategory(slug){
+        Inertia.visit(route('client.category.show',slug));
+    }
+
   return (
     <>
       <header className="fixed w-full left-0 top-0 bg-white/[0.9]  py-4 after:backdrop-blur-md after:left-0 after:top-0 after:w-full after:h-full after:z-0 z-50">
@@ -189,7 +195,7 @@ const Navbar = () => {
 
                         subCategories.push(item.children);
 
-                    //console.log(subCategories);
+                    console.log(subCategories);
                   return (
                     <button
                       onClick={() => mainCatClick(index)}
@@ -221,7 +227,12 @@ const Navbar = () => {
                           <button
                             key={index + 1}
                             onClick={() => {
-                                setSubCatIndex(item.id)
+                                if (item.children.length > 0){
+                                    setSubCatIndex(item.id)
+                                } else {
+                                    toSubCategory(item.slug);
+                                }
+
                                 //alert(subCatIndex)
                             }}
                             className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all text-left ${
@@ -231,7 +242,7 @@ const Navbar = () => {
                             }`}
                           >
                             {item.title}
-                            <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
+                              {item.children.length > 0 ? <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />:null}
                           </button>
                         );
                       })}
