@@ -181,6 +181,7 @@ class CategoryController extends Controller
                     $_key++;
                 }
                 $result['attributes'][$key]['options'] = $_options;
+                $key++;
             } else {
                 $result['color']['id'] = $item->id;
                 $result['color']['name'] = $item->name;
@@ -198,7 +199,7 @@ class CategoryController extends Controller
                 $result['color']['options'] = $_options;
             }
 
-            $key++;
+
         }
         $result['price']['max'] = $this->productRepository->getMaxprice($category);
         $result['price']['min'] = $this->productRepository->getMinprice($category);
