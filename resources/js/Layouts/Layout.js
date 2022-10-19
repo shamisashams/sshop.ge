@@ -17,15 +17,27 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../components/Preloader/Preloader";
+import { Inertia } from '@inertiajs/inertia'
 
 export default function Layout({ children, seo = null }) {
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    /*useEffect(() => {
         setTimeout(() => {
             setLoading(false);
         }, [3000]);
-    }, []);
+    }, []);*/
+
+    Inertia.on('finish', () => {
+        setTimeout(() => {
+            setLoading(false);
+        }, [0]);
+    })
+
+
+    window.addEventListener("load", ()=>{
+        setLoading(false)
+    })
 
     if (seo) {
         setSeoData(seo);
