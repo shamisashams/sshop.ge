@@ -20,13 +20,23 @@ import Preloader from "../components/Preloader/Preloader";
 import { Inertia } from '@inertiajs/inertia'
 
 export default function Layout({ children, seo = null }) {
-    const [loading, setLoading] = useState(true);
+    function detectQueryString() {
+        var currentQueryString = window.location.search;
+        if (currentQueryString) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    const [loading, setLoading] = useState(!detectQueryString);
 
     /*useEffect(() => {
         setTimeout(() => {
             setLoading(false);
         }, [3000]);
     }, []);*/
+
+
 
     Inertia.on('finish', () => {
         setTimeout(() => {
