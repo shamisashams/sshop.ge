@@ -1,15 +1,7 @@
-import React from "react";
-//import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { Link, usePage } from "@inertiajs/inertia-react";
-//import Logo from "../assets/images/logo/1.png";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
-//import { ReactComponent as GlobeIcon } from "../assets/images/icons/header/globe.svg";
-//import { ReactComponent as UserIcon } from "../assets/images/icons/header/user.svg";
-//import { ReactComponent as HeartIcon } from "../assets/images/icons/header/heart.svg";
-//import { ReactComponent as CartIcon } from "../assets/images/icons/header/cart.svg";
-import { useState } from "react";
-import { mainCategory, subCategory, catProducts } from "./Data";
 import { Inertia } from "@inertiajs/inertia";
 
 const Navbar = () => {
@@ -94,10 +86,6 @@ const Navbar = () => {
                     <div className="md:flex ml-20 hidden">
                         <div className="group relative ">
                             <button onClick={() => setShowLang(!showLang)}>
-                                {/*<GlobeIcon
-                  className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue"
-                  style={{ stroke: showLang ? "#4FA9D2" : "" }}
-                />*/}
                                 <svg
                                     className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue"
                                     style={{
@@ -178,38 +166,12 @@ const Navbar = () => {
                                         );
                                     }
                                 })}
-
-                                {/*<a
-                  className={`opacity-50  transition-all duration-300 ${
-                    showLang ? "ml-2" : "-ml-3"
-                  } `}
-                  href="#"
-                >
-                  Geo
-                </a>
-                <a
-                  className={`opacity-100 transition-all duration-300  ${
-                    showLang ? "ml-2" : "-ml-3"
-                  }  `}
-                  href="#"
-                >
-                  Eng
-                </a>
-                <a
-                  className={`opacity-50  transition-all duration-300 ${
-                    showLang ? "ml-2" : "-ml-3"
-                  } `}
-                  href="#"
-                >
-                  Rus
-                </a>*/}
                             </div>
                         </div>
                         <Link
                             className=" group  lg:ml-5 ml-3"
                             href={route("client.login.index")}
                         >
-                            {/*<UserIcon className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" />*/}
                             <svg
                                 className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue"
                                 id="Component_44_1"
@@ -239,7 +201,6 @@ const Navbar = () => {
                             className="relative group lg:ml-5 ml-3"
                             href={route("client.favorite.index")}
                         >
-                            {/*<HeartIcon className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" />*/}
                             <svg
                                 className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -275,7 +236,6 @@ const Navbar = () => {
                             className="relative group lg:ml-5 ml-3"
                             href={route("client.cart.index")}
                         >
-                            {/*<CartIcon className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue" />*/}
                             <svg
                                 className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue"
                                 id="Component_45_1"
@@ -302,8 +262,10 @@ const Navbar = () => {
                         </Link>
                     </div>
                 </div>
+
+                {/* category start */}
                 <div
-                    className={`absolute left-0 top-full w-full transition-all duration-500 lg:text-base text-sm  ${
+                    className={`categories absolute left-0 top-full w-full transition-all duration-500 lg:text-base text-sm  ${
                         openMenu
                             ? "translate-y-0 top-full"
                             : "-translate-y-full -top-full"
@@ -311,7 +273,7 @@ const Navbar = () => {
                 >
                     <div className="w-full h-full bg-white/[0.9] backdrop-blur-md py-10 ">
                         <div className="wrapper flex items-start justify-start">
-                            <div className="scrollbar overflow-y-scroll md:pr-10 pr-5 md:mr-10 mr-5 ">
+                            <div className="md:pr-10 pr-5 md:mr-10 mr-5 ">
                                 {categories.map((item, index) => {
                                     subCategories.push(item.children);
 
@@ -427,6 +389,7 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
+                    ;
                 </div>
             </header>
         </>

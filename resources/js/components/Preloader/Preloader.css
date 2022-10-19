@@ -1,0 +1,158 @@
+/* preloader start */
+
+/* keyframes */
+@keyframes img2 {
+    0% {
+        transform: translate(-800px, 0px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+@keyframes img3 {
+    0% {
+        transform: translate(0, 300px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+@keyframes img4 {
+    0% {
+        transform: translate(-200px, -500px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+@keyframes img5 {
+    0% {
+        transform: translate(-600px, 100px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+@keyframes img6 {
+    0% {
+        transform: translate(600px, -300px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+@keyframes img7 {
+    0% {
+        transform: translate(500px, 200px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+#preloader {
+    z-index: 1000;
+    overflow: hidden;
+}
+#preloader .imgs {
+    position: absolute;
+    transition: 1s;
+}
+#preloader .img-2 {
+    top: 144px;
+    left: -67px;
+    animation: img2 3s;
+}
+#preloader .img-3 {
+    bottom: -46px;
+    right: -11px;
+    animation: img3 3s;
+}
+#preloader .img-4 {
+    top: 32px;
+    left: 99px;
+    animation: img4 3s;
+}
+#preloader .img-5 {
+    bottom: 133px;
+    left: -109px;
+    animation: img5 3s;
+}
+#preloader .img-6 {
+    bottom: 144px;
+    right: -68px;
+    animation: img6 3s;
+}
+#preloader .img-7 {
+    bottom: 82px;
+    right: -104px;
+    animation: img7 3s;
+}
+@media screen and (max-width: 800px) {
+    #preloader .container {
+        width: 90%;
+        margin: auto;
+    }
+    #preloader .container .img-1 {
+        max-width: 100%;
+        width: auto;
+    }
+    #preloader .img-2 {
+        width: 125px;
+        top: 93px;
+        left: -18px;
+    }
+    #preloader .img-3 {
+        width: 72px;
+        bottom: -12px;
+        right: -4px;
+    }
+    #preloader .img-4 {
+        width: 67px;
+        top: 27px;
+        left: 68px;
+    }
+    #preloader .img-5 {
+        width: 50px;
+        bottom: 38px;
+        left: 2px;
+    }
+    #preloader .img-6 {
+        width: 50px;
+        bottom: 107px;
+        right: -30px;
+    }
+    #preloader .img-7 {
+        width: 20px;
+        bottom: 87px;
+        right: -13px;
+    }
+}
+
+/* progressbar */
+.progress.css-0 {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+.css-r40f8v-MuiTypography-root {
+    font-family: "GAdzen" !important;
+    color: rgb(0, 0, 0) !important;
+    font-size: 35px !important;
+}
+.css-eglki6-MuiLinearProgress-root {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    height: 2px !important;
+    margin: 20px auto;
+}
+.css-1bhivts {
+    margin-right: 0px !important;
+}
+.css-5xe99f-MuiLinearProgress-bar1 {
+    background-color: rgb(0, 0, 0) !important;
+    transition: linear 0.1;
+}
+
+/* preloader end */

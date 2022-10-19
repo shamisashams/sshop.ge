@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import "./style.css";
 
@@ -7,20 +7,26 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 //import ScrollToTop from "../components/ScrollToTop";
 
-
 import setSeoData from "./SetSeoData";
 // import {Fragment} from "react";
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Aos from "aos";
 import { usePage } from "@inertiajs/inertia-react";
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
-
-
+import "react-toastify/dist/ReactToastify.css";
+import Preloader from "../components/Preloader/Preloader";
 
 export default function Layout({ children, seo = null }) {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, [3000]);
+    }, []);
+
     if (seo) {
         setSeoData(seo);
     }
@@ -31,27 +37,28 @@ export default function Layout({ children, seo = null }) {
     console.log(usePage().props);
     const { currentLocale, flash } = usePage().props;
 
-     if (currentLocale == "ge") {
-         import("./Geo.css");
-     }
+    if (currentLocale == "ge") {
+        import("./Geo.css");
+    }
     //console.log(flash);
 
-    if(flash.success){
+    if (flash.success) {
         toast.success(flash.success);
         flash.success = null;
     }
-    if(flash.error){
+    if (flash.error) {
         toast.error(flash.error);
         flash.error = null;
     }
-    if(flash.warning){
+    if (flash.warning) {
         toast.warn(flash.warning);
         flash.warning = null;
     }
 
-    return (
+    return loading ? (
+        <Preloader />
+    ) : (
         <>
-
             {/*<Router>*/}
             {/*<Fragment>*/}
             <ToastContainer
@@ -70,8 +77,6 @@ export default function Layout({ children, seo = null }) {
             <Footer />
             {/*</Fragment>*/}
             {/*</Router>*/}
-
-
         </>
     );
 }
