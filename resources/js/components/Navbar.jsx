@@ -294,7 +294,13 @@ const Navbar = () => {
                                 })}
                             </div>
                             <div
-                                className={catIndex === 0 ? "hidden" : "block"}
+                                className={`transition-all duration-500
+                                  ${
+                                      catIndex === 0
+                                          ? "invisible opacity-0 -translate-x-full"
+                                          : "visible opacity-100 translate-x-0"
+                                  }
+                               `}
                             >
                                 {subCategories.map((cat, index) => {
                                     let children = [];
@@ -350,9 +356,13 @@ const Navbar = () => {
                                 })}
                             </div>
                             <div
-                                className={
-                                    subCatIndex === 0 ? "hidden" : "block"
-                                }
+                                className={` transition-all duration-500
+                                   ${
+                                       subCatIndex === 0
+                                           ? "invisible opacity-0 -translate-x-full"
+                                           : "visible opacity-100 translate-x-0"
+                                   }
+                                `}
                             >
                                 {Object.keys(subCategories2).map(
                                     (cat, index) => {
