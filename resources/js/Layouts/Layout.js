@@ -22,13 +22,18 @@ import { Inertia } from '@inertiajs/inertia'
 export default function Layout({ children, seo = null }) {
     function detectQueryString() {
         var currentQueryString = window.location.search;
+        //console.log('alllelele',currentQueryString);
         if (currentQueryString) {
+
             return true;
+
         } else {
+
             return false;
+
         }
     }
-    const [loading, setLoading] = useState(!detectQueryString);
+    const [loading, setLoading] = useState(!detectQueryString());
 
     /*useEffect(() => {
         setTimeout(() => {
