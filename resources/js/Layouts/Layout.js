@@ -31,12 +31,14 @@ export default function Layout({ children, seo = null }) {
     Inertia.on('finish', () => {
         setTimeout(() => {
             setLoading(false);
-        }, [0]);
+        }, [500]);
     })
 
 
     window.addEventListener("load", ()=>{
-        setLoading(false)
+        setTimeout(() => {
+            setLoading(false);
+        }, [500]);
     })
 
     if (seo) {
