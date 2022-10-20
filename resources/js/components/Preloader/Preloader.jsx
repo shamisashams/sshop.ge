@@ -34,7 +34,7 @@ const Preloader = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             setProgress((prevProgress) =>
-                prevProgress >= 100 ? 0 : prevProgress + 1
+                prevProgress >= 100 ? 100 : prevProgress + 1
             );
         }, 30);
         return () => {

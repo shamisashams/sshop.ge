@@ -41,6 +41,8 @@ export default function Layout({ children, seo = null }) {
         }, [3000]);
     }, []);*/
 
+
+
     addEventListener('popstate', (event) => {
        // alert(234);
 
@@ -48,6 +50,10 @@ export default function Layout({ children, seo = null }) {
     setTimeout(() => {
         setLoading(false);
     }, [500]);
+
+    Inertia.on('progress', (event) => {
+        console.log('axaxaxaxaxaxaxa',event.detail.progress.percentage)
+    })
 
     Inertia.on('finish', () => {
         setTimeout(() => {
@@ -57,6 +63,7 @@ export default function Layout({ children, seo = null }) {
 
 
     window.addEventListener("load", ()=>{
+        var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart;
         setTimeout(() => {
             setLoading(false);
         }, [500]);
