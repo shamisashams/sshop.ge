@@ -50,7 +50,7 @@ const ProductSlider = ({products}) => {
           return (
             <SwiperSlide key={index} className="pb-10">
               <ProductBox
-                img={item.latest_image ? item.latest_image.file_full_url : null}
+                img={item.latest_image ? item.latest_image.thumb_full_url : null}
                 name={item.title}
                 brand={item.attributes.brand}
                 oldPrice={item.special_price ? item.price : null}

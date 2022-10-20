@@ -58,7 +58,8 @@ class File extends Model
     ];
 
     protected $appends = [
-        'file_full_url'
+        'file_full_url',
+        'thumb_full_url'
     ];
 
     /**
@@ -82,5 +83,10 @@ class File extends Model
     public function getFileFullUrlAttribute(): string
     {
         return asset($this->path . '/' . $this->title);
+    }
+
+    public function getThumbFullUrlAttribute(): string
+    {
+        return asset($this->path . '/thumb/' . $this->title);
     }
 }
