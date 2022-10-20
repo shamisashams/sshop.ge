@@ -41,7 +41,13 @@ export default function Layout({ children, seo = null }) {
         }, [3000]);
     }, []);*/
 
+    addEventListener('popstate', (event) => {
+       // alert(234);
 
+    });
+    setTimeout(() => {
+        setLoading(false);
+    }, [500]);
 
     Inertia.on('finish', () => {
         setTimeout(() => {
