@@ -801,7 +801,7 @@ class ProductController extends Controller
             foreach ($cellIterator as $cell) { $data[] = $cell->getValue(); }
 
             //echo '<pre>';
-            if($data[array_search($request->post('model'),$chars)]){
+            if(isset($data[array_search($request->post('model'),$chars)])){
                 $result[] = [
                     'model' => $data[array_search($request->post('model'),$chars)],
                     'price' => $data[array_search($request->post('price'),$chars)],
