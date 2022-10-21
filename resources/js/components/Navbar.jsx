@@ -71,7 +71,7 @@ const Navbar = () => {
                     <div className="h-10 w-1/3 mx-5 relative text-sm  hidden md:inline-block">
                         <form className="h-full" action={route("search.index")}>
                             <input
-                                className="w-full h-full bg-custom-zinc-100 text-center border-none placeholder:opacity-40"
+                                className="w-full h-full bg-custom-zinc-100 text-center placeholder:opacity-40 border-solid border-1 border-custom-dark"
                                 type="text"
                                 placeholder={__(
                                     "client.search_here",
