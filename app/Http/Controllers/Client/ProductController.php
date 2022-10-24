@@ -121,7 +121,7 @@ class ProductController extends Controller
                     if($item->integer_value == $option->id) {
                         if($item->attribute->code == 'size'){
                             $result[$item->attribute->code]['attribute'] = $item->attribute->name;
-                            $result[$item->attribute->code]['option'] = $option->value;
+                            $result[$item->attribute->code]['option'] = $option->label . ' - ' . $option->value;
                         }
                         else {
                             $result[$item->attribute->code]['option'] = $option->label;
