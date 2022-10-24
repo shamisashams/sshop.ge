@@ -302,7 +302,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
                                 @endif
 
                         </ul>
-                        <input class="form-control" type="text" id="search_product" name="term" value="" placeholder="Add search group">
+                        <input class="form-control" type="text" id="search_product" name="term" value="" placeholder="Add search group" autocomplete="off">
                         <ul id="product_list">
 
                         </ul>
