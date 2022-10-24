@@ -233,7 +233,7 @@ const Products = ({seo}) => {
                           <div className="my-5">
                               <div className="opacity-50 text-sm mb-3">{__('client.filter_color',localizations)}</div>
                               {/*<ColorPick attribute={filter.color ?? {options:[]}} />*/}
-
+                              <div className="grid grid-cols-5 gap-2">
                               {filter.color.options.map((item,index) => {
                                   return (
                                       <button
@@ -254,6 +254,7 @@ const Products = ({seo}) => {
                                       </button>
                                   )
                               })}
+                              </div>
                           </div>
                           {filter.attributes.map((item, index) => {
 
