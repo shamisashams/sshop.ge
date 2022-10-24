@@ -233,10 +233,11 @@ const Products = ({seo}) => {
                           <div className="my-5">
                               <div className="opacity-50 text-sm mb-3">{__('client.filter_color',localizations)}</div>
                               {/*<ColorPick attribute={filter.color ?? {options:[]}} />*/}
-                              <div className="grid grid-cols-5 gap-2">
+                              <div className="grid grid-cols-5 gap-0">
                               {filter.color.options.map((item,index) => {
                                   return (
                                       <button
+                                      style={{ width:"57%"}}
                                           onClick={() => choseColor(item)}
                                           key={index}
                                           className={`inline-block rounded mr-3 mb-2 border-2 border-solid transition-all ${
@@ -249,7 +250,7 @@ const Products = ({seo}) => {
                                               style={{
                                                   background: item.color,
                                               }}
-                                              className=" w-5 h-5"
+                                              className="w-5 h-5"
                                           ></div>
                                       </button>
                                   )
