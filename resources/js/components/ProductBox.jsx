@@ -44,6 +44,7 @@ const ProductBox = (props) => {
   return (
     <>
       <div className="bg-white rounded p-5 text-sm relative">
+      <Link href={props.link} className="underline text-custom-blue ">
         {props.oldPrice ? (
           <div className="absolute top-5 left-5 text-xs text-white bg-custom-red rounded py-0.5 px-2">
             {props.discount}%
@@ -117,9 +118,9 @@ const ProductBox = (props) => {
             ₾ <span className="text-xl ">{props.price}</span>
           </div>
         </div>
-        <Link href={props.link} className="underline text-custom-blue ">
+        {/* <Link href={props.link} className="underline text-custom-blue ">
             {__('client.see_details',localizations)}
-        </Link>
+        </Link> */}
         {/*<ToastContainer
           position="top-center"
           autoClose={5000}
@@ -131,6 +132,7 @@ const ProductBox = (props) => {
           draggable
           pauseOnHover
         />*/}
+        </Link>
       </div>
     </>
   );
