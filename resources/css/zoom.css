@@ -1,0 +1,20 @@
+.img-wrapper {
+
+    overflow: hidden;
+  }
+
+  .inner-img {
+    transition: 0.3s ease-in-out;
+  }
+
+  .inner-img:hover {
+    transform: scale(1.1);
+  }
+
+  /* Other styling elements, that are not necessary for the example */
+
+  .img-wrapper {
+    display: inline-block;
+    box-sizing: border-box;
+    //border: 1px solid #000;
+  }

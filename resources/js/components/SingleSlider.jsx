@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "../../css/zoom.css"
 import { Pagination, Navigation } from "swiper";
 //import Product1 from "../assets/images/products/1.png";
 //import Product2 from "../assets/images/products/2.png";
@@ -36,7 +37,7 @@ const SingleSlider = ({ images }) => {
                     return (
                         <SwiperSlide key={index}>
                             <div className="w-full pb-10 w-4/5 mx-auto" style={{ overflow: "hidden" }}>
-                                <img
+                                {/* <img
                                     onMouseEnter={(e) => {
                                         e.target.style.transform = 'scale(2)'
                                     }}
@@ -47,7 +48,14 @@ const SingleSlider = ({ images }) => {
                                         }
                                     }
 
-                                    src={item.file_full_url} alt="" />
+                                    src={item.file_full_url} alt="" /> */}
+
+
+<div class="img-wrapper">
+    <img class="inner-img" src={item.file_full_url} />
+</div>
+
+
                                 {/* <div className="w-4/5 mx-auto">
                     <CursorZoom
                         image={{
