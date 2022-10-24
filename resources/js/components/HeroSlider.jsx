@@ -32,7 +32,7 @@ const HeroSlider = () => {
             <SwiperSlide key={index} className="self-stretch !h-auto">
               <div
                 className="w-full h-full bg-center bg-cover bg-no-repeat "
-                style={{ backgroundImage: `url(${item.file ? item.file.file_full_url : null})` }}
+                style={{ backgroundImage: `url(${item.file ? item.file.file_full_url : null})`, maxHeight : "525px"}}
               >
                 <div className="wrapper md:py-32 py-10">
                   <div className="max-w-sm">
