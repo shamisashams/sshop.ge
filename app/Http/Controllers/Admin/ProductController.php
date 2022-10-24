@@ -734,7 +734,7 @@ class ProductController extends Controller
         if(isset($params['term'])){
             $query = Product::query()
                 ->select('group')
-            ->where('group','like', $params['term'] . '%');
+            ->where('group','like', '%' . $params['term'] . '%');
 
         }
 
