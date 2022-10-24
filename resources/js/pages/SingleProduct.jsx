@@ -164,7 +164,7 @@ const SingleProduct = ({seo}) => {
                                       localizations
                                   )}
                               </div>
-                              <div className="grid grid-cols-2 gap-y-2 gap-x-5 opacity-50 text-sm mb-5 mt-3">
+                              <div className="grid grid-cols-1 gap-y-2 gap-x-5 opacity-50 text-sm mb-5 mt-3">
                                   {Object.keys(product.attributes).map(
                                       (item, index) => {
                                           return item !== "brand" ? (
