@@ -110,6 +110,7 @@ const SingleProduct = ({seo}) => {
                               <BiChevronRight />{" "}
             </span>
                           <span>Gaming PC</span>*/}
+
                       </div>
                       <div className="flex items-start justify-start pt-10 flex-col lg:flex-row">
                           <div className="lg:w-1/2 w-full lg:mr-10 mb-10">

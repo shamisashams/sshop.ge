@@ -227,16 +227,17 @@ const Products = ({seo}) => {
                       {__('client.filter',localizations)}
                   </button>
                   <div className="flex justify-start items-start relative ">
-                      <div className="bg-white rounded mr-10 p-7 shrink-0 filterBox">
+                      <div className="bg-white rounded mr-10 p-7 shrink-0 filterBox" style={{maxWidth:"300px"}}>
                           <div className="bold text-lg mb-5">{__('client.filter_price',localizations)}</div>
                           <RangeSlider appliedFilters={appliedFilters} />
                           <div className="my-5">
                               <div className="opacity-50 text-sm mb-3">{__('client.filter_color',localizations)}</div>
                               {/*<ColorPick attribute={filter.color ?? {options:[]}} />*/}
-
+                              <div className="grid grid-cols-5 gap-0">
                               {filter.color.options.map((item,index) => {
                                   return (
                                       <button
+                                      style={{ width:"57%"}}
                                           onClick={() => choseColor(item)}
                                           key={index}
                                           className={`inline-block rounded mr-3 mb-2 border-2 border-solid transition-all ${
@@ -249,11 +250,12 @@ const Products = ({seo}) => {
                                               style={{
                                                   background: item.color,
                                               }}
-                                              className=" w-5 h-5"
+                                              className="w-5 h-5"
                                           ></div>
                                       </button>
                                   )
                               })}
+                              </div>
                           </div>
                           {filter.attributes.map((item, index) => {
 
@@ -286,7 +288,7 @@ const Products = ({seo}) => {
                                   sort({sort: 'created_at', order: 'asc'});
                               }} className={`inline-block bold mr-3 ${sort_f === 'created_at' && order === 'asc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_date_asc',localizations)}</button>
                           </div>
-                          <div className="grid xl:grid-cols-3 grid-cols-2 gap-8">
+                          <div className="grid xl:grid-cols-4 grid-cols-2 gap-8">
                               {products.data.map((item, index) => {
                                   let discount;
                                   discount = 100 - ((item.special_price * 100) / item.price).toFixed()
