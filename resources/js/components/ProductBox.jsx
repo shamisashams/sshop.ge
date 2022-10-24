@@ -93,17 +93,17 @@ const ProductBox = (props) => {
 
           </button>
         </div>
-        <Link href={props.link} className="underline text-custom-blue ">
 
         <div className="w-4/5 h-60  mb-4 mx-auto">
+        <Link href={props.link} className="underline text-custom-blue ">
           <img
             className=" w-full h-full object-contain"
             src={props.img}
             alt=""
           />
+        </Link>
         </div>
 
-        </Link>
         <div className=" mb-1 uppercase" style={{height:"40px", overflow: 'hidden'}}>{props.name}</div>
         <div className="opacity-50  mb-2" style={{height:'20px'}}>
             {props.brand}
