@@ -4,7 +4,7 @@ import Layout from "@/Layouts/Layout";
 import { Link, usePage } from '@inertiajs/inertia-react'
 
 const About = ({seo}) => {
-    const {images, localizations} = usePage().props;
+    const {images, localizations, page} = usePage().props;
 
     const renderHTML = (rawHTML) =>
         React.createElement("p", {
@@ -17,9 +17,9 @@ const About = ({seo}) => {
               <div className="wrapper">
                   <div id="about-us">
                       <div className="text">
-                          <div className="title bold">{__('client.about_h',localizations)}</div>
+                          <div className="title bold">{page.title}</div>
                           <div className="paragraphs">
-                              {renderHTML(__('client.about_t',localizations).newLineToBr())}
+                              {renderHTML(page.description)}
                               {/*<p>
                                   Unlike Privacy Policies, which are required by laws such as the
                                   GDPR, CalOPPA and many others, there's no law or regulation on
