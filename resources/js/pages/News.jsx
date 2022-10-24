@@ -11,7 +11,12 @@ import { Link, usePage } from '@inertiajs/inertia-react'
 
 const News = ({seo}) => {
 
-    const {news, localizations} = usePage().props;
+    const {news, localizations, page} = usePage().props;
+
+    const renderHTML = (rawHTML) =>
+        React.createElement("p", {
+            dangerouslySetInnerHTML: { __html: rawHTML },
+        });
 
   const newsData = [
     {
@@ -69,9 +74,9 @@ const News = ({seo}) => {
           <div className="batman">
               <div className="wrapper">
                   <div className="news-titles">
-                      <div className="title">{__('client.news_h',localizations)}</div>
+                      <div className="title">{page.title}</div>
                       <div className="paragraph">
-                          {__('client.news_t',localizations)}
+                          {renderHTML(page.description)}
                       </div>
                   </div>
                   <div className="news-grid">
