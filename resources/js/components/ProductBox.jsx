@@ -95,13 +95,17 @@ const ProductBox = (props) => {
         </div>
 
         <div className="w-4/5 h-60  mb-4 mx-auto">
-        <Link href={props.link} className="underline text-custom-blue ">
+        {/* <Link href={props.link} className="underline text-custom-blue "> */}
           <img
+          style={{cursor:"pointer"}}
+            onClick={()=>{
+                Inertia.visit(props.link)
+            }}
             className=" w-full h-full object-contain"
             src={props.img}
             alt=""
           />
-        </Link>
+        {/* </Link> */}
         </div>
 
         <div className=" mb-1 uppercase" style={{height:"40px", overflow: 'hidden'}}>{props.name}</div>
