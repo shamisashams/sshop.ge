@@ -100,8 +100,10 @@ const ProductBox = (props) => {
             alt=""
           />
         </div>
-        <div className=" mb-1 uppercase">{props.name}</div>
-        <div className="opacity-50  mb-2">{props.brand}</div>
+        <div className=" mb-1 uppercase" style={{height:"40px", overflow: 'hidden'}}>{props.name}</div>
+        <div className="opacity-50  mb-2" style={{height:'20px'}}>
+            {props.brand}
+            </div>
         <div className="flex mb-3 items-end justify-start">
           {props.oldPrice ? (
             <div className="opacity-70  mr-2 mb-0.5 bold relative">
