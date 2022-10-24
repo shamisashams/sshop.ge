@@ -286,7 +286,7 @@ const Products = ({seo}) => {
                                   sort({sort: 'created_at', order: 'asc'});
                               }} className={`inline-block bold mr-3 ${sort_f === 'created_at' && order === 'asc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_date_asc',localizations)}</button>
                           </div>
-                          <div className="grid xl:grid-cols-3 grid-cols-2 gap-8">
+                          <div className="grid xl:grid-cols-4 grid-cols-2 gap-8">
                               {products.data.map((item, index) => {
                                   let discount;
                                   discount = 100 - ((item.special_price * 100) / item.price).toFixed()
