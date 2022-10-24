@@ -227,7 +227,7 @@ const Products = ({seo}) => {
                       {__('client.filter',localizations)}
                   </button>
                   <div className="flex justify-start items-start relative ">
-                      <div className="bg-white rounded mr-10 p-7 shrink-0 filterBox">
+                      <div className="bg-white rounded mr-10 p-7 shrink-0 filterBox" style={{maxWidth:"300px"}}>
                           <div className="bold text-lg mb-5">{__('client.filter_price',localizations)}</div>
                           <RangeSlider appliedFilters={appliedFilters} />
                           <div className="my-5">
