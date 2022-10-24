@@ -15,6 +15,11 @@ import { Inertia } from '@inertiajs/inertia'
 const ShippingDetails = ({seo}) => {
     const { cart, cities, errors, shipping, localizations } = usePage().props;
 
+    const renderHTML = (rawHTML) =>
+        React.createElement("span", {
+            dangerouslySetInnerHTML: { __html: rawHTML },
+        });
+
     let selected = null;
     if (shipping) {
         cities.map((item, index) => {
@@ -238,7 +243,19 @@ const ShippingDetails = ({seo}) => {
                                                       <div className="bold uppercase">{item.product.title}</div>
                                                       {item.product.attributes.map((attr,ind) => {
 
-                                                          return <div className="text-sm opacity-50">{attr.attribute.name} : {attr.option}</div>
+                                                          let option = ''
+
+                                                          switch (attr.attribute.code){
+                                                              case 'color':
+                                                                  option = '<span style="display:inline-block;background-color: ' + attr.option.color + ';width: 20px;height: 20px"></span> ' + attr.option.label;
+                                                                  break;
+                                                              case 'size':
+                                                                  option = attr.option.value;
+                                                                  break;
+                                                              default:
+                                                                  option = attr.option.label;
+                                                          }
+                                                          return <div className="text-sm opacity-50">{attr.attribute.name} : {renderHTML(option)}</div>
                                                       })}
                                                       {/*<div className="text-sm opacity-50">
                                                           Color: {item.color}

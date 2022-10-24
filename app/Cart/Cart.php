@@ -251,16 +251,16 @@ class Cart
                                 if($item->integer_value == $option->id) {
                                     $result[$key]['attribute']['code'] = $item->attribute->code;
                                     $result[$key]['attribute']['name'] = $item->attribute->name;
-                                    if($item->attribute->code == 'size'){
 
-                                        $result[$key]['option'] = $option->value;
-                                    }
-                                    elseif ($item->attribute->code == 'color'){
-                                        $result[$key]['option'] = $option->color;
-                                    }
-                                    else {
-                                        $result[$key]['option'] = $option->label;
-                                    }
+
+                                    $result[$key]['option']['value'] = $option->value;
+
+
+                                    $result[$key]['option']['color'] = $option->color;
+
+
+                                    $result[$key]['option']['label'] = $option->label;
+
                                 }
 
                             }

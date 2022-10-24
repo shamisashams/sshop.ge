@@ -18,6 +18,11 @@ const PaymentDetails = ({seo}) => {
     const {cart,promocode, shipping, city, localizations} = usePage().props;
   const [bankSelect, setBankSelect] = useState(null);
 
+    const renderHTML = (rawHTML) =>
+        React.createElement("span", {
+            dangerouslySetInnerHTML: { __html: rawHTML },
+        });
+
     const [bank,setBank] = useState(null);
   //const [chooseCity, setChooseCity] = useState(false);
   //const [city, setCity] = useState("Choose city");
@@ -277,7 +282,20 @@ const PaymentDetails = ({seo}) => {
                                                       <div className="bold uppercase">{item.product.title}</div>
                                                       {item.product.attributes.map((attr,ind) => {
 
-                                                          return <div className="text-sm opacity-50">{attr.attribute.name} : {attr.option}</div>
+                                                          let option = ''
+
+                                                          switch (attr.attribute.code){
+                                                              case 'color':
+                                                                  option = '<span style="display:inline-block;background-color: ' + attr.option.color + ';width: 20px;height: 20px"></span> ' + attr.option.label;
+                                                                  break;
+                                                              case 'size':
+                                                                  option = attr.option.value;
+                                                                  break;
+                                                              default:
+                                                                  option = attr.option.label;
+                                                          }
+
+                                                          return <div className="text-sm opacity-50">{attr.attribute.name} : {renderHTML(option)}</div>
                                                       })}
                                                       {/*<div className="text-sm opacity-50">
                                                           Color: {item.color}
