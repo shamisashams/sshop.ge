@@ -119,10 +119,10 @@ const Contact = ({seo}) => {
                   <div className="smedia-contact">
                       <div className="title-text bold">{__('client.contact_social',localizations)}</div>
                       <div className="sm-icons flex">
-                          <a href={info.facebook}>
+                          <a target="_blank" href={info.facebook}>
                               <img src="/client/assets/images/contact/5.png" alt="facebook" />
                           </a>
-                          <a href={info.instagram}>
+                          <a target="_blank" href={info.instagram}>
                               <img src="/client/assets/images/contact/6.png" alt="Instagram" />
                           </a>
                       </div>
