@@ -54,7 +54,7 @@ const ShoppingCart = ({seo}) => {
                                       let brand;
                                       item.product.attributes.map((attr) => {
                                           if(attr.attribute.code === 'brand'){
-                                              brand = attr.option
+                                              brand = attr.option.label
                                           }
                                       });
                                       return (
