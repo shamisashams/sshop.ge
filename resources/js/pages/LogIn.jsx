@@ -8,7 +8,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 const LogIn = ({seo}) => {
 
-    const { errors, localizations } = usePage().props;
+    const { pathname, errors, localizations } = usePage().props;
     const [values, setValues] = useState({
         email: "",
         password: "",
@@ -30,7 +30,7 @@ const LogIn = ({seo}) => {
 
     window.addEventListener("keypress", function(event) {
         // If the user presses the "Enter" key on the keyboard
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && pathname === route('client.login.index')) {
             // Cancel the default action, if needed
 
             event.preventDefault();
