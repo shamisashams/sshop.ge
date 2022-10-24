@@ -17,6 +17,11 @@ const SingleProduct = ({seo}) => {
   const [favorite, setFavorite] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
+    const renderHTML = (rawHTML) =>
+        React.createElement("div", {
+            dangerouslySetInnerHTML: { __html: rawHTML },
+        });
+
   const {product,category_path, product_images, variants, similar_products, urlPrev, localizations} = usePage().props;
 
   //alert(urlPrev);
@@ -348,6 +353,10 @@ const SingleProduct = ({seo}) => {
                           {__("client.more_details", localizations)}
                       </div>
                       <div className="lg:columns-3 sm:columns-2 w-full leading-relaxed gap-10">
+
+                          <div className="break-inside-avoid mb-7">
+                              {renderHTML(product.description)}
+                          </div>
                           {/*<div className="break-inside-avoid mb-7">
                               <p>processor</p>
                               <p>• Processor model: Intel Core i3-12100</p>
