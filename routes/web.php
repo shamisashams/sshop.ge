@@ -296,19 +296,57 @@ Route::prefix('{locale?}')
             $facebookUser = Socialite::driver('facebook')->stateless()->user();
 
             //dd($facebookUser);
-            $email = uniqid();
-            if ($facebookUser->email !== null) $email = $facebookUser->email;
-            $user = User::updateOrCreate([
-                'facebook_id' => $facebookUser->id,
 
-            ], [
-                'email' => $email,
-                'name' => $facebookUser->name,
-                'facebook_id' => $facebookUser->id,
-                'facebook_token' => $facebookUser->token,
-                'facebook_refresh_token' => $facebookUser->refreshToken,
-                'avatar' => $facebookUser->avatar,
-            ]);
+            if ($facebookUser->email !== null) {
+                $email = $facebookUser->email;
+
+                $user = User::query()->where('email', $email)->first();
+
+                if($user){
+                    $user->update([
+                        //'name' => $facebookUser->name,
+                        'facebook_id' => $facebookUser->id,
+                        'facebook_token' => $facebookUser->token,
+                        'facebook_refresh_token' => $facebookUser->refreshToken,
+                        'avatar' => $facebookUser->avatar
+                    ]);
+                } else {
+                    $user = User::query()->create([
+                        'email' => $email,
+                        'name' => $facebookUser->name,
+                        'facebook_id' => $facebookUser->id,
+                        'facebook_token' => $facebookUser->token,
+                        'facebook_refresh_token' => $facebookUser->refreshToken,
+                        'avatar' => $facebookUser->avatar,
+                        'affiliate_id' => (string) Str::uuid()
+                    ]);
+                }
+            } else {
+
+
+                $user = User::query()->where('facebook_id', $facebookUser->id)->first();
+
+                if($user){
+                    $user->update([
+                        //'name' => $facebookUser->name,
+                        'facebook_token' => $facebookUser->token,
+                        'facebook_refresh_token' => $facebookUser->refreshToken,
+                        'avatar' => $facebookUser->avatar
+                    ]);
+                } else {
+                    $email = uniqid();
+                    $user = User::query()->create([
+                        'email' => $email,
+                        'name' => $facebookUser->name,
+                        'facebook_id' => $facebookUser->id,
+                        'facebook_token' => $facebookUser->token,
+                        'facebook_refresh_token' => $facebookUser->refreshToken,
+                        'avatar' => $facebookUser->avatar,
+                        'affiliate_id' => (string) Str::uuid()
+                    ]);
+                }
+            }
+
 
 
 
@@ -316,7 +354,7 @@ Route::prefix('{locale?}')
 
             Auth::login($user);
 
-            return redirect(route('profile'));
+            return redirect(route('client.cabinet'));
         })->name('fb-callback');
 
         Route::get('/auth/google/redirect', function () {
