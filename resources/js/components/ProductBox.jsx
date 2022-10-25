@@ -44,7 +44,6 @@ const ProductBox = (props) => {
   return (
     <>
       <div className="bg-white rounded p-5 text-sm relative">
-      <Link href={props.link} className="underline text-custom-blue ">
         {props.oldPrice ? (
           <div className="absolute top-5 left-5 text-xs text-white bg-custom-red rounded py-0.5 px-2">
             {props.discount}%
@@ -94,13 +93,21 @@ const ProductBox = (props) => {
 
           </button>
         </div>
+
         <div className="w-4/5 h-60  mb-4 mx-auto">
+        {/* <Link href={props.link} className="underline text-custom-blue "> */}
           <img
+          style={{cursor:"pointer"}}
+            onClick={()=>{
+                Inertia.visit(props.link)
+            }}
             className=" w-full h-full object-contain"
             src={props.img}
             alt=""
           />
+        {/* </Link> */}
         </div>
+
         <div className=" mb-1 uppercase" style={{height:"40px", overflow: 'hidden'}}>{props.name}</div>
         <div className="opacity-50  mb-2" style={{height:'20px'}}>
             {props.brand}
@@ -132,7 +139,7 @@ const ProductBox = (props) => {
           draggable
           pauseOnHover
         />*/}
-        </Link>
+
       </div>
     </>
   );
