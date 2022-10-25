@@ -173,6 +173,8 @@ Route::prefix('{locale?}')
         Route::get('partner-signin',[\App\Http\Controllers\Client\AuthController::class,'partnerLoginView'])->name('partner.login.index')->middleware('guest_p');
         Route::post('partner-signin',[\App\Http\Controllers\Client\AuthController::class,'partnerLogin'])->name('partner.login');
 
+
+
         Route::middleware(['auth_partner','is_partner'])->group(function (){
             Route::get('partner/settings',[\App\Http\Controllers\Client\PartnerController::class,'cabinet'])->name('partner.settings');
             Route::get('partner/bank-account',[\App\Http\Controllers\Client\PartnerController::class,'bankAccount'])->name('partner.bank-account');
