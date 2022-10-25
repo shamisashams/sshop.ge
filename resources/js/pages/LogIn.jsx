@@ -28,7 +28,7 @@ const LogIn = ({seo}) => {
         Inertia.post(route("client.login"), values);
     }
 
-    window.addEventListener("keypress", function(event) {
+    /*window.addEventListener("keypress", function(event) {
         // If the user presses the "Enter" key on the keyboard
         if (event.key === "Enter" && pathname === route('client.login.index')) {
             // Cancel the default action, if needed
@@ -37,7 +37,12 @@ const LogIn = ({seo}) => {
             // Trigger the button element with a click
             Inertia.post(route("client.login"), values);
         }
-    });
+    });*/
+
+    function handleClick(e){
+        e.preventDefault();
+        Inertia.post(route("client.login"), values);
+    }
 
   return (
       <Layout seo={seo}>
@@ -45,12 +50,13 @@ const LogIn = ({seo}) => {
               <div className="wrapper">
                   <div className="sign-in">
                       <div className="title-text bold">{__('client.login',localizations)}</div>
-                      <form action="#" className="auth-form">
+                      <form onSubmit={handleSubmit} className="auth-form">
                           {errors.email && <div>{errors.email}</div>}
                           <input name="email" type="email" placeholder={__('client.form_email',localizations)} onChange={handleChange} />
-                          <input type="password" name="password" placeholder={__('client.form_password',localizations)} onChange={handleChange} />
+                          <input id="pass" type="password" name="password" placeholder={__('client.form_password',localizations)} onChange={handleChange} />
+                          <input type="submit" id="submitbtn" style={{display:'none'}} />
                       </form>
-                      <a onClick={handleSubmit} href="javascript:;">
+                      <a onClick={handleClick} href="javascript:;">
                           <div className="main-btn bold">{__('client.login_btn',localizations)}</div>
                       </a>
                       <div className="or">
