@@ -24,6 +24,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->withoutMiddleware('web')->name('upload');
 
@@ -364,24 +365,37 @@ Route::prefix('{locale?}')
         Route::get('/auth/google/callback', function () {
             $googleUser = Socialite::driver('google')->user();
 
+            $user = User::query()->where('email', $googleUser->email)->first();
+
+            if($user){
+                $user->update([
+                    //'name' => $googleUser->name,
+                    'google_id' => $googleUser->id,
+                    'google_token' => $googleUser->token,
+                    'google_refresh_token' => $googleUser->refreshToken,
+                    'avatar' => $googleUser->avatar,
+                ]);
+            } else {
+                $user = User::query()->create([
+                    'email' => $googleUser->email,
+                    'name' => $googleUser->name,
+                    'google_id' => $googleUser->id,
+                    'google_token' => $googleUser->token,
+                    'google_refresh_token' => $googleUser->refreshToken,
+                    'avatar' => $googleUser->avatar,
+                    'affiliate_id' => (string) Str::uuid()
+                ]);
+            }
+
             //dd($googleUser);
-            $user = User::updateOrCreate([
-                //'facebook_id' => $facebookUser->id,
-                'email' => $googleUser->email,
-            ], [
-                'name' => $googleUser->name,
-                'google_id' => $googleUser->id,
-                'google_token' => $googleUser->token,
-                'google_refresh_token' => $googleUser->refreshToken,
-                'avatar' => $googleUser->avatar,
-            ]);
+
 
 
             //dd($user);
 
             Auth::login($user);
 
-            return redirect(route('profile'));
+            return redirect(route('client.cabinet'));
         })->name('google-callback');
         //--------------------------------------------------------------------------
     });
