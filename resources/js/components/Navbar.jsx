@@ -35,6 +35,11 @@ const Navbar = () => {
         Inertia.visit(route("client.category.show", slug));
     }
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        Inertia.get(route("search.index"), {term: document.getElementById('search_inp').value});
+    }
+
     return (
         <>
             <header className="fixed w-full left-0 top-0 bg-white/[0.9]  py-4 after:backdrop-blur-md after:left-0 after:top-0 after:w-full after:h-full after:z-0 z-50">
@@ -69,7 +74,7 @@ const Navbar = () => {
                         </div>
                     </button>
                     <div className="h-10 w-1/3 mx-5 relative text-sm  hidden md:inline-block">
-                        <form className="h-full" action={route("search.index")}>
+                        <form onSubmit={handleSubmit} className="h-full">
                             <input
                                 className="w-full h-full bg-custom-zinc-100 text-center placeholder:opacity-40 border-solid border-1 border-custom-dark"
                                 type="text"
@@ -78,6 +83,7 @@ const Navbar = () => {
                                     localizations
                                 )}
                                 name="term"
+                                id="search_inp"
                             />
                         </form>
 
