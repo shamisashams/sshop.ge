@@ -139,6 +139,7 @@
                                 <thead>
                                 <tr>
                                     <th>@lang('admin.id')</th>
+                                    <th>@lang('admin.image')</th>
                                     <th>@lang('admin.model')</th>
                                     <th>@lang('admin.slug')</th>
                                     <th>@lang('admin.group')</th>
@@ -158,6 +159,7 @@
                                                value="{{Request::get('id')}}"
                                                class="validate {{$errors->has('id') ? '' : 'valid'}}">
                                     </th>
+                                    <th></th>
                                     <th>
                                         <input class="form-control" type="text" name="model" onchange="this.form.submit()"
                                                value="{{Request::get('model')}}"
@@ -201,6 +203,9 @@
                                     @foreach($data as $item)
                                         <tr>
                                             <th scope="row">{{$item->id}}</th>
+                                            <td>
+                                                <img src="{{$item->latestImage->file_full_url}}">
+                                            </td>
                                             <th scope="row">{{$item->model}}</th>
                                             <th scope="row">{{$item->slug}}</th>
                                             <td>{{$item->group}}</td>

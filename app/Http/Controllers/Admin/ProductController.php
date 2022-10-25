@@ -95,7 +95,7 @@ class ProductController extends Controller
         ]);*/
 
         return view('admin.nowa.views.products.index', [
-            'data' => $this->productRepository->getData($request, ['translations', 'categories','stocks','categories.ancestors','categories.colors']),
+            'data' => $this->productRepository->getData($request, ['translations', 'categories','stocks','categories.ancestors','categories.colors','latestImage']),
             'stocks' => Stock::with('translation')->get(),
             'categories' => $this->categoryRepository->model->leftJoin('category_translations',function ($join){
                 $join->on('category_translations.category_id','categories.id')->where('category_translations.locale',app()->getLocale());
