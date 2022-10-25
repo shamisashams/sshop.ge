@@ -177,6 +177,7 @@ class CategoryController extends Controller
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
                     $_options[$_key]['color'] = $option->color;
+                    $_options[$_key]['value'] = $option->value;
                     $_options[$_key]['count'] = isset($data[$option->id]) ? $data[$option->id] : 0;
                     $_key++;
                 }
@@ -193,6 +194,7 @@ class CategoryController extends Controller
                     $_options[$_key]['id'] = $option->id;
                     $_options[$_key]['label'] = $option->label;
                     $_options[$_key]['color'] = $option->color;
+                    $_options[$_key]['value'] = $option->value;
                     $_options[$_key]['count'] = isset($data[$option->id]) ? $data[$option->id] : 0;
                     $_key++;
                 }

@@ -177,7 +177,7 @@ export const FilterOptions = ({ title, options, attribute, appliedFilters }) => 
                 htmlFor={`${item.label}_${index}`}
               ></label>
               <label className="" htmlFor={`${item.label}_${index}`}>
-                {`${item.label}`}{" "}
+                {`${item.label}`} {item.value}
                 <span className="opacity-50 text-sm">({item.count})</span>
               </label>
             </div>
