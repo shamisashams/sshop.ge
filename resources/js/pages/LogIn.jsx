@@ -64,13 +64,13 @@ const LogIn = ({seo}) => {
                       </div>
                       {/* Alternative Sign in */}
                       <div className="alternative-sign">
-                          <a href="#">
+                          <a href={route('google-redirect')}>
                               <div className="options flex center">
                                   <img src="/client/assets/images/signin/2.png" alt="" />
                                   <p>{__('client.sign_in_with_google',localizations)}</p>
                               </div>
                           </a>
-                          <a href="#">
+                          <a href={route('fb-redirect')}>
                               <div className="options flex center">
                                   <img src="/client/assets/images/signin/1.png" alt="" />
                                   <p>{__('client.sign_in_with_facebook',localizations)}</p>

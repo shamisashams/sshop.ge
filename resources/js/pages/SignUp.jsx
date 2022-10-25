@@ -100,12 +100,12 @@ const SignUp = ({seo}) => {
                       </div>
                       {/* Alternative Sign in */}
                       <div className="alternative-sign-up">
-                          <a href="#">
+                          <a href={route('google-redirect')}>
                               <div className="options flex center">
                                   <img src="/client/assets/images/signin/2.png" alt="" />
                               </div>
                           </a>
-                          <a href="#">
+                          <a href={route('fb-redirect')}>
                               <div className="options flex center">
                                   <img src="/client/assets/images/signin/1.png" alt="" />
                               </div>
