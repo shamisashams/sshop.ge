@@ -30,8 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'facebook' => [
-        'client_id' => '482293713932255',
-        'client_secret' => '1f79a4793b19b317ca2573421cf1de0f',
+        'client_id' => '1250269695555740',
+        'client_secret' => '1720f94cc87fb3c93f2c562b5dddb476',
         'redirect' => 'https://sshop.ge/ge/auth/facebook/callback',
     ],
     'google' => [
