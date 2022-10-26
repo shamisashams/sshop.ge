@@ -35,8 +35,8 @@ return [
         'redirect' => 'https://sshop.ge/ge/auth/facebook/callback',
     ],
     'google' => [
-        'client_id' => '194477847906-5oba7obd2csbm6bn3a6u2jb22usln98o.apps.googleusercontent.com',
-        'client_secret' => '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',
+        'client_id' => '147763779029-fdovspq1jrb3h6u39e7shdg9nild61jn.apps.googleusercontent.com',
+        'client_secret' => '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',
         'redirect' => 'https://sshop.ge/ge/auth/google/callback',
     ],
 
