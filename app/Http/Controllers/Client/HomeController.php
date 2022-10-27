@@ -76,7 +76,7 @@ class HomeController extends Controller
             if($product->popular) $products['popular'][] = $product;
         }
 
-        $rand_products =  Product::with(['latestImage','translation','variants.translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
+        $rand_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
         })->inRandomOrder()->limit(18)->get();
 
