@@ -146,15 +146,19 @@
                                 <td class="tx-right" colspan="2">{{$order->discount ?? 0}}%</td>
                             </tr>
                             <tr>
+                                <td class="tx-right">Shipping</td>
+                                <td class="tx-right" colspan="2">{{$order->ship_price ?? 0}}₾</td>
+                            </tr>
+                            <tr>
                                 <td class="tx-right tx-uppercase tx-bold tx-inverse">Total Due</td>
-                                <td class="tx-right" colspan="2">
+                                <td class="tx-right" colspan="3">
                                     <?php
                                     $grand_total = $order->grand_total;
                                     if($order->discount){
                                         $grand_total = $order->grand_total - (($order->grand_total * $order->discount) / 100);
                                     }
                                     ?>
-                                    <h4 class="tx-bold">{{$grand_total}}₾</h4>
+                                    <h4 class="tx-bold">{{$grand_total + $order->ship_price}}₾</h4>
                                 </td>
                             </tr>
                             </tbody>

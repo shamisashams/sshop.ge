@@ -318,7 +318,7 @@ class OrderController extends Controller
                     $data['name'] = $item['product']['title'];
                     $data['qty_ordered'] = $item['quantity'];
                     $data['price'] = $item['product']->special_price ? $item['product']->special_price : $item['product']['price'] ;
-                    $data['total'] = $item['product']['price'] * $item['quantity'];
+                    $data['total'] = $data['price'] * $item['quantity'];
                     $data['attributes'] = json_encode($item['product']['attributes']);
                     if ($item['product']->discount){
                         $data['promocode_discount'] = $item['product']->discount;
