@@ -78,7 +78,7 @@ class HomeController extends Controller
 
         $rand_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
-        })->inRandomOrder()->limit(18)->get();
+        })->inRandomOrder()->limit(25)->get();
 
         foreach ($rand_products as $product){
             $product_attributes = $product->attribute_values;
