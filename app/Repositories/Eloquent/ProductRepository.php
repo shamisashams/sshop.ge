@@ -48,19 +48,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $query->where('status',1);
         })->with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->inRandomOrder()->get();
 
-        $prices = [];
-        $sale = false;
-        foreach ($products as $item){
-            foreach ($item->variants as $variant){
-                $prices[] = $variant->special_price ? $variant->special_price : $variant->price;
-                if($variant->special_price){
-                    $sale = true;
-                }
-            }
-            $item['min_price'] = !empty($prices) ? min($prices) : 0;
-            $item['sale'] = $sale;
 
-        }
         //dd($products);
         return $products;
     }
