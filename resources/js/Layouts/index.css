@@ -175,6 +175,10 @@ table tr:last-child td {
 
 /* swiper start */
 
+.swiper-button-prev,
+.swiper-button-next {
+    display: none;
+}
 .swiper-wrapper {
     align-items: stretch;
     height: auto;
