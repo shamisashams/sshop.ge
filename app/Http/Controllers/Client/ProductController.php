@@ -294,13 +294,7 @@ class ProductController extends Controller
 
             }
             $_product['attributes'] = $_result;
-            $prices = [];
 
-            foreach ($_product->variants as $variant){
-                $prices[] = $variant->special_price ? $variant->special_price : $variant->price;
-            }
-
-            $_product['min_price'] = !empty($prices) ? min($prices) : 0;
 
 
         }
