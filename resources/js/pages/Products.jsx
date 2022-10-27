@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { productSliderData } from "../components/Data";
 //import RangeSlider from "../components/PriceRange";
 import ProductBox from "../components/ProductBox";
 import { ColorPick, FilterOptions } from "../components/Shared";
 import { TbAdjustments } from "react-icons/tb";
 import Layout from "@/Layouts/Layout";
-import { Link, usePage } from '@inertiajs/inertia-react'
-import {Inertia} from "@inertiajs/inertia";
+import { Link, usePage } from "@inertiajs/inertia-react";
+import { Inertia } from "@inertiajs/inertia";
 import RangeSlider from "../components/PriceRange/PriceRange";
+import { IoCloseOutline } from "react-icons/io5";
 
-const Products = ({seo}) => {
+const Products = ({ seo }) => {
+    const [showFilters, setShowFilters] = useState(false);
+    const wrapperRef = useRef(null);
 
+    useOutsideAlerter(wrapperRef);
+    function useOutsideAlerter(ref) {
+        useEffect(() => {
+            function handleClickOutside(event) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setShowFilters(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
     let appliedFilters = [];
     let urlParams = new URLSearchParams(window.location.search);
 
@@ -18,17 +35,12 @@ const Products = ({seo}) => {
         appliedFilters[index] = value.split(",");
     });
 
-    const {category,products, filter, localizations} = usePage().props;
+    const { category, products, filter, localizations } = usePage().props;
 
     console.log(filter);
 
-
-    function choseColor(color){
-
-
-
-            appliedFilters['color'] = [color.id] ;
-
+    function choseColor(color) {
+        appliedFilters["color"] = [color.id];
 
         let params = [];
 
@@ -39,7 +51,7 @@ const Products = ({seo}) => {
         Inertia.visit("?" + params.join("&"));
     }
 
-    function clearFilter(){
+    function clearFilter() {
         appliedFilters = [];
         let params = [];
 
@@ -104,84 +116,7 @@ const Products = ({seo}) => {
         ) : null;
     };
 
-  const [showFilters, setShowFilters] = useState(false);
-  const options = [
-    {
-      title: "Brands",
-      list: [
-        {
-          label: "Apple",
-          quantity: "10",
-        },
-        {
-          label: "Asus",
-          quantity: "10",
-        },
-        {
-          label: "Hp",
-          quantity: "32",
-        },
-        {
-          label: "Dell",
-          quantity: "7",
-        },
-        {
-          label: "HyperPC",
-          quantity: "2",
-        },
-        {
-          label: "Hp",
-          quantity: "32",
-        },
-        {
-          label: "Dell",
-          quantity: "7",
-        },
-        {
-          label: "HyperPC",
-          quantity: "2",
-        },
-      ],
-    },
-    {
-      title: "Gpu",
-      list: [
-        {
-          label: "Geforce RfghTX 3090",
-          quantity: "1",
-        },
-        {
-          label: "Geforce RTfghX 3090",
-          quantity: "34",
-        },
-        {
-          label: "Geforce RfghTX 3090",
-          quantity: "7",
-        },
-        {
-          label: "Geforce gf",
-          quantity: "2",
-        },
-        {
-          label: "Geforce Rfgh 3090",
-          quantity: "34",
-        },
-        {
-          label: "Geforce fghRTX 3090",
-          quantity: "7",
-        },
-        {
-          label: "Geforce RTfghX 3090",
-          quantity: "2",
-        },
-      ],
-    },
-  ];
-
-
     const sort = function (data) {
-
-
         appliedFilters["sort"] = data.sort;
         appliedFilters["order"] = data.order;
 
@@ -200,128 +135,238 @@ const Products = ({seo}) => {
     };
 
     let sort_f, order;
-    sort_f = 'created_at';
-    order = 'desc';
-    if(appliedFilters.hasOwnProperty('sort')){
-
-        sort_f =  appliedFilters['sort'][0];
-        order = appliedFilters['order'][0];
-
-
-
+    sort_f = "created_at";
+    order = "desc";
+    if (appliedFilters.hasOwnProperty("sort")) {
+        sort_f = appliedFilters["sort"][0];
+        order = appliedFilters["order"][0];
     }
 
     //alert(sort_f);
-  return (
-      <Layout seo={seo}>
-          <div className="bg-custom-zinc-300 py-12">
-              <div className="wrapper pb-10">
-                  {category ? <div className="text-3xl bold mb-10">
-                      {category.title} <span className="text-xl opacity-20 pl-3">{category.product_count} {__('client.products_count',localizations)}</span>
-                  </div>:null}
-                  <button
-                      onClick={() => setShowFilters(true)}
-                      className="bold text-lg  whitespace-nowrap"
-                  >
-                      <TbAdjustments className="w-6 h-6 inline-block mb-1" />
-                      {__('client.filter',localizations)}
-                  </button>
-                  <div className="flex justify-start items-start relative ">
-                      <div className="bg-white rounded mr-10 p-7 shrink-0 filterBox" style={{maxWidth:"300px"}}>
-                          <div className="bold text-lg mb-5">{__('client.filter_price',localizations)}</div>
-                          <RangeSlider appliedFilters={appliedFilters} />
-                          <div className="my-5">
-                              <div className="opacity-50 text-sm mb-3">{__('client.filter_color',localizations)}</div>
-                              {/*<ColorPick attribute={filter.color ?? {options:[]}} />*/}
-                              <div className="grid grid-cols-5 gap-0">
-                              {filter.color.options.map((item,index) => {
-                                  return (
-                                      <button
-                                      style={{ width:"57%"}}
-                                          onClick={() => choseColor(item)}
-                                          key={index}
-                                          className={`inline-block rounded mr-3 mb-2 border-2 border-solid transition-all ${
-                                              (appliedFilters.hasOwnProperty('color') ? appliedFilters['color'].includes(item.id.toString()): false)
-                                                  ? "border-custom-blue"
-                                                  : "border-transparent"
-                                          } `}
-                                      >
-                                          <div
-                                              style={{
-                                                  background: item.color,
-                                              }}
-                                              className="w-5 h-5"
-                                          ></div>
-                                      </button>
-                                  )
-                              })}
-                              </div>
-                          </div>
-                          {filter.attributes.map((item, index) => {
-
-                              return (
-                                  <FilterOptions
-                                      key={index}
-                                      title={item.name}
-                                      options={item.options}
-                                      attribute={item}
-                                      appliedFilters={appliedFilters}
-                                  />
-                              );
-                          })}
-                          <button onClick={clearFilter} className="bg-custom-blue text-white rounded-md p-4 w-full bold">
-                              {__('client.filter_clear',localizations)}
-                          </button>
-                      </div>
-                      <div className=" w-full lg:w-auto">
-                          <div className="block text-sm mb-5">
-                              <button onClick={() => {
-                                  sort({sort: 'price', order: 'asc'});
-                              }} className={`inline-block bold mr-3 ${sort_f === 'price' && order === 'asc' ? 'opacity-100' : 'opacity-20'}`}>{__('client.filter_price_asc',localizations)}</button>
-                              <button onClick={() => {
-                                  sort({sort: 'price', order: 'desc'});
-                              }} className={`inline-block bold mr-3 ${sort_f === 'price' && order === 'desc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_price_desc',localizations)}</button>
-                              <button onClick={() => {
-                                  sort({sort: 'created_at', order: 'desc'});
-                              }} className={`inline-block bold mr-3 ${sort_f === 'created_at' && order === 'desc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_date_desc',localizations)}</button>
-                              <button onClick={() => {
-                                  sort({sort: 'created_at', order: 'asc'});
-                              }} className={`inline-block bold mr-3 ${sort_f === 'created_at' && order === 'asc' ? 'opacity-100' : 'opacity-20'} `}>{__('client.filter_date_asc',localizations)}</button>
-                          </div>
-                          <div className="grid xl:grid-cols-4 grid-cols-2 gap-8">
-                              {products.data.map((item, index) => {
-                                  let discount;
-                                  discount = 100 - ((item.special_price * 100) / item.price).toFixed()
-                                  return (
-                                      <ProductBox
-                                          key={index}
-                                          img={item.latest_image ? item.latest_image.thumb_full_url:null}
-                                          name={item.title}
-                                          brand={item.attributes.brand}
-                                          oldPrice={item.special_price ? item.price : null}
-                                          price={item.special_price ? item.special_price : item.price}
-                                          discount={discount}
-                                          link={route('client.product.show',item.slug)}
-                                          id={item.id}
-                                          qty={item.quantity}
-                                      />
-                                  );
-                              })}
-                          </div>
-                          <div className="flex items-center justify-end mt-10">
-                              {/*<button className="mx-2 bold opacity-100">1</button>
+    return (
+        <Layout seo={seo}>
+            <div className="bg-custom-zinc-300 py-12">
+                <div className="wrapper pb-10">
+                    {category ? (
+                        <div className="text-3xl bold mb-10">
+                            {category.title}{" "}
+                            <span className="text-xl opacity-20 pl-3">
+                                {category.product_count}{" "}
+                                {__("client.products_count", localizations)}
+                            </span>
+                        </div>
+                    ) : null}
+                    <button
+                        onClick={() =>
+                            showFilters === false
+                                ? setShowFilters(!showFilters)
+                                : setShowFilters(false)
+                        }
+                        className="bold text-lg lg:hidden whitespace-nowrap mb-5"
+                    >
+                        <TbAdjustments className="w-6 h-6 inline-block  mb-1" />
+                        {__("client.filter", localizations)}
+                    </button>
+                    <div className="flex justify-start items-start relative ">
+                        <div
+                            ref={wrapperRef}
+                            className={`bg-white rounded mr-10 p-7 shrink-0 filterBox z-40 ${
+                                showFilters ? "open" : ""
+                            }`}
+                            style={{ maxWidth: "300px" }}
+                        >
+                            <button
+                                onClick={() => setShowFilters(false)}
+                                className="absolute top-4 right-4"
+                            >
+                                <IoCloseOutline className="w-5 h-5 " />
+                            </button>
+                            <div className="bold text-lg mb-5">
+                                {__("client.filter_price", localizations)}
+                            </div>
+                            <RangeSlider appliedFilters={appliedFilters} />
+                            <div className="my-5">
+                                <div className="opacity-50 text-sm mb-3">
+                                    {__("client.filter_color", localizations)}
+                                </div>
+                                {/*<ColorPick attribute={filter.color ?? {options:[]}} />*/}
+                                <div className="grid grid-cols-5 gap-0">
+                                    {filter.color.options.map((item, index) => {
+                                        return (
+                                            <button
+                                                style={{ width: "57%" }}
+                                                onClick={() => choseColor(item)}
+                                                key={index}
+                                                className={`inline-block rounded mr-3 mb-2 border-2 border-solid transition-all ${
+                                                    (
+                                                        appliedFilters.hasOwnProperty(
+                                                            "color"
+                                                        )
+                                                            ? appliedFilters[
+                                                                  "color"
+                                                              ].includes(
+                                                                  item.id.toString()
+                                                              )
+                                                            : false
+                                                    )
+                                                        ? "border-custom-blue"
+                                                        : "border-transparent"
+                                                } `}
+                                            >
+                                                <div
+                                                    style={{
+                                                        background: item.color,
+                                                    }}
+                                                    className="w-5 h-5"
+                                                ></div>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            {filter.attributes.map((item, index) => {
+                                return (
+                                    <FilterOptions
+                                        key={index}
+                                        title={item.name}
+                                        options={item.options}
+                                        attribute={item}
+                                        appliedFilters={appliedFilters}
+                                    />
+                                );
+                            })}
+                            <button
+                                onClick={clearFilter}
+                                className="bg-custom-blue text-white rounded-md p-4 w-full bold"
+                            >
+                                {__("client.filter_clear", localizations)}
+                            </button>
+                        </div>
+                        <div className=" w-full lg:w-auto">
+                            <div className="block text-sm mb-5">
+                                <button
+                                    onClick={() => {
+                                        sort({ sort: "price", order: "asc" });
+                                    }}
+                                    className={`inline-block bold mr-3 ${
+                                        sort_f === "price" && order === "asc"
+                                            ? "opacity-100"
+                                            : "opacity-20"
+                                    }`}
+                                >
+                                    {__(
+                                        "client.filter_price_asc",
+                                        localizations
+                                    )}
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        sort({ sort: "price", order: "desc" });
+                                    }}
+                                    className={`inline-block bold mr-3 ${
+                                        sort_f === "price" && order === "desc"
+                                            ? "opacity-100"
+                                            : "opacity-20"
+                                    } `}
+                                >
+                                    {__(
+                                        "client.filter_price_desc",
+                                        localizations
+                                    )}
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        sort({
+                                            sort: "created_at",
+                                            order: "desc",
+                                        });
+                                    }}
+                                    className={`inline-block bold mr-3 ${
+                                        sort_f === "created_at" &&
+                                        order === "desc"
+                                            ? "opacity-100"
+                                            : "opacity-20"
+                                    } `}
+                                >
+                                    {__(
+                                        "client.filter_date_desc",
+                                        localizations
+                                    )}
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        sort({
+                                            sort: "created_at",
+                                            order: "asc",
+                                        });
+                                    }}
+                                    className={`inline-block bold mr-3 ${
+                                        sort_f === "created_at" &&
+                                        order === "asc"
+                                            ? "opacity-100"
+                                            : "opacity-20"
+                                    } `}
+                                >
+                                    {__(
+                                        "client.filter_date_asc",
+                                        localizations
+                                    )}
+                                </button>
+                            </div>
+                            <div className="grid xl:grid-cols-4 sm:grid-cols-2  gap-8">
+                                {products.data.map((item, index) => {
+                                    let discount;
+                                    discount =
+                                        100 -
+                                        (
+                                            (item.special_price * 100) /
+                                            item.price
+                                        ).toFixed();
+                                    return (
+                                        <ProductBox
+                                            key={index}
+                                            img={
+                                                item.latest_image
+                                                    ? item.latest_image
+                                                          .thumb_full_url
+                                                    : null
+                                            }
+                                            name={item.title}
+                                            brand={item.attributes.brand}
+                                            oldPrice={
+                                                item.special_price
+                                                    ? item.price
+                                                    : null
+                                            }
+                                            price={
+                                                item.special_price
+                                                    ? item.special_price
+                                                    : item.price
+                                            }
+                                            discount={discount}
+                                            link={route(
+                                                "client.product.show",
+                                                item.slug
+                                            )}
+                                            id={item.id}
+                                            qty={item.quantity}
+                                        />
+                                    );
+                                })}
+                            </div>
+                            <div className="flex items-center justify-end mt-10">
+                                {/*<button className="mx-2 bold opacity-100">1</button>
                               <button className="mx-2 bold opacity-50">2</button>
                               <button className="mx-2 bold opacity-50">3</button>
                               <button className="mx-2 bold opacity-50">4</button>*/}
-                              {links(products.links)}
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </Layout>
-
-  );
+                                {links(products.links)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    );
 };
 
 export default Products;
