@@ -156,7 +156,7 @@
                                                             $color = 'red';
                                                             break;
                                                         case 'pending':
-                                                            $color = 'yellow';
+                                                            $color = '#4fa9d2';
                                                             break;
                                                     }
                                                 ?>
