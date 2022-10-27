@@ -76,9 +76,9 @@ class HomeController extends Controller
             if($product->popular) $products['popular'][] = $product;
         }
 
-        $rand_products =  Product::with(['latestImage','variants','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
+        $rand_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
-        })->inRandomOrder()->limit(18)->get();
+        })->inRandomOrder()->limit(25)->get();
 
         foreach ($rand_products as $product){
             $product_attributes = $product->attribute_values;
@@ -119,8 +119,6 @@ class HomeController extends Controller
             'products' => $products,
             'images' => $images,
             'sections' => $sections,
-            'collections' => ProductSet::with(['translation','latestImage'])->where('status',1)->get(),
-            'collection' => ProductSet::with(['translation','latestImage','products','products.stocks'])->where('status',1)->inRandomOrder()->first(),
             'blogs' => News::with(['translation','latestImage'])->limit(4)->inRandomOrder()->get()
         ])->withViewData([
             'meta_title' => $page->meta_title,

@@ -46,21 +46,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
             ->whereHas('categories',function ($query){
             $query->where('status',1);
-        })->with(['latestImage','variants','attribute_values.attribute.options.translation'])->inRandomOrder()->get();
+        })->with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->inRandomOrder()->get();
 
-        $prices = [];
-        $sale = false;
-        foreach ($products as $item){
-            foreach ($item->variants as $variant){
-                $prices[] = $variant->special_price ? $variant->special_price : $variant->price;
-                if($variant->special_price){
-                    $sale = true;
-                }
-            }
-            $item['min_price'] = !empty($prices) ? min($prices) : 0;
-            $item['sale'] = $sale;
 
-        }
         //dd($products);
         return $products;
     }
@@ -206,7 +194,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         $query->groupBy('products.id');
 
-        return $query->with(['translation','attribute_values.attribute.options.translation','latestImage'])->paginate('16')->withQueryString();
+        return $query->with(['translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation','latestImage'])->paginate('16')->withQueryString();
     }
 
 

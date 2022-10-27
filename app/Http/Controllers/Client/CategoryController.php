@@ -343,30 +343,17 @@ class CategoryController extends Controller
             }
             $product['attributes'] = $_result;
 
-            $sale = false;
 
-            foreach ($product->variants as $variant){
-
-                if($variant->special_price){
-                    $sale = true;
-                }
-            }
-
-            $product['sale'] = $sale;
 
         }
 
-        $subCategories = [];
-        foreach (Category::where('parent_id','!=',null)->get()->toArray() as $item){
-            $subCategories[] = $item;
-        }
+
 
         return Inertia::render('Products',[
             'products' => $products,
             'category' => null,
             'images' => $images,
             'filter' => $this->getAttributes(),
-            'subcategories' => $subCategories,
             'collections' => [],
             "seo" => [
                 "title"=>$page->meta_title,
@@ -423,24 +410,13 @@ class CategoryController extends Controller
             }
             $product['attributes'] = $_result;
 
-            $sale = false;
 
-            foreach ($product->variants as $variant){
-
-                if($variant->special_price){
-                    $sale = true;
-                }
-            }
-
-            $product['sale'] = $sale;
 
 
 
         }
 
-        foreach (Category::where('parent_id','!=',null)->get()->toArray() as $item){
-            $subCategories[] = $item;
-        }
+
 
 
         return Inertia::render('Products',[
@@ -448,7 +424,7 @@ class CategoryController extends Controller
             'category' => null,
             'images' => $images,
             'filter' => $this->getAttributes(),
-            'subcategories' => $subCategories,
+
             'collections' => [],
             "seo" => [
                 "title"=>$page->meta_title,

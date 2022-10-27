@@ -84,7 +84,7 @@ class ProductController extends Controller
         $product = Product::query()->where(['status' => true, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
 
-        })->with(['latestImage','video','attribute_values.attribute.translation','attribute_values.attribute.options.translation','colors.file'])->firstOrFail();
+        })->with(['translation','latestImage','video','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->firstOrFail();
 
         $productImages = $product->files()->orderBy('id','desc')->get();
 
@@ -206,7 +206,7 @@ class ProductController extends Controller
 
 
         //dd(last($product->categories));
-        $categories = $product->categories()->get();
+        $categories = $product->categories()->with(['ancestors'])->get();
 
 
         $path = [];
@@ -273,7 +273,7 @@ class ProductController extends Controller
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
             ->inRandomOrder()
             ->groupBy('products.id')
-            ->with('latestImage','variants','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation')->get();
+            ->with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->limit(25)->get();
 
         foreach ($similar_products as $_product){
             $product_attributes = $_product->attribute_values;
@@ -294,13 +294,7 @@ class ProductController extends Controller
 
             }
             $_product['attributes'] = $_result;
-            $prices = [];
 
-            foreach ($_product->variants as $variant){
-                $prices[] = $variant->special_price ? $variant->special_price : $variant->price;
-            }
-
-            $_product['min_price'] = !empty($prices) ? min($prices) : 0;
 
 
         }
@@ -327,7 +321,6 @@ class ProductController extends Controller
             'product_images' => $productImages,
             'product_attributes' => $result,
             'product_config' => $config,
-            'cities' => City::with('translation')->has('stocks')->get(),
             'stocks' => $stocks,
             "seo" => [
                 "title"=>$product->meta_title,
