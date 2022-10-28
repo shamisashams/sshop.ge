@@ -305,6 +305,10 @@ const Navbar = () => {
 
                 {/* category start */}
                 <div
+                    onMouseLeave={() => {
+                        setCatIndex("1000");
+                        setSubCatIndex("1000");
+                    }}
                     className={`categories absolute left-0 top-full w-full transition-all duration-500 lg:text-base text-sm  ${
                         openMenu
                             ? "translate-y-0 top-full"
@@ -320,7 +324,9 @@ const Navbar = () => {
                                     console.log(subCategories);
                                     return (
                                         <button
-                                            onClick={() => mainCatClick(index)}
+                                            onMouseEnter={() =>
+                                                mainCatClick(index)
+                                            }
                                             key={index + 1}
                                             className={`mb-3 block hover:text-custom-blue transition-all text-left ${
                                                 index + 1 === catIndex
@@ -344,7 +350,7 @@ const Navbar = () => {
                                `}
                             >
                                 <button
-                                    className=""
+                                    className="md:hidden"
                                     onClick={() => setMobileCatState(0)}
                                 >
                                     <IoIosArrowRoundBack className="w-8 h-8" />
@@ -386,6 +392,16 @@ const Navbar = () => {
 
                                                             //alert(subCatIndex)
                                                         }}
+                                                        onMouseEnter={() => {
+                                                            if (
+                                                                item.children
+                                                                    .length > 0
+                                                            ) {
+                                                                setSubCatIndex(
+                                                                    item.id
+                                                                );
+                                                            }
+                                                        }}
                                                         className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all text-left ${
                                                             item.id ===
                                                             subCatIndex
@@ -416,7 +432,7 @@ const Navbar = () => {
                                 `}
                             >
                                 <button
-                                    className=""
+                                    className="md:hidden"
                                     onClick={() => setMobileCatState(1)}
                                 >
                                     <IoIosArrowRoundBack className="w-8 h-8" />
@@ -456,7 +472,6 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-                    ;
                 </div>
             </header>
         </>
