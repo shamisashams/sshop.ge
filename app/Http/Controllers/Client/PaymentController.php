@@ -37,9 +37,7 @@ class PaymentController extends Controller
     {
         if(!session('shipping')) return redirect()->route('client.shipping.index')->with('error','fill all');
         $page = Page::where('key', 'products')->firstOrFail();
-        $products = Product::with(['files'])->whereHas('categories',function (Builder $query){
-            $query->where('status', 1);
-        })->paginate(16);
+
 
         $images = [];
         foreach ($page->sections as $sections){
@@ -53,7 +51,6 @@ class PaymentController extends Controller
 
         //dd($products);
         return Inertia::render('PaymentDetails',[
-            'products' => $products,
             'images' => $images,
             'page' => $page,
             'cart' => Cart::getCart(),
