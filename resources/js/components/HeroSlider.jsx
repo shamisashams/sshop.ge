@@ -21,7 +21,9 @@ const HeroSlider = () => {
             {" "}
             <Swiper
                 loop
-                pagination={true}
+                pagination={{
+                    clickable: true,
+                }}
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 grabCursor

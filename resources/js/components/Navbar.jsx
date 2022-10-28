@@ -55,7 +55,7 @@ const Navbar = () => {
                     </Link>
                     <button
                         onClick={() => setOpenMenu(!openMenu)}
-                        className="flex items-center justify-center order-last sm:order-none"
+                        className="flex items-center justify-center order-last md:order-none"
                     >
                         <div
                             className={`menuButton mr-2 ${
@@ -66,7 +66,7 @@ const Navbar = () => {
                             <div></div>
                             <div></div>
                         </div>
-                        <div className="text-left text-sm sm:inline-block hidden">
+                        <div className="text-left text-sm md:inline-block hidden">
                             <div className="opacity-50 text-xs -mb-1">
                                 {openMenu
                                     ? __("client.nav_select", localizations)
@@ -95,7 +95,7 @@ const Navbar = () => {
 
                         <FiSearch className="absolute top-1/2 -translate-y-1/2 right-2 stroke-custom-dark w-5 h-5" />
                     </div>
-                    <div className="flex sm:ml-20 ">
+                    <div className="flex md:ml-20 ">
                         <div className="group relative ">
                             <button
                                 className="align-middle"
