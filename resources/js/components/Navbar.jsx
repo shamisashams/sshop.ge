@@ -45,6 +45,12 @@ const Navbar = () => {
             term: document.getElementById("search_inp").value,
         });
     }
+    function handleSubmitMob(e) {
+        e.preventDefault();
+        Inertia.get(route("search.index"), {
+            term: document.getElementById("search_inp_mob").value,
+        });
+    }
 
     return (
         <>
@@ -80,7 +86,7 @@ const Navbar = () => {
                         </div>
                     </button>
                     <div className="h-10 w-1/3 mx-5 relative text-sm  hidden md:inline-block">
-                        <form onSubmit={handleSubmit} className="h-full">
+                        <form onSubmit={handleSubmitMob} className="h-full">
                             <input
                                 className="w-full h-full bg-custom-zinc-100 text-center placeholder:opacity-40 border-solid border-1 border-custom-dark"
                                 type="text"
@@ -89,7 +95,7 @@ const Navbar = () => {
                                     localizations
                                 )}
                                 name="term"
-                                id="search_inp"
+                                id="search_inp_mob"
                             />
                         </form>
 
