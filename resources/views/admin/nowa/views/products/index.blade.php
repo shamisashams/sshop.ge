@@ -204,7 +204,7 @@
                                         <tr>
                                             <th scope="row">{{$item->id}}</th>
                                             <td>
-                                                <img src="{{$item->latestImage->file_full_url}}">
+                                                <img src="{{$item->latestImage ? $item->latestImage->file_full_url : null}}">
                                             </td>
                                             <th scope="row">{{$item->model}}</th>
                                             <th scope="row">{{$item->slug}}</th>
