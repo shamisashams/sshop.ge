@@ -178,27 +178,26 @@ Route::prefix('{locale?}')
         Route::post('partner-signin',[\App\Http\Controllers\Client\AuthController::class,'partnerLogin'])->name('partner.login');
 
 
-        Route::get('/forgot-password', function () {
-            return view('auth.forgot-password');
-        })->middleware('guest')->name('password.request');
+        Route::get('/forgot-password', [\App\Http\Controllers\Client\AuthController::class,'forgotPassword'])->middleware('guest')->name('password.request');
 
         Route::post('/forgot-password', function (Request $request) {
+            //dd($request->all());
             $request->validate(['email' => 'required|email']);
 
             $status = Password::sendResetLink(
                 $request->only('email')
             );
 
+            //dd($status);
             return $status === Password::RESET_LINK_SENT
-                ? back()->with(['status' => __($status)])
+                ? back()->with(['success' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
         })->middleware('guest')->name('password.email');
 
-        Route::get('/reset-password/{token}', function ($token) {
-            return view('auth.reset-password', ['token' => $token]);
-        })->middleware('guest')->name('password.reset');
+        Route::get('/reset-password/{token}', [\App\Http\Controllers\Client\AuthController::class,'resetPassword'])->middleware('guest')->name('password.reset');
 
         Route::post('/reset-password', function (Request $request) {
+            //dd($request->all());
             $request->validate([
                 'token' => 'required',
                 'email' => 'required|email',
@@ -218,8 +217,10 @@ Route::prefix('{locale?}')
                 }
             );
 
+            //dd($status);
+
             return $status === Password::PASSWORD_RESET
-                ? redirect()->route('login')->with('status', __($status))
+                ? redirect()->route('client.login')->with('success', __($status))
                 : back()->withErrors(['email' => [__($status)]]);
         })->middleware('guest')->name('password.update');
 

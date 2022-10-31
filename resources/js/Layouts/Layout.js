@@ -84,18 +84,22 @@ export default function Layout({ children, seo = null }) {
     }
     //console.log(flash);
 
-    if (flash.success) {
-        toast.success(flash.success);
-        flash.success = null;
-    }
-    if (flash.error) {
-        toast.error(flash.error);
-        flash.error = null;
-    }
-    if (flash.warning) {
-        toast.warn(flash.warning);
-        flash.warning = null;
-    }
+    useEffect(() => {
+        if (flash.success) {
+            //setLoading(false);
+            toast.success(flash.success);
+            flash.success = null;
+        }
+        if (flash.error) {
+            toast.error(flash.error);
+            flash.error = null;
+        }
+        if (flash.warning) {
+            toast.warn(flash.warning);
+            flash.warning = null;
+        }
+    })
+
 
     return loading ? (
         <Preloader />

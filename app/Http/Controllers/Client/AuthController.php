@@ -61,6 +61,85 @@ class AuthController extends Controller
         ]);
     }
 
+    public function forgotPassword()
+    {
+        $page = Page::where('key', 'about')->firstOrFail();
+
+        $images = [];
+        foreach ($page->sections as $sections){
+            if($sections->file){
+                $images[] = asset($sections->file->getFileUrlAttribute());
+            } else {
+                $images[] = null;
+            }
+
+        }
+
+        $files = [];
+        if($page->images) $files = $page->files;
+
+        //dd($files);
+
+        return Inertia::render('ForgotPassword', ["page" => $page, "seo" => [
+            "title"=>$page->meta_title,
+            "description"=>$page->meta_description,
+            "keywords"=>$page->meta_keyword,
+            "og_title"=>$page->meta_og_title,
+            "og_description"=>$page->meta_og_description,
+//            "image" => "imgg",
+//            "locale" => App::getLocale()
+        ], 'gallery_img' => $files,'images' => $images])->withViewData([
+            'meta_title' => $page->meta_title,
+            'meta_description' => $page->meta_description,
+            'meta_keyword' => $page->meta_keyword,
+            "image" => $page->file,
+            'og_title' => $page->meta_og_title,
+            'og_description' => $page->meta_og_description
+        ]);
+    }
+
+    public function resetPassword($locale, $token)
+    {
+        //dd($token);
+        $page = Page::where('key', 'about')->firstOrFail();
+
+        $images = [];
+        foreach ($page->sections as $sections){
+            if($sections->file){
+                $images[] = asset($sections->file->getFileUrlAttribute());
+            } else {
+                $images[] = null;
+            }
+
+        }
+
+        $files = [];
+        if($page->images) $files = $page->files;
+
+        //dd($files);
+
+        return Inertia::render('ResetPassword', [
+            "token" => $token,
+            "reset_email" => \request('email'),
+            "page" => $page,
+            "seo" => [
+            "title"=>$page->meta_title,
+            "description"=>$page->meta_description,
+            "keywords"=>$page->meta_keyword,
+            "og_title"=>$page->meta_og_title,
+            "og_description"=>$page->meta_og_description,
+//            "image" => "imgg",
+//            "locale" => App::getLocale()
+        ], 'gallery_img' => $files,'images' => $images])->withViewData([
+            'meta_title' => $page->meta_title,
+            'meta_description' => $page->meta_description,
+            'meta_keyword' => $page->meta_keyword,
+            "image" => $page->file,
+            'og_title' => $page->meta_og_title,
+            'og_description' => $page->meta_og_description
+        ]);
+    }
+
     public function login(Request $request){
         $credentials = $request->validate([
             'email' => ['required', 'email'],
