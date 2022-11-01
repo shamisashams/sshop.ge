@@ -26,5 +26,5 @@ function locale_route($name, $parameters = [], bool $absolute = true): string
 
     //dd(request()->query);
 
-    return route($name, array_merge($parameters,request()->query()), $absolute);
+    return route($name, $parameters, $absolute);
 }
