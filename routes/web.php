@@ -177,6 +177,8 @@ Route::prefix('{locale?}')
         Route::get('partner-signin',[\App\Http\Controllers\Client\AuthController::class,'partnerLoginView'])->name('partner.login.index')->middleware('guest_p');
         Route::post('partner-signin',[\App\Http\Controllers\Client\AuthController::class,'partnerLogin'])->name('partner.login');
 
+        Route::get('guarantee', [\App\Http\Controllers\Client\AboutUsController::class, 'guarantee'])->name('client.guarantee');
+        Route::get('shipping-payment', [\App\Http\Controllers\Client\AboutUsController::class, 'shippingPayment'])->name('client.shipping-payment');
 
         Route::get('/forgot-password', [\App\Http\Controllers\Client\AuthController::class,'forgotPassword'])->middleware('guest')->name('password.request');
 

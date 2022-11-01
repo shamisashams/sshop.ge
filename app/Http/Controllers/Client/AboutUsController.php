@@ -86,7 +86,7 @@ class AboutUsController extends Controller
 
         //dd($files);
 
-        return Inertia::render('TermConditions', ["page" => $page, "seo" => [
+        return Inertia::render('Guarantee', ["page" => $page, "seo" => [
             "title"=>$page->meta_title,
             "description"=>$page->meta_description,
             "keywords"=>$page->meta_keyword,
@@ -122,7 +122,7 @@ class AboutUsController extends Controller
 
         //dd($files);
 
-        return Inertia::render('TermConditions', ["page" => $page, "seo" => [
+        return Inertia::render('ShippingPayment', ["page" => $page, "seo" => [
             "title"=>$page->meta_title,
             "description"=>$page->meta_description,
             "keywords"=>$page->meta_keyword,

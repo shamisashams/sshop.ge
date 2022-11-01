@@ -40,6 +40,18 @@ const Footer = () => {
               {__('client.nav_product_like',localizations)}
           </Link>
         </div>
+          <div className="md:mx-5 mx-3 mb-5">
+              <Link className="bold mb-4 block" href={route('client.terms')}>
+                  {__('client.nav_terms',localizations)}
+              </Link>
+              <Link className="bold mb-4 block" href={route('client.guarantee')}>
+                  {__('client.nav_guarantee',localizations)}
+              </Link>
+              <Link className="bold mb-4 block" href={route('client.shipping-payment')}>
+                  {__('client.nav_shipping_payment',localizations)}
+              </Link>
+
+          </div>
         <div className="rounded overflow-hidden md:w-1/3 w-1/2 md:mx-5 mx-3 mb-5">
           <LocationMap />
         </div>
