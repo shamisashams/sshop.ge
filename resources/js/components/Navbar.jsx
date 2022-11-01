@@ -6,7 +6,6 @@ import { Inertia } from "@inertiajs/inertia";
 import { IoIosArrowRoundBack } from "react-icons/io";
 
 const Navbar = () => {
-    const [showLang, setShowLang] = useState(false);
     const [openMenu, setOpenMenu] = useState(false);
 
     const [catIndex, setCatIndex] = useState(0);
@@ -54,7 +53,7 @@ const Navbar = () => {
 
     return (
         <>
-            <header className="fixed w-full left-0 top-0 md:bg-white/[0.9] bg-white  py-4 after:backdrop-blur-md after:left-0 after:top-0 after:w-full after:h-full after:z-0 z-50">
+            <header className="fixed w-full left-0 top-0 md:bg-white/[0.9] bg-white  py-4 after:backdrop-blur-md after:left-0 after:top-0 after:w-full after:h-full after:-z-10 z-50">
                 <div className="wrapper flex justify-between items-center relative z-10">
                     <Link href={route("client.home.index")}>
                         <img src="/client/assets/images/logo/1.png" alt="" />
@@ -103,15 +102,9 @@ const Navbar = () => {
                     </div>
                     <div className="flex md:ml-20 ">
                         <div className="group relative ">
-                            <button
-                                className="align-middle"
-                                onClick={() => setShowLang(!showLang)}
-                            >
+                            <button className="align-middle">
                                 <svg
                                     className="transition-all duration-300 fill-custom-dark stroke-custom-dark group-hover:stroke-custom-blue group-hover:fill-custom-blue"
-                                    style={{
-                                        stroke: showLang ? "#4FA9D2" : "",
-                                    }}
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="17.605"
                                     height="17.605"
@@ -156,34 +149,35 @@ const Navbar = () => {
                                 </svg>
                             </button>
                             <div
-                                className={`absolute flex transition-all duration-300 top-0 right-full text-sm lg:text-base ${
-                                    showLang
-                                        ? "opacity-100 visible lg:pr-3 pr-1"
-                                        : "opacity-0 invisible"
-                                }`}
+                                className={`absolute bg-white w-10 py-3 transition-all duration-300 top-full left-1/2 -translate-x-1/2 text-sm lg:text-base z-50 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible`}
                             >
                                 {Object.keys(locales).map((name, index) => {
                                     if (locales[name] !== currentLocale) {
                                         return (
                                             <a
                                                 key={index}
-                                                className={`opacity-50  transition-all duration-300 ${
-                                                    showLang ? "ml-2" : "-ml-3"
-                                                } `}
+                                                className={`opacity-30 block transition-all duration-300  px-2 `}
                                                 href={locale_urls[name]}
                                             >
-                                                {name}
+                                                <img
+                                                    className="w-6 h-6 "
+                                                    src={`/client/assets/images/icons/header/${name}.png`}
+                                                    alt=""
+                                                />
                                             </a>
                                         );
                                     } else {
                                         return (
                                             <a
-                                                className={`opacity-100 transition-all duration-300  ${
-                                                    showLang ? "ml-2" : "-ml-3"
-                                                }  `}
+                                                className={`opacity-100 block transition-all duration-300  px-2  `}
                                                 href="javascript:;"
                                             >
-                                                {name}
+                                                {" "}
+                                                <img
+                                                    className="w-6 h-6 "
+                                                    src={`/client/assets/images/icons/header/${name}.png`}
+                                                    alt=""
+                                                />
                                             </a>
                                         );
                                     }
@@ -191,7 +185,7 @@ const Navbar = () => {
                             </div>
                         </div>
                         <Link
-                            className=" group  lg:ml-5 ml-3"
+                            className="py-1 relative group  lg:ml-5 ml-3"
                             href={route("client.login.index")}
                         >
                             <svg
@@ -218,9 +212,12 @@ const Navbar = () => {
                                     stroke="none"
                                 />
                             </svg>
+                            <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300">
+                                Sign in / up
+                            </p>
                         </Link>
                         <Link
-                            className="relative group lg:ml-5 ml-3"
+                            className="py-1 relative group lg:ml-5 ml-3"
                             href={route("client.favorite.index")}
                         >
                             <svg
@@ -253,9 +250,12 @@ const Navbar = () => {
                                     {wishlist_count}
                                 </button>
                             ) : null}
+                            <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300">
+                                Favorite
+                            </p>
                         </Link>
                         <Link
-                            className="relative group lg:ml-5 ml-3"
+                            className="py-1 relative group lg:ml-5 ml-3"
                             href={route("client.cart.index")}
                         >
                             <svg
@@ -281,10 +281,13 @@ const Navbar = () => {
                                     {cart_count}
                                 </button>
                             ) : null}
+                            <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300 pt-px">
+                                Cart
+                            </p>
                         </Link>
                     </div>
                 </div>
-                <div className="wrapper z-50 py-2 block  md:hidden">
+                <div className="wrapper py-2 block  md:hidden">
                     <div className="h-10 w-full  relative text-sm">
                         <form onSubmit={handleSubmit} className="h-full">
                             <input

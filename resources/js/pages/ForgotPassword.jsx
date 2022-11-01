@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 //import Google from "../assets/images/signin/2.png";
 //import Fb from "../assets/images/signin/1.png";
 //import { Link } from "react-router-dom";
-import { Link, usePage } from '@inertiajs/inertia-react'
+import { Link, usePage } from "@inertiajs/inertia-react";
 import Layout from "@/Layouts/Layout";
 import { Inertia } from "@inertiajs/inertia";
 
-const ForgotPassword = ({seo}) => {
-
+const ForgotPassword = ({ seo }) => {
+    const [passSend, setPassSend] = useState(false);
     const { pathname, errors, localizations } = usePage().props;
     const [values, setValues] = useState({
         email: "",
@@ -38,60 +38,90 @@ const ForgotPassword = ({seo}) => {
         }
     });*/
 
-    function handleClick(e){
+    function handleClick(e) {
         e.preventDefault();
         Inertia.post(route("password.email"), values);
+        setPassSend(true);
     }
 
-  return (
-      <Layout seo={seo}>
-          <div className="batman">
-              <div className="wrapper">
-                  <div className="sign-in">
-                      <div className="title-text bold">{__('client.forgot_password',localizations)}</div>
-                      <form onSubmit={handleSubmit} className="auth-form">
-                          {errors.email && <div>{errors.email}</div>}
-                          <input name="email" type="email" placeholder={__('client.form_email',localizations)} onChange={handleChange} />
-                          <input type="submit" id="submitbtn" style={{display:'none'}} />
-                      </form>
-                      <a onClick={handleClick} href="javascript:;">
-                          <div className="main-btn bold">{__('client.send_recover',localizations)}</div>
-                      </a>
-                      <div className="or">
-                          <hr className="hr-text" data-content={__('client.or_do_this',localizations)} />
-                      </div>
-                      {/* Alternative Sign in */}
-                      <div className="alternative-sign">
-                          <a href={route('google-redirect')}>
-                              <div className="options flex center">
-                                  <img src="/client/assets/images/signin/2.png" alt="" />
-                                  <p>{__('client.sign_in_with_google',localizations)}</p>
-                              </div>
-                          </a>
-                          <a href={route('fb-redirect')}>
-                              <div className="options flex center">
-                                  <img src="/client/assets/images/signin/1.png" alt="" />
-                                  <p>{__('client.sign_in_with_facebook',localizations)}</p>
-                              </div>
-                          </a>
-                      </div>
-                      {/* Alternative Sign in ends */}
-                      {/* Registration */}
-                      <div className="acoount-alternative">
-                          <p>
-                              {__('client.dont_have_account',localizations)}
-                              <Link href={route('client.registration.index')}>
-                                  <span> {__('client.signup_link',localizations)}</span>
-                              </Link>
-                          </p>
-                      </div>
-                      {/* Registration End*/}
-                  </div>
-              </div>
-          </div>
-      </Layout>
+    return (
+        <Layout seo={seo}>
+            <div className="batman">
+                <div className="wrapper pb-60">
+                    <div className="sign-in relative p-5">
+                        <div className="title-text bold">
+                            {__("client.forgot_password", localizations)}
+                        </div>
+                        <p className="opacity-50 text-sm mb-10">
+                            to reset your password please enter email address
+                            you've registerd
+                        </p>
 
-  );
+                        <div className="flex items-center justify-between">
+                            <form onSubmit={handleSubmit} className="auth-form">
+                                {errors.email && <div>{errors.email}</div>}
+                                <input
+                                    className="!mb-0"
+                                    name="email"
+                                    type="email"
+                                    placeholder={__(
+                                        "client.form_email",
+                                        localizations
+                                    )}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    className="!mb-0"
+                                    type="submit"
+                                    id="submitbtn"
+                                    style={{ display: "none" }}
+                                />
+                            </form>
+                            <a
+                                onClick={handleClick}
+                                href="javascript:;"
+                                className="ml-3"
+                            >
+                                <div className="main-btn bold whitespace-nowrap">
+                                    {__("client.send_recover", localizations)}
+                                </div>
+                            </a>
+                        </div>
+                        {/* Registration End*/}
+                        <div
+                            className={`absolute w-full left-0 top-0 pt-40 transition-all duration-500 ${
+                                passSend
+                                    ? "opacity-100 visible"
+                                    : "opacity-0 invisible"
+                            }`}
+                            style={{ backgroundColor: "#f8f8f9" }}
+                        >
+                            <div className="title-text bold">
+                                {__("client.forgot_password", localizations)}
+                            </div>
+                            <p className="opacity-50 text-sm mb-5">
+                                We have sent link to your email, please check
+                                mailbox
+                            </p>{" "}
+                            <img
+                                className="mx-auto mb-10"
+                                src="/client/assets/images/other/1.png"
+                                alt=""
+                            />
+                            <Link
+                                href={route("client.login.index")}
+                                className="w-fit  mx-auto"
+                            >
+                                <div className="main-btn  mx-auto bold whitespace-nowrap w-fit">
+                                    Login
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    );
 };
 
 export default ForgotPassword;
