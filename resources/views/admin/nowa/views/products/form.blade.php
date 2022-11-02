@@ -170,6 +170,18 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids,$disabled
 
 
 
+                                            <div class="form-group">
+                                                <label class="form-label">@lang('admin.guarantee')</label>
+                                                <input type="text" name="{{$locale.'[guarantee]'}}" class="form-control" placeholder="guarantee" value="{{$product->translate($locale)->guarantee ?? old($locale.'.guarantee')}}">
+                                                @error($locale.'.guarantee')
+                                                <small class="text-danger">
+                                                    <div class="error">
+                                                        {{$message}}
+                                                    </div>
+                                                </small>
+                                                @enderror
+                                            </div>
+
                                             <div class="main-content-label mg-b-5 text-danger">
                                             @lang('admin.product_seo')
                                             </div>

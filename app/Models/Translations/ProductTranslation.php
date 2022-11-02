@@ -25,5 +25,6 @@ class ProductTranslation extends BaseTranslationModel
         'meta_title',
         'meta_description',
         'meta_keyword',
+        'guarantee'
     ];
 }

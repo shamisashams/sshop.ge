@@ -33,6 +33,7 @@ use App\Repositories\Eloquent\ProductRepository;
 use Spatie\TranslationLoader\TranslationLoaders\Db;
 use Illuminate\Support\Facades\DB as DataBase;
 use function Symfony\Component\String\s;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -385,6 +386,13 @@ class OrderController extends Controller
 
 
                 DataBase::commit();
+
+                $pdf = Pdf::loadView('client.email.order',compact('order'));
+
+                $pdf->save('order_'. $order->id .'.pdf');
+
+                Mail::to($request->user())->send(new \App\Mail\Order($order));
+                unlink('order_'. $order->id .'.pdf');
 
                 $_promocode = \App\Models\PromoCode::query()->where('type','cart')->first();
                 //dd($promocode);

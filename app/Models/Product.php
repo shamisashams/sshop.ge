@@ -72,6 +72,7 @@ class Product extends Model implements Searchable
         'meta_title',
         'meta_description',
         'meta_keyword',
+        'guarantee'
     ];
 
     //protected $with = ['translation'];
