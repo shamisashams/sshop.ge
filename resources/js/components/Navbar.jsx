@@ -213,7 +213,7 @@ const Navbar = () => {
                                 />
                             </svg>
                             <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300">
-                                Sign in / up
+                                {__("client.signin_up", localizations)}
                             </p>
                         </Link>
                         <Link
@@ -251,7 +251,7 @@ const Navbar = () => {
                                 </button>
                             ) : null}
                             <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300">
-                                Favorite
+                                {__("client.favorite", localizations)}
                             </p>
                         </Link>
                         <Link
@@ -282,7 +282,7 @@ const Navbar = () => {
                                 </button>
                             ) : null}
                             <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300 pt-px">
-                                Cart
+                                {__("client.cart", localizations)}
                             </p>
                         </Link>
                     </div>

@@ -53,8 +53,10 @@ const ForgotPassword = ({ seo }) => {
                             {__("client.forgot_password", localizations)}
                         </div>
                         <p className="opacity-50 text-sm mb-10">
-                            to reset your password please enter email address
-                            you've registerd
+                            {__(
+                                "client.to_reset_pass_enter_mail",
+                                localizations
+                            )}
                         </p>
 
                         <div className="flex items-center justify-between">
@@ -100,8 +102,7 @@ const ForgotPassword = ({ seo }) => {
                                 {__("client.forgot_password", localizations)}
                             </div>
                             <p className="opacity-50 text-sm mb-5">
-                                We have sent link to your email, please check
-                                mailbox
+                                {__("client.we_sent_link", localizations)}
                             </p>{" "}
                             <img
                                 className="mx-auto mb-10"
@@ -113,7 +114,7 @@ const ForgotPassword = ({ seo }) => {
                                 className="w-fit  mx-auto"
                             >
                                 <div className="main-btn  mx-auto bold whitespace-nowrap w-fit">
-                                    Login
+                                    {__("client.login", localizations)}
                                 </div>
                             </Link>
                         </div>

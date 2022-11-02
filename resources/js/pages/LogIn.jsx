@@ -79,13 +79,13 @@ const LogIn = ({ seo }) => {
                             />
                         </form>{" "}
                         <p className="mb-5 text-left ">
-                            Can't remember password?{" "}
+                            {__("client.cant_remember_pass", localizations)}{" "}
                             <Link
                                 className="text-custom-blue underline"
                                 href={route("password.request")}
                             >
                                 {" "}
-                                Reset It
+                                {__("client.reset_it", localizations)}
                             </Link>
                         </p>
                         <a onClick={handleClick} href="javascript:;">
