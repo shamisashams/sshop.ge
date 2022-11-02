@@ -53,10 +53,7 @@ const ForgotPassword = ({ seo }) => {
                             {__("client.forgot_password", localizations)}
                         </div>
                         <p className="opacity-50 text-sm mb-10">
-                            {__(
-                                "client.to_reset_pass_enter_mail",
-                                localizations
-                            )}
+                            {__("client.to_reset_pass_enter_mail", localizations)} 
                         </p>
 
                         <div className="flex items-center justify-between">
