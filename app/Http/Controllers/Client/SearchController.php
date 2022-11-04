@@ -56,15 +56,22 @@ class SearchController extends Controller
             $_result = [];
 
             foreach ($product_attributes as $item){
-                $options = $item->attribute->options;
+                //$options = $item->attribute->options;
                 $value = '';
-                foreach ($options as $option){
+                /*foreach ($options as $option){
                     if($item->attribute->type == 'select'){
                         if($item->integer_value == $option->id) {
                             $_result[$item->attribute->code] = $option->label;
                         }
 
                     }
+                }*/
+
+                if($item->attribute->type == 'select'){
+
+                    $_result[$item->attribute->code] = $item->option->label;
+
+
                 }
 
             }
