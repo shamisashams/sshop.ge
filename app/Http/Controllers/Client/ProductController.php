@@ -114,9 +114,9 @@ class ProductController extends Controller
         $result = [];
 
         foreach ($product_attributes as $item){
-            $options = $item->attribute->options;
+            //$options = $item->attribute->options;
             $value = '';
-            foreach ($options as $option){
+            /*foreach ($options as $option){
                 if($item->attribute->type == 'select'){
                     if($item->integer_value == $option->id) {
                         if($item->attribute->code == 'size'){
@@ -129,6 +129,16 @@ class ProductController extends Controller
                         }
                     }
 
+                }
+            }*/
+            if($item->attribute->type == 'select'){
+                if($item->attribute->code == 'size'){
+                    $result[$item->attribute->code]['attribute'] = $item->attribute->name;
+                    $result[$item->attribute->code]['option'] = $item->option->value;
+                }
+                else {
+                    $result[$item->attribute->code]['option'] = $item->option->label;
+                    $result[$item->attribute->code]['attribute'] = $item->attribute->name;
                 }
             }
 
