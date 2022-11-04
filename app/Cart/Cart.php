@@ -235,7 +235,7 @@ class Cart
         //dd($cart);
         if ($cart !== null) {
             foreach ($cart as $_item) {
-                $product = Product::with(['translation','latestImage','attribute_values.attribute.translation','attribute_values.attribute.options.translation','parent.latestImage'])->where(['id' => $_item->product_id])->first();
+                $product = Product::with(['translation','latestImage','attribute_values.attribute.translation','attribute_values.option.translation','parent.latestImage'])->where(['id' => $_item->product_id])->first();
                 $result = [];
 
                 if ($product){
@@ -244,9 +244,9 @@ class Cart
 
 
                     foreach ($product_attributes as $key => $item){
-                        $options = $item->attribute->options;
+                        //$options = $item->attribute->options;
                         $value = '';
-                        foreach ($options as $option){
+                        /*foreach ($options as $option){
                             if($item->attribute->type == 'select'){
                                 if($item->integer_value == $option->id) {
                                     $result[$key]['attribute']['code'] = $item->attribute->code;
@@ -264,8 +264,24 @@ class Cart
                                 }
 
                             }
-                        }
+                        }*/
+                        if($item->attribute->type == 'select'){
 
+                            $result[$key]['attribute']['code'] = $item->attribute->code;
+                            $result[$key]['attribute']['name'] = $item->attribute->name;
+
+
+                            $result[$key]['option']['value'] = $item->option->value;
+
+
+                            $result[$key]['option']['color'] = $item->option->color;
+
+
+                            $result[$key]['option']['label'] = $item->option->label;
+
+
+
+                        }
                     }
 
                     $product['attributes'] = $result;
