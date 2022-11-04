@@ -84,7 +84,7 @@ class ProductController extends Controller
         $product = Product::query()->where(['status' => true, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
 
-        })->with(['translation','latestImage','video','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->firstOrFail();
+        })->with(['translation','latestImage','video','attribute_values.attribute.translation','attribute_values.option.translation'])->firstOrFail();
 
         $productImages = $product->files()->orderBy('id','desc')->get();
 
