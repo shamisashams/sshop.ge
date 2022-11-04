@@ -45,7 +45,7 @@ class CartController extends Controller
 
         }
 
-        $rand_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.attribute.options.translation'])->whereHas('categories',function ($query){
+        $rand_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.option.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
         })->inRandomOrder()->limit(25)->get();
 
@@ -55,17 +55,22 @@ class CartController extends Controller
             $_result = [];
 
             foreach ($product_attributes as $item){
-                $options = $item->attribute->options;
+                //$options = $item->attribute->options;
                 $value = '';
-                foreach ($options as $option){
+                /*foreach ($options as $option){
                     if($item->attribute->type == 'select'){
                         if($item->integer_value == $option->id) {
                             $_result[$item->attribute->code] = $option->label;
                         }
 
                     }
-                }
+                }*/
+                if($item->attribute->type == 'select'){
 
+                    $_result[$item->attribute->code] = $item->option->label;
+
+
+                }
             }
             $product['attributes'] = $_result;
         }
