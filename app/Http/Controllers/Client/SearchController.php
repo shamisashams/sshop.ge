@@ -92,10 +92,10 @@ class SearchController extends Controller
 
         }
 
-        $subCategories = [];
+        /*$subCategories = [];
         foreach (Category::where('parent_id','!=',null)->get()->toArray() as $item){
             $subCategories[] = $item;
-        }
+        }*/
 
         //dd($products);
 
