@@ -221,7 +221,7 @@ class ProductController extends Controller
 
 
         //dd(last($product->categories));
-        $categories = $product->categories()->with(['translation','ancestors.translation'])->get();
+        $categories = $product->categories()->with(['ancestors'])->get();
 
 
         $path = [];
