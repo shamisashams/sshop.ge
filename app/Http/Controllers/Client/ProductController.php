@@ -88,19 +88,24 @@ class ProductController extends Controller
 
         $productImages = $product->files()->orderBy('id','desc')->get();
 
-        $gpouped = $product->grouped()->with(['attribute_values.attribute.translation','attribute_values.attribute.options'])->get();
+        $gpouped = $product->grouped()->with(['attribute_values.attribute.translation','attribute_values.attribute.translation','attribute_values.option.translation'])->get();
 
         $arr = [];
         $d =[];
         foreach ($gpouped as $v_product){
             foreach ($v_product->attribute_values as $attr_value){
-                foreach ($attr_value->attribute->options as $option){
+                /*foreach ($attr_value->attribute->options as $option){
                     if($attr_value->integer_value == $option->id) {
                         if($attr_value->attribute->code == 'color'){
                             $arr[$attr_value->attribute->code]['attribute'] = $attr_value->attribute->name;
                             $arr[$attr_value->attribute->code]['option'] = $option->color;
                         }
                     }
+                }*/
+
+                if($attr_value->attribute->code == 'color'){
+                    $arr[$attr_value->attribute->code]['attribute'] = $attr_value->attribute->name;
+                    $arr[$attr_value->attribute->code]['option'] = $attr_value->option->color;
                 }
 
             }
