@@ -21,7 +21,8 @@ class Page extends Model
 
     protected $fillable = [
         'key',
-        'images'
+        'images',
+        'css'
     ];
 
     //protected $with = 'sections';
@@ -38,6 +39,7 @@ class Page extends Model
         "meta_keyword",
         "meta_og_title",
         "meta_og_description",
+
     ];
 
 

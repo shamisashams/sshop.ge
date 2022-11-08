@@ -88,6 +88,14 @@
             return date_arr.join(' ');
         }
 
+        function setCss(css){
+            const style = document.createElement('style');
+
+            style.textContent = css;
+
+            document.head.appendChild(style);
+        }
+
     </script>
     <!-- Meta Pixel Code -->
     <script>
@@ -106,6 +114,7 @@
                    src="https://www.facebook.com/tr?id=6279913775357690&ev=PageView&noscript=1"
         /></noscript>
     <!-- End Meta Pixel Code -->
+
 </head>
 <body>
 

@@ -215,6 +215,11 @@
                 <div class="card-body">
 
 
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.css')</label>
+                        <textarea style="font-size: 12px" rows="20" name="css" class="form-control">{{$page->css??old('css')}}</textarea>
+
+                    </div>
 
 
                     <div class="form-group mb-0 mt-3 justify-content-end">

@@ -12,6 +12,10 @@ const Guarantee = ({seo}) => {
             dangerouslySetInnerHTML: { __html: rawHTML },
         });
 
+    if(page.css){
+        setCss(page.css)
+    }
+
   return (
       <Layout seo={seo}>
           <div className="batman">
