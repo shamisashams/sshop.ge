@@ -326,7 +326,7 @@ Route::prefix('{locale?}')
                 $request->fulfill();
 
                 return redirect(route('client.cabinet'));
-            })->middleware(['auth', 'signed'])->name('verification.verify');
+            })->middleware(['auth', /*'signed'*/])->name('verification.verify');
 
             Route::post('/email/verification-notification', function (Request $request) {
                 $request->user()->sendEmailVerificationNotification();
