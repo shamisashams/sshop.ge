@@ -387,7 +387,7 @@ class OrderController extends Controller
 
                 DataBase::commit();
 
-                $pdf = Pdf::loadView('client.order.order',compact('order'));
+                $pdf = Pdf::loadView('client.order.order',compact('order'),[],'UTF-8');
 
                 $pdf->save('order_'. $order->id .'.pdf');
 

@@ -326,13 +326,13 @@ Route::prefix('{locale?}')
                 $request->fulfill();
 
                 return redirect(route('client.cabinet'));
-            })->middleware(['auth', /*'signed'*/])->name('verification.verify');
+            })->middleware(['auth_client', /*'signed'*/])->name('verification.verify');
 
             Route::post('/email/verification-notification', function (Request $request) {
                 $request->user()->sendEmailVerificationNotification();
 
                 return back()->with('success', 'Verification link sent!');
-            })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+            })->middleware(['auth_client', 'throttle:6,1'])->name('verification.send');
         });
 
 
