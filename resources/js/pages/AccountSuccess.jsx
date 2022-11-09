@@ -11,6 +11,13 @@ const AccountSuccess = ({seo}) => {
               <div className="text-sm opacity-50">
                   {__('client.account_success_t',localizations)}
               </div>
+              <Link
+                  className="text-custom-blue underline"
+                  href={route("client.login.index")}
+              >
+                  {" "}
+                  {__("client.login", localizations)}
+              </Link>
           </div>
       </Layout>
 
