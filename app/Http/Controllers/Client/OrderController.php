@@ -540,6 +540,19 @@ class OrderController extends Controller
         }
     }
 
+    public function tbcResponse(Request $request){
+        //dump($request->order_id);
+        $order = Order::query()->where('id',$request->get('order_id'))->first();
+
+        //dd($order);
+        if($order->status == 'success') return redirect(locale_route('order.success',$order->id));
+        else if($order->status == 'error') return redirect(route('order.failure'));
+        else {
+            sleep(3);
+            return redirect('https://sshop.ge/' . app()->getLocale() . '/payments/tbc/status?order_id='.$order->id);
+        }
+    }
+
     public function statusSuccess($order_id){
         $order = Order::query()->where('id',$order_id)->with('items')->first();
         return Inertia::render('PaymentSuccess',['order' => $order])->withViewData([

@@ -318,6 +318,8 @@ Route::prefix('{locale?}')
 
             Route::any('payments/bog/status',[\App\Http\Controllers\Client\OrderController::class, 'bogResponse'])->name('bogResponse');
 
+            Route::any('payments/tbc/status',[\App\Http\Controllers\Client\OrderController::class, 'tbcResponse'])->name('tbcResponse');
+
             /*Route::get('test/{method}',function ($locale,$method,\App\Http\Controllers\TestController $testController){
 
                 return $testController->{$method}();
