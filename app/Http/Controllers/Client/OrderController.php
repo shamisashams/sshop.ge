@@ -19,6 +19,7 @@ use App\Models\ProductSet;
 use App\Models\Setting;
 use App\Promocode\Promocode;
 use App\SpacePay\SpacePay;
+use App\TbcPay\TbcPayment;
 use App\TerraPay\TerraPay;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Contracts\Foundation\Application;
@@ -434,6 +435,20 @@ class OrderController extends Controller
                 if($order->payment_method == 1 && $order->payment_type == 'bog'){
                     return app(BogPaymentController::class)->make_order($order->id,$order->grand_total);
                 } elseif($order->payment_method == 1 && $order->payment_type == 'tbc'){
+                    $tbcPay = new TbcPayment('cVcrsvTG7A3MWSslK62G9jlGqKxEAyCI','7000998','SVcfMh6VPFIJV47l');
+                    $returnUrl = 'https://sshop.ge/' . app()->getLocale() . '/payments/tbc/status?order_id='.$order->id;
+
+                    $installmentProducts = [];
+                    foreach ($order->items as $key => $item){
+                        $installmentProducts[] = [
+                            'Name' => $item->name,
+                            'Price' => $item->price,
+                            'Quantity' => $item->qty_ordered
+                        ];
+                    }
+
+                    $resp = $tbcPay->createPayment($order->grand_total,$returnUrl,$order->id,$installmentProducts,route('tbcCallbackStatus'));
+                    dd($resp);
                     return redirect(locale_route('order.failure',$order->id));
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'terra'){

@@ -31,10 +31,12 @@ use Illuminate\Support\Facades\Hash;
 
 Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->withoutMiddleware('web')->name('upload');
 
-Route::any('bog/callback/status', [\App\BogPay\BogCallbackController::class, 'status'])->withoutMiddleware('web')->name('bogCallbackStatus');
-Route::any('bog/callback/refund',[\App\BogPay\BogCallbackController::class, 'refund'])->withoutMiddleware('web')->name('bogCallbackRefund');
+Route::any('bog/callback/status', [\App\BogPay\TbcCallbackController::class, 'status'])->withoutMiddleware('web')->name('bogCallbackStatus');
+Route::any('bog/callback/refund',[\App\BogPay\TbcCallbackController::class, 'refund'])->withoutMiddleware('web')->name('bogCallbackRefund');
 
 Route::any('space/callback/status', [\App\SpacePay\SpaceCallbackController::class, 'status'])->withoutMiddleware('web')->name('spaceCallbackStatus');
+
+Route::any('tbc/callback', [\App\TbcPay\TbcCallbackController::class, 'status'])->withoutMiddleware('web')->name('tbcCallbackStatus');
 
 
 
