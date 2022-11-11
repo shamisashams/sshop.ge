@@ -35,7 +35,7 @@ class TbcCallbackController extends Controller
                 Order::where('tbc_pay_id','=',$resp['payId'])->update(['status' => 'in_progress']);
                 break;
             default:
-
+                Order::where('tbc_pay_id','=',$resp['payId'])->update(['status' => 'error']);
         }
         return response('',200);
     }
