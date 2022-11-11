@@ -17,7 +17,7 @@ class TbcCallbackController extends Controller
 
         $paymentId = $request->input('PaymentId');
 
-        $tbcPayment = new TbcPayment('cVcrsvTG7A3MWSslK62G9jlGqKxEAyCI','324234','2345354');
+        $tbcPayment = new TbcPayment('cVcrsvTG7A3MWSslK62G9jlGqKxEAyCI','7000998','SVcfMh6VPFIJV47l');
 
         $resp = $tbcPayment->checkStatus($paymentId);
 
