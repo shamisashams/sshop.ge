@@ -69,7 +69,7 @@ class TbcPayment
 
         $expirationMinutes = 5;
 
-        $methods = [5,7,8];
+        $methods = [5,7];
 
         //$installmentProducts = [];
         //$callbackUrl = '';
