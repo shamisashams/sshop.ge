@@ -85,7 +85,7 @@ class TbcPayment
         $json = [
             'amount' => $amount,
             'returnurl' => $returnUrl,
-            //'extra' => $extra,
+            'extra' => $extra,
             'userIpAddress' => $userIpAddress,
             'expirationMinutes' => $expirationMinutes,
             'methods' => $methods,
@@ -95,7 +95,7 @@ class TbcPayment
             'language' => $language,
             'merchantPaymentId' => $merchantPaymentId,
             'saveCard' => false,
-            //'saveCardToDate' => ''
+            'saveCardToDate' => ''
         ];
 
         //dd($json);
