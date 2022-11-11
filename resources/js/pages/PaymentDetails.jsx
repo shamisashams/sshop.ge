@@ -198,7 +198,7 @@ const PaymentDetails = ({seo}) => {
                                                       : "border-white"
                                               }`}
                                           >
-                                              <img className={`  mx-auto `} src="/client/assets/images/banks/2.png"
+                                              <img className={`  mx-auto `} src="/client/assets/images/banks/1.png"
                                                    alt=""/>
                                           </button>
                                       </div>
