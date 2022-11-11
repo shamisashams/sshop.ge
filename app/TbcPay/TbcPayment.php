@@ -85,7 +85,7 @@ class TbcPayment
         $json = [
             'amount' => $amount,
             'returnurl' => $returnUrl,
-            'extra' => $extra,
+            //'extra' => $extra,
             'userIpAddress' => $userIpAddress,
             'expirationMinutes' => $expirationMinutes,
             'methods' => $methods,
@@ -98,7 +98,7 @@ class TbcPayment
             'saveCardToDate' => ''
         ];
 
-        dd($json);
+        //dd($json);
 
         $response = $this->http_client->request('POST', $url, [
             'headers' => [
