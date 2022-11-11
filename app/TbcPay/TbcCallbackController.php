@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class TbcCallbackController extends Controller
 {
@@ -22,7 +23,7 @@ class TbcCallbackController extends Controller
         $resp = $tbcPayment->checkStatus($paymentId);
 
         $resp = \json_decode($resp,true);
-        file_put_contents('tbc.txt',print_r($resp,true));
+        Storage::put('tbc.txt',print_r($request->all(),true));
 
         switch ($resp['status']){
             case 'Succeeded':
