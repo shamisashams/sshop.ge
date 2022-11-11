@@ -116,7 +116,7 @@ class TbcPayment
     public function checkStatus($paymentId){
         $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'payments/' . $paymentId;
 
-        $response = $this->http_client->request('POST', $url, [
+        $response = $this->http_client->request('GET', $url, [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'apikey' => $this->apiKey,
