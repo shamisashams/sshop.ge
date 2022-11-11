@@ -448,8 +448,14 @@ class OrderController extends Controller
                     }
 
                     $resp = $tbcPay->createPayment($order->grand_total,$returnUrl,$order->id,$installmentProducts,route('tbcCallbackStatus'));
-                    dd($resp);
-                    return redirect(locale_route('order.failure',$order->id));
+                    $resp = \json_decode($resp,true);
+                    if(isset($resp['status'])){
+                        if ($resp['status'] == 'Created'){
+                            return Inertia::location($resp['links'][1]['uri']);
+                        }
+                    }
+
+                    //return redirect(locale_route('order.failure',$order->id));
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'terra'){
 
