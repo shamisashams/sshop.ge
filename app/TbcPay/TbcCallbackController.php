@@ -24,8 +24,8 @@ class TbcCallbackController extends Controller
         $resp = \json_decode($resp,true);
         file_put_contents('tbc.txt',print_r($resp,true));
 
-        switch ($resp['Succeeded']){
-            case 'success':
+        switch ($resp['status']){
+            case 'Succeeded':
                 Order::where('tbc_pay_id','=',$resp['payId'])->update(['status' => 'success']);
                 break;
             case 'Failed':
