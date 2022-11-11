@@ -98,7 +98,7 @@ class TbcPayment
             'saveCardToDate' => ''
         ];
 
-        //dd($json);
+        dd($json);
 
         $response = $this->http_client->request('POST', $url, [
             'headers' => [
