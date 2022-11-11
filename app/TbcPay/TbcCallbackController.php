@@ -15,7 +15,7 @@ class TbcCallbackController extends Controller
     public function status(Request $request){
 
         //dd($request->all());
-
+        Storage::put('request.txt',print_r($request->all(),true));
         $paymentId = $request->input('PaymentId');
 
         $tbcPayment = new TbcPayment('cVcrsvTG7A3MWSslK62G9jlGqKxEAyCI','7000998','SVcfMh6VPFIJV47l');
@@ -23,7 +23,7 @@ class TbcCallbackController extends Controller
         $resp = $tbcPayment->checkStatus($paymentId);
 
         $resp = \json_decode($resp,true);
-        Storage::put('request.txt',print_r($request->all(),true));
+
         Storage::put('tbc.txt',print_r($resp,true));
 
         switch ($resp['status']){
