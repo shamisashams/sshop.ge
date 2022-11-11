@@ -26,13 +26,13 @@ class TbcCallbackController extends Controller
 
         switch ($resp['Succeeded']){
             case 'success':
-                Order::where('id','=',$request->shop_order_id)->update(['status' => 'success']);
+                Order::where('tbc_pay_id','=',$resp['payId'])->update(['status' => 'success']);
                 break;
             case 'Failed':
-                Order::where('id','=',$request->shop_order_id)->update(['status' => 'error']);
+                Order::where('tbc_pay_id','=',$resp['payId'])->update(['status' => 'error']);
                 break;
             case 'Processing':
-                Order::where('id','=',$request->shop_order_id)->update(['status' => 'in_progress']);
+                Order::where('tbc_pay_id','=',$resp['payId'])->update(['status' => 'in_progress']);
                 break;
             default:
 
