@@ -451,6 +451,7 @@ class OrderController extends Controller
                     $resp = \json_decode($resp,true);
                     if(isset($resp['status'])){
                         if ($resp['status'] == 'Created'){
+                            $order->update(['tbc_pay_id' => $resp['payId']]);
                             return Inertia::location($resp['links'][1]['uri']);
                         }
                     }

@@ -21,18 +21,21 @@ class TbcCallbackController extends Controller
 
         $resp = $tbcPayment->checkStatus($paymentId);
 
+        $resp = \json_decode($resp,true);
         file_put_contents('tbc.txt',print_r($resp,true));
 
-        switch ($request->status){
+        switch ($resp['Succeeded']){
             case 'success':
                 Order::where('id','=',$request->shop_order_id)->update(['status' => 'success']);
                 break;
-            case 'error':
+            case 'Failed':
                 Order::where('id','=',$request->shop_order_id)->update(['status' => 'error']);
                 break;
-            case 'in_progress':
+            case 'Processing':
                 Order::where('id','=',$request->shop_order_id)->update(['status' => 'in_progress']);
                 break;
+            default:
+
         }
         return response('',200);
     }
