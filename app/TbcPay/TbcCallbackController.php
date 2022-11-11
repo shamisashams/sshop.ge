@@ -23,7 +23,8 @@ class TbcCallbackController extends Controller
         $resp = $tbcPayment->checkStatus($paymentId);
 
         $resp = \json_decode($resp,true);
-        Storage::put('tbc.txt',print_r($request->all(),true));
+        Storage::put('request.txt',print_r($request->all(),true));
+        Storage::put('tbc.txt',print_r($resp,true));
 
         switch ($resp['status']){
             case 'Succeeded':
