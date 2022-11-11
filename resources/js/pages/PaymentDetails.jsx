@@ -201,6 +201,21 @@ const PaymentDetails = ({seo}) => {
                                               <img className={`  mx-auto `} src="/client/assets/images/banks/1.png"
                                                    alt=""/>
                                           </button>
+
+                                          <button
+                                              onClick={() => {
+                                                  setBankSelect(4)
+                                                  selectBank('bog_installment');
+                                              }}
+                                              className={` text-center mb-3 rounded-xl bg-white  border-solid border-2 w-full h-16   transition-all shadow-lg  hover:border-zinc-300  ${
+                                                  bankSelect === 4
+                                                      ? "!border-custom-blue"
+                                                      : "border-white"
+                                              }`}
+                                          >
+                                              <img className={`  mx-auto `} src="/client/assets/images/banks/2.png"
+                                                   alt=""/>
+                                          </button>
                                       </div>
                                       <div className="my-5">{__('client.make_an_installment',localizations)}</div>
                                       <div className="grid grid-cols-2 gap-4 mt-6">
