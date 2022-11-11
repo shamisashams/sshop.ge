@@ -21,7 +21,7 @@ class TbcCallbackController extends Controller
 
         $resp = $tbcPayment->checkStatus($paymentId);
 
-        dd($resp);
+        file_put_contents('tbc.txt',print_r($resp,true));
 
         switch ($request->status){
             case 'success':
