@@ -134,7 +134,7 @@ const PaymentDetails = ({ seo }) => {
                     <div className="pt-12">
                         <div className="flex items-start justify-between flex-col lg:flex-row">
                             <div className=" lg:w-1/2 w-full mb-10">
-                                <div className="bg-white p-5 md:py-20 rounded text-center ">
+                                <div className="bg-white sm:p-5 p-2 md:py-20  rounded text-center ">
                                     <div className="max-w-md mx-auto">
                                         <div className="bold text-lg mb-5">
                                             {__(
@@ -143,26 +143,26 @@ const PaymentDetails = ({ seo }) => {
                                             )}
                                         </div>
                                         <div className="flex items-center justify-start text-sm border border-solid w-full h-14 px-4 mb-2 rounded">
-                                            <div className="w-1/4 text-left">
+                                            <div className="md:w-1/4 mr-2 text-left">
                                                 {__(
                                                     "client.ship_to",
                                                     localizations
                                                 )}
                                                 :
                                             </div>
-                                            <div className="opacity-50 pl-1">
+                                            <div className="opacity-50 pl-1 text-left">
                                                 {city.title}, {shipping.address}
                                             </div>
                                         </div>
                                         <div className="flex items-center justify-start text-sm border border-solid w-full h-14 px-4 mb-5 rounded">
-                                            <div className="w-1/4 text-left">
+                                            <div className="md:w-1/4 mr-2 text-left">
                                                 {__(
                                                     "client.ship_contact",
                                                     localizations
                                                 )}
                                                 :
                                             </div>
-                                            <div className="opacity-50 pl-1">
+                                            <div className="opacity-50 pl-1 text-left">
                                                 {shipping.phone}
                                             </div>
                                         </div>
