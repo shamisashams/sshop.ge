@@ -181,6 +181,7 @@ Route::prefix('{locale?}')
 
         Route::get('guarantee', [\App\Http\Controllers\Client\AboutUsController::class, 'guarantee'])->name('client.guarantee');
         Route::get('shipping-payment', [\App\Http\Controllers\Client\AboutUsController::class, 'shippingPayment'])->name('client.shipping-payment');
+        Route::get('privacy-policy', [\App\Http\Controllers\Client\AboutUsController::class, 'privacyPolicy'])->name('client.privacy-policy');
 
         Route::get('/forgot-password', [\App\Http\Controllers\Client\AuthController::class,'forgotPassword'])->middleware('guest')->name('password.request');
 

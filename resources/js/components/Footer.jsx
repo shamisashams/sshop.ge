@@ -84,6 +84,12 @@ const Footer = () => {
                     >
                         {__("client.nav_shipping_payment", localizations)}
                     </Link>
+                    <Link
+                        className="bold mb-4 block"
+                        href={route("client.privacy-policy")}
+                    >
+                        {__("client.nav_privacy_policy", localizations)}
+                    </Link>
                 </div>
                 <div className="rounded overflow-hidden md:w-1/3 sm:w-1/2 w-full md:ml-5 sm:ml-3 mb-5">
                     <LocationMap />
@@ -100,7 +106,7 @@ const Footer = () => {
                         </Link>
                         <Link className="bold block" href="/">
                             <MdLocationOn className="inline-block mr-1 align-middle w-4 h-4" />{" "}
-                            გორი, გურამიშვილის ქ 84
+                            {info.address}
                         </Link>
                     </div>
 
