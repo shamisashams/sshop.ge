@@ -40,7 +40,7 @@ const ProductBox = (props) => {
 
     return (
         <>
-            <div className="bg-white rounded p-5 text-sm relative">
+            <div className="bg-white rounded sm:p-5 p-2 text-sm relative">
                 {props.oldPrice ? (
                     <div className="absolute top-5 left-5 text-xs text-white bg-custom-red rounded py-0.5 px-2">
                         {props.discount}%
