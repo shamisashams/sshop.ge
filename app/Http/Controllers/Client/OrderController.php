@@ -504,7 +504,7 @@ class OrderController extends Controller
 
                 }
                 elseif($order->payment_method == 1 && $order->payment_type == 'space_bank'){
-                    $space = new SpacePay('pantsilion.ge','2f6ea5f1-78f6-4d50-a666-b7e9a0b46791');
+                    $space = new SpacePay('','');
 
                     $data = $space->createQr($order->grand_total,$order->id);
 
