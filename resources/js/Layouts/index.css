@@ -183,9 +183,6 @@ table tr:last-child td {
     align-items: stretch;
     height: auto;
 }
-.heroSlider .swiper-slide {
-    height: 400px;
-}
 .heroSlider .swiper-pagination {
     width: 1480px !important;
     left: 50% !important;
@@ -206,6 +203,12 @@ table tr:last-child td {
     opacity: 1 !important;
     margin: 0 5px !important;
 }
+.heroSlider.desktopImages {
+    display: block;
+}
+.heroSlider.mobileImages {
+    display: none;
+}
 
 .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
 .swiper-pagination-horizontal.swiper-pagination-bullets
@@ -220,31 +223,20 @@ table tr:last-child td {
         width: 96% !important;
     }
 }
-@media screen and (max-width: 1400px) {
-    .heroSlider .swiper-slide {
-        height: 350px;
-    }
-}
-@media screen and (max-width: 1300px) {
-    .heroSlider .swiper-slide {
-        height: 300px;
-    }
-}
 @media screen and (max-width: 1000px) {
-    .heroSlider .swiper-slide {
-        height: 233px;
-    }
     .heroSlider .swiper-pagination-bullet {
         width: 10px !important;
         height: 4px !important;
         margin: 0 3px !important;
     }
-}
-@media screen and (max-width: 600px) {
-    .heroSlider .swiper-slide {
-        height: 160px;
+    .heroSlider.desktopImages {
+        display: none;
+    }
+    .heroSlider.mobileImages {
+        display: block;
     }
 }
+
 .swiper-pagination-bullet-active,
 .heroSlider .swiper-pagination-bullet-active {
     background: #df6756 !important;
