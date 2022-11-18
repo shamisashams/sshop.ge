@@ -63,4 +63,12 @@ class Slider extends Model
     {
         return $this->morphOne(File::class, 'fileable');
     }
+
+    public function desktop(){
+        return $this->morphOne(File::class, 'fileable')->where('main',1);
+    }
+
+    public function mobile(){
+        return $this->morphOne(File::class, 'fileable')->where('span',1);
+    }
 }
