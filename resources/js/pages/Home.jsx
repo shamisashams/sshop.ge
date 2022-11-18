@@ -36,9 +36,6 @@ const Home = ({ seo }) => {
                         />
                     </div>
                     <ProductSlider products={products.special_price_tag} />
-
-                    {/* второй слайдер можем так добавить с новой бази */}
-                    {/* <ProductSlider products={products.special_price_tag} /> */}
                 </section>
                 <section className="wrapper py-10">
                     <CategoryBox categories={categories_} />
