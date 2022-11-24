@@ -48,7 +48,7 @@ class HomeController extends Controller
 
         $rand_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.option.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
-        })->inRandomOrder()->limit(15)->get();
+        })->inRandomOrder()->limit(18)->get();
 
         foreach ($rand_products as $product){
             $product_attributes = $product->attribute_values;
@@ -83,7 +83,7 @@ class HomeController extends Controller
 
         $special_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.option.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
-        })->where('special_price_tag',1)->inRandomOrder()->limit(15)->get();
+        })->where('special_price_tag',1)->inRandomOrder()->limit(18)->get();
 
         foreach ($special_products as $product){
             $product_attributes = $product->attribute_values;
@@ -117,7 +117,7 @@ class HomeController extends Controller
 
         $popular_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.option.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
-        })->where('popular',1)->inRandomOrder()->limit(15)->get();
+        })->where('popular',1)->inRandomOrder()->limit(18)->get();
 
         foreach ($popular_products as $product){
             $product_attributes = $product->attribute_values;
@@ -151,7 +151,7 @@ class HomeController extends Controller
 
         $new_products =  Product::with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.option.translation'])->whereHas('categories',function ($query){
             $query->where('status',1);
-        })->where('new',1)->inRandomOrder()->limit(15)->get();
+        })->where('new',1)->inRandomOrder()->limit(18)->get();
 
         foreach ($new_products as $product){
             $product_attributes = $product->attribute_values;
