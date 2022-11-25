@@ -271,7 +271,7 @@ Route::prefix('{locale?}')
 
         Route::get('payment',[\App\Http\Controllers\Client\PaymentController::class,'index'])->name('client.payment.index');
 
-        Route::any('bog/installment',[\App\Http\Controllers\Client\OrderController::class,'order'])->name('bogInstallment');
+        Route::any('bog/installment',[\App\Http\Controllers\Client\OrderController::class,'order'])->name('bogInstallment')->middleware('auth_client');
 
         Route::middleware(['active'])->group(function () {
 
