@@ -254,7 +254,7 @@ const PaymentDetails = ({ seo }) => {
                                             >
                                                 <img
                                                     className={`  mx-auto `}
-                                                    src="/client/assets/images/banks/6.png"
+                                                    src="/client/assets/images/banks/Untitled-3.png"
                                                     alt=""
                                                 />
                                             </button>
@@ -266,6 +266,14 @@ const PaymentDetails = ({ seo }) => {
                                             )}
                                         </div>
                                         <div className="flex flex-wrap justify-center gap-4 mt-6">
+                                            <button className={`tbc-installment-btn px-3 text-center mb-3 rounded-xl bg-white  border-solid border-2 h-16   transition-all shadow-lg  hover:border-zinc-300  ${
+                                                bankSelect === 5
+                                                    ? "!border-custom-blue"
+                                                    : "border-white"
+                                            }`} onClick={() => {
+                                                setBankSelect(5);
+                                                selectBank("tbc_installment");
+                                            }}></button>
                                             <button
                                                 onClick={() => {
                                                     setBankSelect(0);

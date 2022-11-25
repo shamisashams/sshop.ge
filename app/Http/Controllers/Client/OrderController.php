@@ -19,6 +19,7 @@ use App\Models\ProductSet;
 use App\Models\Setting;
 use App\Promocode\Promocode;
 use App\SpacePay\SpacePay;
+use App\TbcPay\TbcInstallment;
 use App\TbcPay\TbcPayment;
 use App\TerraPay\TerraPay;
 use Doctrine\DBAL\Query\QueryException;
@@ -388,7 +389,7 @@ class OrderController extends Controller
 
                 DataBase::commit();
 
-                $pdf = Pdf::loadView('client.order.order',compact('order'),[],'UTF-8');
+                /*$pdf = Pdf::loadView('client.order.order',compact('order'),[],'UTF-8');
 
                 $pdf->save('order_'. $order->id .'.pdf');
 
@@ -400,7 +401,7 @@ class OrderController extends Controller
                     $file = 'warranty_'. $item->id .'.pdf';
 
                     unlink($file);
-                }
+                }*/
 
                 $_promocode = \App\Models\PromoCode::query()->where('type','cart')->first();
                 //dd($promocode);
@@ -503,19 +504,26 @@ class OrderController extends Controller
                     return app(BogInstallmentController::class)->make_order($order->id,$bog_products,$request);
 
                 }
-                elseif($order->payment_method == 1 && $order->payment_type == 'space_bank'){
-                    $space = new SpacePay('','');
+                elseif($order->payment_method == 1 && $order->payment_type == 'tbc_installment'){
+                    $tbcPay = new TbcInstallment('VzlcvfDPoQhAMAMsLmkGKfyfcEXO4LcG','o3F9HKvmDlk4X7pt');
+                    $returnUrl = 'https://sshop.ge/' . app()->getLocale() . '/payments/tbc/status?order_id='.$order->id;
 
-                    $data = $space->createQr($order->grand_total,$order->id);
+                    $installmentProducts = [];
+                    foreach ($order->items as $key => $item){
+                        $installmentProducts[] = [
+                            'Name' => $item->name,
+                            'Price' => $item->price,
+                            'Quantity' => $item->qty_ordered
+                        ];
+                    }
 
-                    $response = json_decode($data,true);
-
-                    if($response['status']['code'] == 1){
-
-                        return Inertia::location($response['data']['redirectUrl']);
-                    } else {
-
-                        dd($response['status']['message']);
+                    $resp = $tbcPay->initiateInstallment('000000000-ce21da5e-da92-48f3-8009-4d438cbcc137',191,$order->grand_total,$installmentProducts,$order->id);
+                    $resp = \json_decode($resp,true);
+                    if(isset($resp['status'])){
+                        if ($resp['status'] == 'Created'){
+                            $order->update(['tbc_pay_id' => $resp['payId']]);
+                            return Inertia::location($resp['links'][1]['uri']);
+                        }
                     }
                 }
                  else {

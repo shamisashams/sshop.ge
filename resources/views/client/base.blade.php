@@ -27,6 +27,7 @@
 {{--    @endif--}}
     {{--    @dd($page["props"]["page"]["meta_title"])--}}
     <link rel="icon" type="image/jpeg" href="{{asset('/assets/images/favicon.jpg')}}" />
+    <link href="https://tbcganvadeba.ge/assets/css/tbc-ganvadeba-button.css" rel="stylesheet" />
     @routes
     <!-- JQUERY JS -->
     <script src="{{asset('admin/assets/plugins/jquery/jquery.min.js')}}"></script>
