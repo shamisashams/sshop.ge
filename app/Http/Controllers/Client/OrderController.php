@@ -517,7 +517,7 @@ class OrderController extends Controller
                         ];
                     }
 
-                    $resp = $tbcPay->initiateInstallment('000000000-ce21da5e-da92-48f3-8009-4d438cbcc137',191,$order->grand_total,$installmentProducts,$order->id);
+                    $resp = $tbcPay->initiateInstallment('000000000-ce21da5e-da92-48f3-8009-4d438cbcc137',204,$order->grand_total,$installmentProducts,$order->id);
                     $resp = \json_decode($resp,true);
                     if(isset($resp['status'])){
                         if ($resp['status'] == 'Created'){
