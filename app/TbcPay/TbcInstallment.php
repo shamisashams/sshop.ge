@@ -68,7 +68,7 @@ class TbcInstallment
             'products' => $installmentProducts,
         ];
 
-        //dd($json);
+        //dd(json_encode($json));
         try {
             $response = $this->http_client->request('POST', $url, [
                 'headers' => [
@@ -89,15 +89,88 @@ class TbcInstallment
 
     }
 
-    public function checkStatus($paymentId){
-        $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'payments/' . $paymentId;
+    public function confirmApplication($sessionId, $merchantKey){
+        $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'online-installments/applications/'. $sessionId .'/confirm';
 
-        $response = $this->http_client->request('GET', $url, [
+        $json = [
+            'merchantKey' => $merchantKey
+        ];
+        $response = $this->http_client->request('POST', $url, [
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
-                'apikey' => $this->apiKey,
                 'Authorization' => 'Bearer '.$this->token
-            ]
+            ],
+            'json' => $json
+        ]);
+
+        return $response->getBody()->getContents();
+    }
+
+    public function cancelApplication($sessionId, $merchantKey){
+        $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'online-installments/applications/'. $sessionId .'/cancel';
+
+        $json = [
+            'merchantKey' => $merchantKey
+        ];
+        $response = $this->http_client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => 'Bearer '.$this->token
+            ],
+            'json' => $json
+        ]);
+
+        return $response->getBody()->getContents();
+    }
+
+    public function getApplicationStatus($sessionId, $merchantKey){
+        $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'online-installments/applications/'. $sessionId .'/status';
+
+        $json = [
+            'merchantKey' => $merchantKey
+        ];
+        $response = $this->http_client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => 'Bearer '.$this->token
+            ],
+            'json' => $json
+        ]);
+
+        return $response->getBody()->getContents();
+    }
+
+    public function merchantApplicationStatuses($merchantKey,$take = 10){
+        $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'online-installments/merchant/applications/status-changes';
+
+        $json = [
+            'merchantKey' => $merchantKey,
+            'take' => $take
+        ];
+        $response = $this->http_client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => 'Bearer '.$this->token
+            ],
+            'json' => $json
+        ]);
+
+        return $response->getBody()->getContents();
+    }
+
+    public function merchantApplicationStatusSync($merchantKey,$synchronizationRequestId){
+        $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'online-installments/merchant/applications/status-changes-sync';
+
+        $json = [
+            'merchantKey' => $merchantKey,
+            'synchronizationRequestId' => $synchronizationRequestId
+        ];
+        $response = $this->http_client->request('POST', $url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => 'Bearer '.$this->token
+            ],
+            'json' => $json
         ]);
 
         return $response->getBody()->getContents();
