@@ -3,6 +3,7 @@
 namespace App\BogInstallment;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class BogInstallment
 {
@@ -97,16 +98,21 @@ class BogInstallment
 
         $json['cart_items'] = $products;
 
+        try {
+            $response = $this->http_client->request('POST', $this->api_url . '/installment/checkout', [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer '.$this->token
+                ],
 
-        $response = $this->http_client->request('POST', $this->api_url . '/installment/checkout', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer '.$this->token
-            ],
+                'json' => $json
+            ]);
 
-            'json' => $json
-        ]);
+            return $response->getBody()->getContents();
+        } catch (ClientException $exception){
+            dd($exception->getResponse()->getBody()->getContents());
+        }
 
-        return $response->getBody()->getContents();
+
     }
 }

@@ -83,7 +83,7 @@ class TbcInstallment
 
             return $response->getBody()->getContents();
         } catch (ClientException $exception){
-            dd($exception->getMessage());
+            dd($exception->getResponse()->getBody()->getContents());
         }
 
 
