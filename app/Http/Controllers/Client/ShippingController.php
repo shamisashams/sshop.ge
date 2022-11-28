@@ -33,7 +33,7 @@ class ShippingController extends Controller
      */
     public function index(string $locale, Request $request)
     {
-        $page = Page::where('key', 'shipping_payment')->firstOrFail();
+        $page = Page::where('key', 'shipping')->firstOrFail();
 
 
         $images = [];
