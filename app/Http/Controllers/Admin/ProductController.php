@@ -119,20 +119,23 @@ class ProductController extends Controller
 
             }
 
-            $max = max(array_keys($arr));
+            if (!empty($arr)){
+                $max = max(array_keys($arr));
 
-            $k = 0;
-            foreach ($arr[$max]['ancestors'] as $ancestor){
-                $path[$k]['id'] = $ancestor->id;
-                $path[$k]['slug'] = $ancestor->slug;
-                $path[$k]['title'] = $ancestor->title;
+                $k = 0;
+                foreach ($arr[$max]['ancestors'] as $ancestor){
+                    $path[$k]['id'] = $ancestor->id;
+                    $path[$k]['slug'] = $ancestor->slug;
+                    $path[$k]['title'] = $ancestor->title;
 
-                $k++;
+                    $k++;
+                }
+
+                $path[$k]['id'] = $arr[$max]['current']->id;
+                $path[$k]['slug'] = $arr[$max]['current']->slug;
+                $path[$k]['title'] = $arr[$max]['current']->title;
             }
 
-            $path[$k]['id'] = $arr[$max]['current']->id;
-            $path[$k]['slug'] = $arr[$max]['current']->slug;
-            $path[$k]['title'] = $arr[$max]['current']->title;
 
             $url_path = '';
             foreach ($path as $cat){
