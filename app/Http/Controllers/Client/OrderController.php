@@ -511,9 +511,9 @@ class OrderController extends Controller
                     $installmentProducts = [];
                     foreach ($order->items as $key => $item){
                         $installmentProducts[] = [
-                            'Name' => $item->name,
-                            'Price' => $item->price,
-                            'Quantity' => $item->qty_ordered
+                            'name' => $item->name,
+                            'price' => $item->price,
+                            'quantity' => $item->qty_ordered
                         ];
                     }
 

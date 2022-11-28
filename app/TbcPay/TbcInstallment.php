@@ -68,6 +68,8 @@ class TbcInstallment
             'products' => $installmentProducts,
         ];
 
+        //echo json_encode($json);
+        //exit();
         //dd(json_encode($json));
         try {
             $response = $this->http_client->request('POST', $url, [
