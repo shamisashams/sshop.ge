@@ -14,14 +14,14 @@ class PageSeeder5 extends Seeder
      */
     public function run()
     {
-        Page::query()->whereIn('key',['cart','shipping','payment','favorites'])->delete();
+        Page::query()->whereIn('key',['cart','shipping','payment','favorites','sipping'])->delete();
         // Pages array
         $pages = [
             [
                 'key' => 'cart'
             ],
             [
-                'key' => 'sipping'
+                'key' => 'shipping'
             ],
             [
                 'key' => 'payment'
