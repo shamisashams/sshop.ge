@@ -278,6 +278,11 @@
         } else {
             $('.input-images').imageUploader();
         }
+
+
+        $(document).on('click','[data-rm_img]',function (e){
+            $(this).parents('.uploaded-image').remove();
+        })
     </script>
 
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
