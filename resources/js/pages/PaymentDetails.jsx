@@ -12,6 +12,7 @@ import { CartTabs, DirectionBtn } from "../components/Shared";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import Layout from "@/Layouts/Layout";
 import { Inertia } from "@inertiajs/inertia";
+import {toast} from "react-toastify";
 
 const PaymentDetails = ({ seo }) => {
     const { cart, promocode, shipping, city, localizations } = usePage().props;
@@ -51,8 +52,12 @@ const PaymentDetails = ({ seo }) => {
     }
 
     function makeOrder() {
+        if(document.getElementById('term_conditions').checked === false){
+            toast.warn(__('client.warn_check_agree',localizations));
+            return;
+        }
         if (bankSelect == null) {
-            alert("select bank");
+            toast.warn(__('client.warn_select_bank',localizations));
             return;
         }
         Inertia.post(route("client.checkout.order"), { payment_type: bank });
