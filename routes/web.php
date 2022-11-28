@@ -454,6 +454,10 @@ Route::prefix('{locale?}')
             return redirect(route('client.cabinet'));
         })->name('google-callback');
         //--------------------------------------------------------------------------
+
+
+
+        Route::fallback(\App\Http\Controllers\Client\ProxyController::class . '@index')->name('proxy');
     });
 
 

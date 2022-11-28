@@ -458,8 +458,8 @@ const Navbar = () => {
                                                             <Link
                                                                 key={index}
                                                                 href={route(
-                                                                    "client.category.show",
-                                                                    item.slug
+                                                                    "proxy",
+                                                                    item.url_path
                                                                 )}
                                                                 className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all `}
                                                             >

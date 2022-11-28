@@ -125,6 +125,7 @@ class HandleInertiaRequests extends Middleware
             $result[$key]['file'] = $category->file;
             $result[$key]['depth'] = $category->depth;
             $result[$key]['on_page'] = $category->on_page;
+            $result[$key]['url_path'] = $category->url_path;
             if(count($category->children)){
                 $result[$key]['children'] = $this->buildTree($category->children);
             }

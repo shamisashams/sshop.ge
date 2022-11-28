@@ -49,6 +49,40 @@ class CategoryController extends Controller
      */
     public function index(CategoryRequest $request)
     {
+
+        $categories = Category::all();
+
+        foreach ($categories as $item){
+            $url_path = '';
+            if ($item->parent_id){
+                $_category = Category::query()->where('id',$item->parent_id)->first();
+                if ($_category){
+                    //dd($category->ancestors);
+                    if($_category->ancestors->count()){
+                        //dd($category->ancestors);
+                        foreach ($_category->ancestors as $ancestor){
+                            $url_path .= $ancestor->slug . '/';
+
+                        }
+                        $url_path .= $_category->slug . '/';
+                        //dd($url_path);
+                    } else {
+                        //dd(3);
+                        $url_path = $_category->slug . '/';
+                    }
+                    $url_path = substr($url_path,0,-1);
+                    $url_path = $url_path . '/' . $item->slug;
+                } else {
+                    $url_path = $item->slug;
+                }
+
+            } else {
+                $url_path = $item->slug;
+            }
+
+            $item->update(['url_path' => $url_path]);
+        }
+
 //        dd($languages = Language::where('status' ,true)->pluck('title', 'locale'));
         return view('admin.nowa.views.categories.index', [
             'data' => $this->categoryRepository->getData($request, ['translations','ancestors'])
@@ -130,6 +164,34 @@ class CategoryController extends Controller
             $saveData['size'] = 0;
         }
         //dd($saveData);
+        $url_path = '';
+        if ($saveData['parent_id']){
+            $category = Category::query()->withDepth()->where('id',$saveData['parent_id'])->first();
+            if ($category){
+                //dd($category->ancestors);
+                if($category->ancestors->count()){
+                    //dd($category->ancestors);
+                    foreach ($category->ancestors as $ancestor){
+                        $url_path .= $ancestor->slug . '/';
+
+                    }
+                    $url_path .= $category->slug . '/';
+                    //dd($url_path);
+                } else {
+                    //dd(3);
+                    $url_path = $category->slug . '/';
+                }
+                $url_path = substr($url_path,0,-1);
+                $url_path = $url_path . '/' . $saveData['slug'];
+            } else {
+                $url_path = $saveData['slug'];
+            }
+
+        }
+
+        $saveData['url_path'] = $url_path;
+
+
         $category = $this->categoryRepository->create($saveData);
 
         // Save Files
@@ -238,6 +300,36 @@ class CategoryController extends Controller
             $saveData['color'] = 0;
             $saveData['size'] = 0;
         }
+
+        $url_path = '';
+        if ($saveData['parent_id']){
+            $_category = Category::query()->where('id',$saveData['parent_id'])->first();
+            if ($_category){
+                //dd($category->ancestors);
+                if($_category->ancestors->count()){
+                    //dd($category->ancestors);
+                    foreach ($_category->ancestors as $ancestor){
+                        $url_path .= $ancestor->slug . '/';
+
+                    }
+                    $url_path .= $_category->slug . '/';
+                    //dd($url_path);
+                } else {
+                    //dd(3);
+                    $url_path = $_category->slug . '/';
+                }
+                $url_path = substr($url_path,0,-1);
+                $url_path = $url_path . '/' . $saveData['slug'];
+            } else {
+                $url_path = $saveData['slug'];
+            }
+
+        } else {
+            $url_path = $saveData['slug'];
+        }
+
+        $saveData['url_path'] = $url_path;
+        //dd($url_path);
 
         $this->categoryRepository->update($category->id, $saveData);
 
