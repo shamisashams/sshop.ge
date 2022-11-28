@@ -14,7 +14,7 @@ class PageSeeder5 extends Seeder
      */
     public function run()
     {
-        //Page::truncate();
+        Page::query()->whereIn('key',['cart','shipping','payment','favorites'])->delete();
         // Pages array
         $pages = [
             [
