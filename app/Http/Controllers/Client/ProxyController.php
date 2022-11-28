@@ -38,10 +38,13 @@ class ProxyController extends Controller
 
         //dd($url_path);
 
+        $url_path = explode('/',$url_path);
+        $slug = end($url_path);
 
+        //dd($slug);
 //        return 1;
-        $category = Category::where(['status' => 1, 'url_path' => $url_path])->firstOrFail();
-        if ($category){
+
+        if ($category = Category::where(['status' => 1, 'slug' => $slug])->first()){
             $page = Page::where('key', 'products')->firstOrFail();
             //dd($category);
             $products = $this->productRepository->getAll($category->id);
@@ -119,6 +122,271 @@ class ProxyController extends Controller
             ]);
         }
 
+
+        if ($product = Product::query()->where(['status' => true, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
+            $query->where('status', 1);
+
+        })->with(['translation','latestImage','video','attribute_values.attribute.translation','attribute_values.option.translation'])->first()){
+
+
+            $productImages = $product->files()->orderBy('id','desc')->get();
+
+            $gpouped = $product->grouped()->with(['attribute_values.attribute.translation','attribute_values.attribute.translation','attribute_values.option.translation'])->get();
+
+            $arr = [];
+            $d =[];
+            foreach ($gpouped as $v_product){
+                foreach ($v_product->attribute_values as $attr_value){
+                    /*foreach ($attr_value->attribute->options as $option){
+                        if($attr_value->integer_value == $option->id) {
+                            if($attr_value->attribute->code == 'color'){
+                                $arr[$attr_value->attribute->code]['attribute'] = $attr_value->attribute->name;
+                                $arr[$attr_value->attribute->code]['option'] = $option->color;
+                            }
+                        }
+                    }*/
+
+                    if($attr_value->attribute->code == 'color'){
+                        $arr[$attr_value->attribute->code]['attribute'] = $attr_value->attribute->name;
+                        $arr[$attr_value->attribute->code]['option'] = $attr_value->option->color;
+                    }
+
+                }
+
+                $d[$v_product->slug] = $arr;
+            }
+            //dd($d);
+
+            $product_attributes = $product->attribute_values;
+
+            $result = [];
+
+            foreach ($product_attributes as $item){
+                //$options = $item->attribute->options;
+                $value = '';
+                /*foreach ($options as $option){
+                    if($item->attribute->type == 'select'){
+                        if($item->integer_value == $option->id) {
+                            if($item->attribute->code == 'size'){
+                                $result[$item->attribute->code]['attribute'] = $item->attribute->name;
+                                $result[$item->attribute->code]['option'] = $option->value;
+                            }
+                            else {
+                                $result[$item->attribute->code]['option'] = $option->label;
+                                $result[$item->attribute->code]['attribute'] = $item->attribute->name;
+                            }
+                        }
+
+                    }
+                }*/
+                if($item->attribute->type == 'select'){
+                    if($item->attribute->code == 'size'){
+                        $result[$item->attribute->code]['attribute'] = $item->attribute->name;
+                        $result[$item->attribute->code]['option'] = $item->option->value;
+                    }
+                    else {
+                        $result[$item->attribute->code]['option'] = $item->option->label;
+                        $result[$item->attribute->code]['attribute'] = $item->attribute->name;
+                    }
+                }
+
+            }
+
+            $product['attributes'] = $result;
+
+            $stocks = [];
+
+            $config = [];
+            $prices = [];
+            $v_c = 0;
+            foreach ($product->variants()->with(['video','attribute_values.attribute.options','latestImage','files','stocks','stocks.translation'])->get() as $variant){
+                $product_attributes = $variant->attribute_values;
+
+                $result = [];
+
+                foreach ($product_attributes as $item){
+                    $options = $item->attribute->options;
+                    $value = '';
+                    foreach ($options as $option){
+                        if($item->attribute->type == 'select'){
+                            if($item->integer_value == $option->id) {
+                                $result[$item->attribute->code]['label'] = $option->label;
+                                $result[$item->attribute->code]['id'] = $option->id;
+                                $result[$item->attribute->code]['code'] = $option->code;
+                                $result[$item->attribute->code]['color'] = $option->color;
+                                $result[$item->attribute->code]['value'] = $option->value;
+                            }
+
+                        }
+                    }
+
+                }
+
+                //dd($result);
+                foreach ($result as $key => $item){
+                    $config[$key][$item['id']]['label'] = $item['label'];
+                    $config[$key][$item['id']]['code'] = $item['code'];
+                    $config[$key][$item['id']]['color'] = $item['color'];
+                    $config[$key][$item['id']]['value'] = $item['value'];
+                    $config[$key][$item['id']]['variants'][] = $variant->id;
+                }
+                $config['variants'][$variant->id]['prices'] = $variant->price;
+                $config['variants'][$variant->id]['images'] = $variant->files;
+                $config['variants'][$variant->id]['variant'] = $variant;
+                $config['variant_count'] = ++$v_c;
+                $config['last_variant'] =  $variant;
+                $config['last_variant']['attributes'] =  $result;
+                $prices[] = $variant->special_price ? $variant->special_price : $variant->price;
+
+
+
+                if(count($variant->stocks)){
+                    foreach ($variant->stocks as $stock){
+                        $stocks[$stock->city_id][$stock->id] = $stock;
+                        $config['variants'][$variant->id]['stocks'][$stock->city_id][$stock->id] = $stock;
+                    }
+
+                }
+
+
+
+            }
+
+
+
+            //dd($config);
+
+            $product['min_price']= !empty($prices) ? min($prices) : 0;
+            //dd($config);
+
+            //dd($prices);
+            //dd($product);
+
+
+            //dd(last($product->categories));
+            $categories = $product->categories()->with(['ancestors'])->get();
+
+
+            $path = [];
+            $arr = [];
+            foreach ($categories as $key =>$item){
+
+
+                $ancestors = $item->ancestors;
+                if(count($ancestors)){
+                    foreach ($ancestors as $ancestor){
+                        $arr[count($ancestors)]['ancestors'][] = $ancestor;
+                        $arr[count($ancestors)]['current'] = $item;
+                    }
+                } else {
+                    $arr[0]['ancestors'] = [];
+                    $arr[0]['current'] = $item;
+                }
+
+
+
+            }
+
+            $max = max(array_keys($arr));
+
+            $k = 0;
+            foreach ($arr[$max]['ancestors'] as $ancestor){
+                $path[$k]['id'] = $ancestor->id;
+                $path[$k]['slug'] = $ancestor->slug;
+                $path[$k]['title'] = $ancestor->title;
+
+                $k++;
+            }
+
+            $path[$k]['id'] = $arr[$max]['current']->id;
+            $path[$k]['slug'] = $arr[$max]['current']->slug;
+            $path[$k]['title'] = $arr[$max]['current']->title;
+
+            //dd($path);
+
+
+            $similar_products = Product::where(['status' => 1, 'product_categories.category_id' => $path[0]['id']])
+                ->where('products.id','!=',$product->id)
+                ->where('parent_id',null)
+                ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
+                ->inRandomOrder()
+                ->groupBy('products.id')
+                ->with(['latestImage','translation','attribute_values.attribute.translation','attribute_values.option.translation'])->limit(25)->get();
+
+            foreach ($similar_products as $_product){
+                $product_attributes = $_product->attribute_values;
+
+                $_result = [];
+
+                foreach ($product_attributes as $item){
+                    //$options = $item->attribute->options;
+                    $value = '';
+                    /*foreach ($options as $option){
+                        if($item->attribute->type == 'select'){
+                            if($item->integer_value == $option->id) {
+                                $_result[$item->attribute->code] = $option->label;
+                            }
+
+                        }
+                    }*/
+                    if($item->attribute->type == 'select'){
+
+                        $_result[$item->attribute->code] = $item->option->label;
+
+
+                    }
+                }
+                $_product['attributes'] = $_result;
+
+
+
+            }
+
+
+
+
+            //dd($product);
+            //dd($category);
+            //$result = [];
+            //$result['id'] = $category[0]['id'];
+            //$result['title'] = $category[0]['title'];
+            //dd(\Illuminate\Support\Facades\DB::getQueryLog());
+
+            /*return view('client.pages.product.show', [
+                'product' => $product
+            ]);*/
+            return Inertia::render('SingleProduct',[
+                'category_last' => end($path),
+                'variants' => $d,
+                'product' => $product,
+                'category_path' => $path,
+                'similar_products' => $similar_products,
+                'product_images' => $productImages,
+                'product_attributes' => $result,
+                'product_config' => $config,
+                'stocks' => $stocks,
+                "seo" => [
+                    "title"=>$product->meta_title,
+                    "description"=>$product->meta_description,
+                    "keywords"=>$product->meta_keyword,
+                    "og_title"=>$product->meta_og_title,
+                    "og_description"=>$product->meta_og_description,
+//            "image" => "imgg",
+//            "locale" => App::getLocale()
+                ]
+            ])->withViewData([
+                'meta_title' => $product->meta_title,
+                'meta_description' => $product->meta_description,
+                'meta_keyword' => $product->meta_keyword,
+                "image" => $product->file,
+                'og_title' => $product->meta_og_title,
+                'og_description' => $product->meta_og_description
+            ]);
+
+        }
+
+
+        abort(404);
     }
 
     private function getAttributes($category = null):array{

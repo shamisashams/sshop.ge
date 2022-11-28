@@ -56,7 +56,8 @@ class Product extends Model implements Searchable
         'min_price',
         'max_price',
         'model',
-        'group'
+        'group',
+        'url_path'
     ];
 
     /** @var string */
