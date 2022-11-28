@@ -144,8 +144,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
             //dd($priceRange);
             $query->where(function ($pQ) use ($priceRange){
-                $pQ->where('products.price', '>=', $priceRange[0])
-                    ->where('products.price', '<=', end($priceRange));
+                $pQ->whereRaw('IF(products.special_price != \'\', products.special_price, products.price) >= '. $priceRange[0])
+                    ->whereRaw('IF(products.special_price != \'\', products.special_price, products.price) <= ' . end($priceRange));
             });
 
         }
