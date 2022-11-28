@@ -169,7 +169,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                         //dd($filterInputValues);
 
 
-                        $aQ->select('product_attribute_values.id');
+                        $aQ->select('product_attribute_values.product_id');
                         $aQ->from('product_attribute_values');
                         //dd($filterInputValues);
                         $aQ->where('product_attribute_values.attribute_id', $attribute->id);
