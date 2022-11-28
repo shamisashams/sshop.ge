@@ -129,6 +129,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         if (isset($params['sort'])) {
             if($params['sort'] == 'title')
                 $query->orderByTranslation('title',$orderDirection);
+            elseif ($params['sort'] == 'price'){
+                $query->orderByRaw('IF(products.special_price != \'\', products.special_price, products.price) ' . $orderDirection);
+            }
             else
             $query->orderBy($params['sort'], $orderDirection);
         } else {
