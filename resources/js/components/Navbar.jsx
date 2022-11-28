@@ -35,7 +35,7 @@ const Navbar = () => {
     let n = 0;
 
     function toSubCategory(slug) {
-        Inertia.visit(route("client.category.show", slug));
+        Inertia.visit(route("proxy", slug));
     }
 
     function handleSubmit(e) {
@@ -389,7 +389,7 @@ const Navbar = () => {
                                                                 );
                                                             } else {
                                                                 toSubCategory(
-                                                                    item.slug
+                                                                    item.url_path
                                                                 );
                                                             }
 
