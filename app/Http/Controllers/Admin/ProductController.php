@@ -97,9 +97,10 @@ class ProductController extends Controller
         $products = Product::all();
 
         foreach ($products as $product){
-            $categories = $product->categories()->with(['ancestors'])->get();
+            $categories = $product->categories()->withDepth()->with(['ancestors'])->orderBy('depth')->get();
 
 
+            //dd($categories);
             $path = [];
             $arr = [];
             foreach ($categories as $key =>$item){
