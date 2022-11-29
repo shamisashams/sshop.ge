@@ -129,6 +129,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         if (isset($params['sort'])) {
             if($params['sort'] == 'title')
                 $query->orderByTranslation('title',$orderDirection);
+            elseif ($params['sort'] == 'price'){
+                $query->orderByRaw('IF(products.special_price != \'\', products.special_price, products.price) ' . $orderDirection);
+            }
             else
             $query->orderBy($params['sort'], $orderDirection);
         } else {
@@ -144,8 +147,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
             //dd($priceRange);
             $query->where(function ($pQ) use ($priceRange){
-                $pQ->where('products.price', '>=', $priceRange[0])
-                    ->where('products.price', '<=', end($priceRange));
+                $pQ->whereRaw('IF(products.special_price != \'\', products.special_price, products.price) >= '. $priceRange[0])
+                    ->whereRaw('IF(products.special_price != \'\', products.special_price, products.price) <= ' . end($priceRange));
             });
 
         }
@@ -154,9 +157,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $attributes = $this->attributeRepository->getFilterAttributes(array_keys(request()->except('price') ? request()->except('price') : []));
         //dd($attributes);
         if (count($attributes) > 0) {
-            $query->where(function ($fQ) use ($attributes) {
+            //$query->where(function ($fQ) use ($attributes) {
                 foreach ($attributes as $attribute) {
-                    $fQ->orWhere(function ($aQ) use ($attribute) {
+                    $query->whereExists(function ($aQ) use ($attribute) {
                         $column = 'product_attribute_values.' . ProductAttributeValue::$attributeTypeFields[$attribute->type];
 
                         $filterInputValues = explode(',', request()->get($attribute->code));
@@ -164,7 +167,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                         //dump($column,$attribute->type,$filterInputValues);
 
                         //dd($filterInputValues);
+
+
+                        $aQ->select('product_attribute_values.product_id');
+                        $aQ->from('product_attribute_values');
+                        //dd($filterInputValues);
                         $aQ->where('product_attribute_values.attribute_id', $attribute->id);
+                        $aQ->whereRaw('product_attribute_values.product_id = products.id');
 
                         $aQ->where(function ($attributeValueQuery) use ($column, $filterInputValues,$attribute) {
 
@@ -189,7 +198,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
 
                 }
-            });
+            //});
         }
 
         $query->groupBy('products.id');

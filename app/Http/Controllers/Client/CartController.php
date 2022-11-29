@@ -32,7 +32,7 @@ class CartController extends Controller
      */
     public function index(string $locale, Request $request)
     {
-        $page = Page::where('key', 'products')->firstOrFail();
+        $page = Page::where('key', 'cart')->firstOrFail();
 
 
         $images = [];

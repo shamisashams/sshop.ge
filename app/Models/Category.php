@@ -83,7 +83,8 @@ class Category extends Model
         'corner',
         'size',
         'color',
-        'on_page'
+        'on_page',
+        'url_path'
     ];
 
     /** @var string */

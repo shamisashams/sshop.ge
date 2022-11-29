@@ -26,8 +26,8 @@ const CategoryBox = ({ categories }) => {
                                                 <Link
                                                     key={index}
                                                     href={route(
-                                                        "client.category.show",
-                                                        el.slug
+                                                        "proxy",
+                                                        el.url_path
                                                     )}
                                                     className="block lg:mb-3 mb-1"
                                                 >
@@ -39,8 +39,8 @@ const CategoryBox = ({ categories }) => {
                                 </div>
                                 <DirectionBtn
                                     link={route(
-                                        "client.category.show",
-                                        item.slug
+                                        "proxy",
+                                        item.url_path
                                     )}
                                     text={__("client.goto_page", localizations)}
                                 />

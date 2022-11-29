@@ -195,7 +195,7 @@ class BaseRepository implements EloquentRepositoryInterface
         }
 
         $this->model->files()->where('id',$request->post('main'))->update(['main'=>1]);
-        $this->model->files()->whereIn('id',$request->post('span') ? $request->post('span') : [])->update(['span'=>1]);
+        $this->model->files()->where('id',$request->post('span'))->update(['span'=>1]);
 
 
         if ($request->hasFile('images')) {

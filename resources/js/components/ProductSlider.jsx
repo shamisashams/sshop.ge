@@ -69,7 +69,7 @@ const ProductSlider = ({ products }) => {
                                         : item.price
                                 }
                                 discount={discount}
-                                link={route("client.product.show", item.slug)}
+                                link={route("proxy", item.url_path)}
                                 id={item.id}
                                 qty={item.quantity}
                             />

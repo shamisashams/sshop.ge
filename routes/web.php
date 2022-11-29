@@ -31,8 +31,8 @@ use Illuminate\Support\Facades\Hash;
 
 Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->withoutMiddleware('web')->name('upload');
 
-Route::any('bog/callback/status', [\App\BogPay\TbcCallbackController::class, 'status'])->withoutMiddleware('web')->name('bogCallbackStatus');
-Route::any('bog/callback/refund',[\App\BogPay\TbcCallbackController::class, 'refund'])->withoutMiddleware('web')->name('bogCallbackRefund');
+Route::any('bog/callback/status', [\App\BogPay\BogCallbackController::class, 'status'])->withoutMiddleware('web')->name('bogCallbackStatus');
+Route::any('bog/callback/refund',[\App\BogPay\BogCallbackController::class, 'refund'])->withoutMiddleware('web')->name('bogCallbackRefund');
 
 Route::any('space/callback/status', [\App\SpacePay\SpaceCallbackController::class, 'status'])->withoutMiddleware('web')->name('spaceCallbackStatus');
 
@@ -252,11 +252,12 @@ Route::prefix('{locale?}')
             Route::post('favorites-set',[\App\Http\Controllers\Client\FavoriteController::class,'addToWishlistCollection'])->name('client.favorite.add-set');
             Route::get('favorites/remove',[\App\Http\Controllers\Client\FavoriteController::class,'removeFromWishlist'])->name('client.favorite.remove');
             Route::post('apply-promocode',[\App\Http\Controllers\Client\CartController::class,'applyPromocode'])->name('apply-promocode');
-            Route::post('shipping-submit',[\App\Http\Controllers\Client\ShippingController::class,'submitShipping'])->name('shipping-submit');
+
             Route::post('checkout',[\App\Http\Controllers\Client\OrderController::class,'order'])->name('client.checkout.order');
             Route::post('settings',[\App\Http\Controllers\Client\UserController::class,'saveSettings'])->name('client.save-settings');
             Route::get('invoice/{order}',[\App\Http\Controllers\Client\UserController::class,'invoice'])->name('client.invoice');
         });
+        Route::post('shipping-submit',[\App\Http\Controllers\Client\ShippingController::class,'submitShipping'])->name('shipping-submit');
 
         Route::post('add-to-cart',[\App\Http\Controllers\Client\CartController::class,'addToCart'])->name('add-to-cart');
         Route::post('add-to-cart-collection',[\App\Http\Controllers\Client\CartController::class,'addToCartCollection'])->name('add-to-cart-collection');
@@ -270,7 +271,7 @@ Route::prefix('{locale?}')
 
         Route::get('payment',[\App\Http\Controllers\Client\PaymentController::class,'index'])->name('client.payment.index');
 
-        Route::any('bog/installment',[\App\Http\Controllers\Client\OrderController::class,'order'])->name('bogInstallment');
+        Route::any('bog/installment',[\App\Http\Controllers\Client\OrderController::class,'order'])->name('bogInstallment')->middleware('auth_client');
 
         Route::middleware(['active'])->group(function () {
 
@@ -453,6 +454,10 @@ Route::prefix('{locale?}')
             return redirect(route('client.cabinet'));
         })->name('google-callback');
         //--------------------------------------------------------------------------
+
+
+
+        Route::fallback(\App\Http\Controllers\Client\ProxyController::class . '@index')->name('proxy');
     });
 
 

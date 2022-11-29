@@ -35,7 +35,7 @@ const Navbar = () => {
     let n = 0;
 
     function toSubCategory(slug) {
-        Inertia.visit(route("client.category.show", slug));
+        Inertia.visit(route("proxy", slug));
     }
 
     function handleSubmit(e) {
@@ -398,7 +398,7 @@ const Navbar = () => {
                                                                 );
                                                             } else {
                                                                 toSubCategory(
-                                                                    item.slug
+                                                                    item.url_path
                                                                 );
                                                             }
 
@@ -467,8 +467,8 @@ const Navbar = () => {
                                                             <Link
                                                                 key={index}
                                                                 href={route(
-                                                                    "client.category.show",
-                                                                    item.slug
+                                                                    "proxy",
+                                                                    item.url_path
                                                                 )}
                                                                 className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all `}
                                                             >

@@ -94,6 +94,62 @@ class ProductController extends Controller
             'products' => $this->productRepository->getData($request, ['translations', 'categories'])
         ]);*/
 
+        $products = Product::all();
+
+        foreach ($products as $product){
+            $categories = $product->categories()->withDepth()->with(['ancestors'])->orderBy('depth')->get();
+
+
+            //dd($categories);
+            $path = [];
+            $arr = [];
+            foreach ($categories as $key =>$item){
+
+
+                $ancestors = $item->ancestors;
+                if(count($ancestors)){
+                    foreach ($ancestors as $ancestor){
+                        $arr[count($ancestors)]['ancestors'][] = $ancestor;
+                        $arr[count($ancestors)]['current'] = $item;
+                    }
+                } else {
+                    $arr[0]['ancestors'] = [];
+                    $arr[0]['current'] = $item;
+                }
+
+
+            }
+
+            if (!empty($arr)){
+                $max = max(array_keys($arr));
+
+                $k = 0;
+                foreach ($arr[$max]['ancestors'] as $ancestor){
+                    $path[$k]['id'] = $ancestor->id;
+                    $path[$k]['slug'] = $ancestor->slug;
+                    $path[$k]['title'] = $ancestor->title;
+
+                    $k++;
+                }
+
+                $path[$k]['id'] = $arr[$max]['current']->id;
+                $path[$k]['slug'] = $arr[$max]['current']->slug;
+                $path[$k]['title'] = $arr[$max]['current']->title;
+            }
+
+
+            $url_path = '';
+            foreach ($path as $cat){
+                $url_path .= $cat['slug'] . '/';
+            }
+
+            $url_path = $url_path . $product->slug;
+
+            //dd($url_path);
+            //dd($attributes);
+            $product->update(['url_path' => $url_path]);
+        }
+
         return view('admin.nowa.views.products.index', [
             'data' => $this->productRepository->getData($request, ['translations', 'categories','stocks','categories.ancestors','categories.colors','latestImage']),
             'stocks' => Stock::with('translation')->get(),
@@ -194,6 +250,53 @@ class ProductController extends Controller
             $product->collections()->sync($saveData['collection_id'] ? [$saveData['collection_id']]:[]);
         }
 
+        $categories = $product->categories()->with(['ancestors'])->get();
+
+
+        $path = [];
+        $arr = [];
+        foreach ($categories as $key =>$item){
+
+
+            $ancestors = $item->ancestors;
+            if(count($ancestors)){
+                foreach ($ancestors as $ancestor){
+                    $arr[count($ancestors)]['ancestors'][] = $ancestor;
+                    $arr[count($ancestors)]['current'] = $item;
+                }
+            } else {
+                $arr[0]['ancestors'] = [];
+                $arr[0]['current'] = $item;
+            }
+
+
+        }
+
+        $max = max(array_keys($arr));
+
+        $k = 0;
+        foreach ($arr[$max]['ancestors'] as $ancestor){
+            $path[$k]['id'] = $ancestor->id;
+            $path[$k]['slug'] = $ancestor->slug;
+            $path[$k]['title'] = $ancestor->title;
+
+            $k++;
+        }
+
+        $path[$k]['id'] = $arr[$max]['current']->id;
+        $path[$k]['slug'] = $arr[$max]['current']->slug;
+        $path[$k]['title'] = $arr[$max]['current']->title;
+
+        $url_path = '';
+        foreach ($path as $cat){
+            $url_path .= $cat['slug'] . '/';
+        }
+
+        $url_path = $url_path . $saveData['slug'];
+
+        //dd($url_path);
+        //dd($attributes);
+        $product->update(['url_path' => $url_path]);
 
 
         //save product attributes
@@ -385,7 +488,54 @@ class ProductController extends Controller
 
         $product->collections()->sync(isset($saveData['collection_id']) ? [$saveData['collection_id']]:[]);
 
+
+        $categories = $product->categories()->with(['ancestors'])->get();
+
+
+        $path = [];
+        $arr = [];
+        foreach ($categories as $key =>$item){
+
+
+            $ancestors = $item->ancestors;
+            if(count($ancestors)){
+                foreach ($ancestors as $ancestor){
+                    $arr[count($ancestors)]['ancestors'][] = $ancestor;
+                    $arr[count($ancestors)]['current'] = $item;
+                }
+            } else {
+                $arr[0]['ancestors'] = [];
+                $arr[0]['current'] = $item;
+            }
+
+
+        }
+
+        $max = max(array_keys($arr));
+
+        $k = 0;
+        foreach ($arr[$max]['ancestors'] as $ancestor){
+            $path[$k]['id'] = $ancestor->id;
+            $path[$k]['slug'] = $ancestor->slug;
+            $path[$k]['title'] = $ancestor->title;
+
+            $k++;
+        }
+
+        $path[$k]['id'] = $arr[$max]['current']->id;
+        $path[$k]['slug'] = $arr[$max]['current']->slug;
+        $path[$k]['title'] = $arr[$max]['current']->title;
+
+        $url_path = '';
+        foreach ($path as $cat){
+            $url_path .= $cat['slug'] . '/';
+        }
+
+        $url_path = $url_path . $saveData['slug'];
+
+        //dd($url_path);
         //dd($attributes);
+        $product->update(['url_path' => $url_path]);
 
 
         //update product attributes

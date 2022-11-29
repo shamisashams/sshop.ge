@@ -36,15 +36,15 @@ const HeroSlider = () => {
                 }}
             >
                 {sliders.map((item, index) => {
+                    let image = item.file ? item.file.file_full_url : null;
+                    if(item.desktop) image = item.desktop.file_full_url;
                     return (
                         <SwiperSlide key={index} className="self-stretch ">
                             <div className="w-full h-fit bg-no-repeat ">
                                 <img
                                     className="w-full h-full object-contain"
                                     src={
-                                        item.file
-                                            ? item.file.file_full_url
-                                            : null
+                                        image
                                     }
                                     alt=""
                                 />
@@ -116,15 +116,15 @@ const HeroSlider = () => {
                 }}
             >
                 {sliders.map((item, index) => {
+                    let image = item.file ? item.file.file_full_url : null;
+                    if(item.mobile) image = item.mobile.file_full_url;
                     return (
                         <SwiperSlide key={index} className="self-stretch ">
                             <div className="w-full h-fit bg-no-repeat ">
                                 <img
                                     className="w-full h-full object-contain"
                                     src={
-                                        item.file
-                                            ? item.file.file_full_url
-                                            : null
+                                        image
                                     }
                                     alt=""
                                 />

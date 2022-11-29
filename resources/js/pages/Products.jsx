@@ -345,8 +345,8 @@ const Products = ({ seo }) => {
                                             }
                                             discount={discount}
                                             link={route(
-                                                "client.product.show",
-                                                item.slug
+                                                "proxy",
+                                                item.url_path
                                             )}
                                             id={item.id}
                                             qty={item.quantity}

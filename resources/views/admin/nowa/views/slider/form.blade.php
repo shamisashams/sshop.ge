@@ -179,6 +179,31 @@
                                             {{ $errors->first('images') }}
                                         </span>
                     @endif
+
+
+
+                    <div class="image-uploader">
+                        <div class="uploaded">
+
+                            @foreach($slider->files as $item)
+
+                                <div class="uploaded-image">
+
+                                    <img src="{{asset($item->getFileUrlAttribute())}}" alt="" />
+
+                                    <div style="position: absolute;z-index: 10;background-color: #fff">
+                                        <input type="hidden" name="old_images[]"  value="{{$item->id}}">
+                                        <label class="rdiobox"><input name="main" value="{{$item->id}}" name="rdio" type="radio" {{$item->main ? 'checked':''}}> <span>Desctop</span></label>
+                                        <label class="rdiobox"><input name="span" value="{{$item->id}}" name="rdio" type="radio" {{$item->span ? 'checked':''}}> <span>Mobile</span></label>
+                                        <button type="button" class="btn" data-rm_img="{{$item->id}}">remove</button>
+                                    </div>
+                                </div>
+
+
+
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,13 +271,18 @@
                 })
             })
             $('.input-images').imageUploader({
-                preloaded: imagedata,
+                //preloaded: imagedata,
                 imagesInputName: 'images',
                 preloadedInputName: 'old_images'
             });
         } else {
             $('.input-images').imageUploader();
         }
+
+
+        $(document).on('click','[data-rm_img]',function (e){
+            $(this).parents('.uploaded-image').remove();
+        })
     </script>
 
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
