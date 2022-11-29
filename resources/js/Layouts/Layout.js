@@ -17,20 +17,16 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../components/Preloader/Preloader";
-import { Inertia } from '@inertiajs/inertia'
+import { Inertia } from "@inertiajs/inertia";
 
 export default function Layout({ children, seo = null }) {
     function detectQueryString() {
         var currentQueryString = window.location.search;
         //console.log('alllelele',currentQueryString);
         if (currentQueryString) {
-
             return true;
-
         } else {
-
             return false;
-
         }
     }
     const [loading, setLoading] = useState(!detectQueryString());
@@ -41,33 +37,31 @@ export default function Layout({ children, seo = null }) {
         }, [3000]);
     }, []);*/
 
-
-
-    addEventListener('popstate', (event) => {
-       // alert(234);
-
+    addEventListener("popstate", (event) => {
+        // alert(234);
     });
     setTimeout(() => {
         setLoading(false);
     }, [500]);
 
-    Inertia.on('progress', (event) => {
-        console.log('axaxaxaxaxaxaxa',event.detail.progress.percentage)
-    })
+    Inertia.on("progress", (event) => {
+        console.log("axaxaxaxaxaxaxa", event.detail.progress.percentage);
+    });
 
-    Inertia.on('finish', () => {
+    Inertia.on("finish", () => {
         setTimeout(() => {
             setLoading(false);
         }, [500]);
-    })
+    });
 
-
-    window.addEventListener("load", ()=>{
-        var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart;
+    window.addEventListener("load", () => {
+        var loadTime =
+            window.performance.timing.domContentLoadedEventEnd -
+            window.performance.timing.navigationStart;
         setTimeout(() => {
             setLoading(false);
         }, [500]);
-    })
+    });
 
     if (seo) {
         setSeoData(seo);
@@ -98,8 +92,7 @@ export default function Layout({ children, seo = null }) {
             toast.warn(flash.warning);
             flash.warning = null;
         }
-    })
-
+    });
 
     return loading ? (
         <Preloader />

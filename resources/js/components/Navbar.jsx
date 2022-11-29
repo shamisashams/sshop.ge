@@ -374,13 +374,22 @@ const Navbar = () => {
                                                     item.children;
                                                 console.log(subCategories2);
                                                 return (
-                                                    <button
+                                                    <Link
+                                                        href={
+                                                            item.children > 0
+                                                                ? "/"
+                                                                : route(
+                                                                      "client.category.show",
+                                                                      item.slug
+                                                                  )
+                                                        }
                                                         key={index + 1}
-                                                        onClick={() => {
+                                                        onClick={(e) => {
                                                             if (
                                                                 item.children
                                                                     .length > 0
                                                             ) {
+                                                                e.preventDefault();
                                                                 setSubCatIndex(
                                                                     item.id
                                                                 );
@@ -417,7 +426,7 @@ const Navbar = () => {
                                                         0 ? (
                                                             <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
                                                         ) : null}
-                                                    </button>
+                                                    </Link>
                                                 );
                                             })}
                                         </div>

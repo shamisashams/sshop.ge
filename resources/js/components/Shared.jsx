@@ -227,7 +227,7 @@ export const FilterOptions = ({
                                 checked={checked}
                             />
                             <label
-                                className="w-4 h-4 rounded border border-solid mr-2  cursor-pointer"
+                                className="w-4 h-4 rounded border border-solid border-black/[0.3] mr-2 mb-1 cursor-pointer"
                                 htmlFor={`${item.label}_${index}`}
                             ></label>
                             <label
@@ -237,7 +237,7 @@ export const FilterOptions = ({
                                 {attribute.code === "size"
                                     ? item.value
                                     : item.label}
-                                <span className="opacity-50 text-sm">
+                                <span className="opacity-70 text-sm">
                                     ({item.count})
                                 </span>
                             </label>
