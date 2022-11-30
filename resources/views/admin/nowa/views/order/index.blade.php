@@ -94,6 +94,7 @@
                                     <th>@lang('admin.email')</th>
                                     <th>@lang('admin.phone')</th>
 
+                                    <th>@lang('admin.payment_type')</th>
                                     <th>@lang('admin.created_at')</th>
                                 </tr>
                                 </thead>
@@ -139,6 +140,9 @@
                                     <th>
 
                                     </th>
+                                    <th>
+
+                                    </th>
                                 </tr>
 
                                 @if($orders)
@@ -166,6 +170,7 @@
                                             <td>{{$order->first_name .', '.$order->last_name}}</td>
                                             <td>{{$order->email}}</td>
                                             <td>{{$order->phone}}</td>
+                                            <td>{{$order->payment_type}}</td>
                                             <td>{{$order->created_at}}</td>
                                             <td>
                                                 <a href="{{locale_route('order.edit',$order->id)}}"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Repositories\Eloquent\OrderRepository;
+use App\TbcPay\TbcInstallment;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -136,5 +137,32 @@ class OrderController extends Controller
 
         return response()->download('orders.xlsx');
 
+    }
+
+
+    public function tbcInstallmentConfirm($locale, Order $order){
+
+        $tbcInstallment = new TbcInstallment('VzlcvfDPoQhAMAMsLmkGKfyfcEXO4LcG','o3F9HKvmDlk4X7pt');
+
+        $resp = $tbcInstallment->confirmApplication($order->tbc_session_id,'000000000-ce21da5e-da92-48f3-8009-4d438cbcc137');
+
+        dd($resp);
+    }
+    public function tbcInstallmentCancel($locale, Order $order){
+
+        $tbcInstallment = new TbcInstallment('VzlcvfDPoQhAMAMsLmkGKfyfcEXO4LcG','o3F9HKvmDlk4X7pt');
+
+        $resp = $tbcInstallment->cancelApplication($order->tbc_session_id,'000000000-ce21da5e-da92-48f3-8009-4d438cbcc137');
+
+        dd($resp);
+    }
+
+    public function tbcInstallmentStatus($locale, Order $order){
+
+        $tbcInstallment = new TbcInstallment('VzlcvfDPoQhAMAMsLmkGKfyfcEXO4LcG','o3F9HKvmDlk4X7pt');
+
+        $resp = $tbcInstallment->getApplicationStatus($order->tbc_session_id,'000000000-ce21da5e-da92-48f3-8009-4d438cbcc137');
+
+        dd($resp);
     }
 }

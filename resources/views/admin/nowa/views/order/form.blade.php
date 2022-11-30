@@ -110,6 +110,16 @@
                         <textarea class="form-control" name="status_text">{{$order->status_text}}</textarea>
                     </div>
 
+                    @if($order->tbc_session_id)
+
+                        <a class="btn btn-success" href="{{route('tbc-installment.confirm',$order)}}">Confirm TBC Installment</a>
+
+                        <a class="btn btn-danger" href="{{route('tbc-installment.cancel',$order)}}">Cansel TBC Installment</a>
+
+                        <a class="btn btn-warning" href="{{route('tbc-installment.status',$order)}}">Status TBC Installment</a>
+
+                    @endif
+
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>
                             {!! Form::submit(__('admin.update'),['class' => 'btn btn-primary']) !!}

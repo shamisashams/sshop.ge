@@ -100,15 +100,22 @@ class TbcInstallment
         $json = [
             'merchantKey' => $merchantKey
         ];
-        $response = $this->http_client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => 'Bearer '.$this->token
-            ],
-            'json' => $json
-        ]);
 
-        return $response->getBody()->getContents();
+        try {
+            $response = $this->http_client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'Content-Type: application/json',
+                    'Authorization' => 'Bearer '.$this->token
+                ],
+                'json' => $json
+            ]);
+
+            return $response->getBody()->getContents();
+        } catch (ClientException $exception){
+            dd($exception->getResponse()->getBody()->getContents());
+            exit();
+        }
+
     }
 
     public function cancelApplication($sessionId, $merchantKey){
@@ -117,15 +124,22 @@ class TbcInstallment
         $json = [
             'merchantKey' => $merchantKey
         ];
-        $response = $this->http_client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => 'Bearer '.$this->token
-            ],
-            'json' => $json
-        ]);
 
-        return $response->getBody()->getContents();
+
+        try {
+            $response = $this->http_client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'Content-Type: application/json',
+                    'Authorization' => 'Bearer '.$this->token
+                ],
+                'json' => $json
+            ]);
+
+            return $response->getBody()->getContents();
+        } catch (ClientException $exception){
+            dd($exception->getResponse()->getBody()->getContents());
+            exit();
+        }
     }
 
     public function getApplicationStatus($sessionId, $merchantKey){
@@ -134,15 +148,22 @@ class TbcInstallment
         $json = [
             'merchantKey' => $merchantKey
         ];
-        $response = $this->http_client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => 'Bearer '.$this->token
-            ],
-            'json' => $json
-        ]);
 
-        return $response->getBody()->getContents();
+
+        try {
+            $response = $this->http_client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'Content-Type: application/json',
+                    'Authorization' => 'Bearer '.$this->token
+                ],
+                'json' => $json
+            ]);
+
+            return $response->getBody()->getContents();
+        } catch (ClientException $exception){
+            dd($exception->getResponse()->getBody()->getContents());
+            exit();
+        }
     }
 
     public function merchantApplicationStatuses($merchantKey,$take = 10){
@@ -152,33 +173,47 @@ class TbcInstallment
             'merchantKey' => $merchantKey,
             'take' => $take
         ];
-        $response = $this->http_client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => 'Bearer '.$this->token
-            ],
-            'json' => $json
-        ]);
 
-        return $response->getBody()->getContents();
+
+        try {
+            $response = $this->http_client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'Content-Type: application/json',
+                    'Authorization' => 'Bearer '.$this->token
+                ],
+                'json' => $json
+            ]);
+
+            return $response->getBody()->getContents();
+        } catch (ClientException $exception){
+            dd($exception->getResponse()->getBody()->getContents());
+            exit();
+        }
     }
 
-    public function merchantApplicationStatusSync($merchantKey,$synchronizationRequestId){
+    public function merchantApplicationStatusSync($merchantKey,$synchronizationRequestId = null){
         $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'online-installments/merchant/applications/status-changes-sync';
 
         $json = [
             'merchantKey' => $merchantKey,
             'synchronizationRequestId' => $synchronizationRequestId
         ];
-        $response = $this->http_client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => 'Bearer '.$this->token
-            ],
-            'json' => $json
-        ]);
 
-        return $response->getBody()->getContents();
+
+        try {
+            $response = $this->http_client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'Content-Type: application/json',
+                    'Authorization' => 'Bearer '.$this->token
+                ],
+                'json' => $json
+            ]);
+
+            return $response->getBody()->getContents();
+        } catch (ClientException $exception){
+            dd($exception->getResponse()->getBody()->getContents());
+            exit();
+        }
     }
 
 }

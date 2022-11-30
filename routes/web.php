@@ -162,6 +162,10 @@ Route::prefix('{locale?}')
 
                 Route::post('collection/product/search',[\App\Http\Controllers\Admin\CollectionController::class,'getProducts'])->name('collection.product.search.ajax');
                 Route::post('collection/{product_set}/product/add',[\App\Http\Controllers\Admin\CollectionController::class,'addProducts'])->name('product.add-to-set');
+
+                Route::get('order/{order}/tbc-installment/confirm',[\App\Http\Controllers\Admin\OrderController::class,'tbcInstallmentConfirm'])->name('tbc-installment.confirm');
+                Route::get('order/{order}/tbc-installment/cancel',[\App\Http\Controllers\Admin\OrderController::class,'tbcInstallmentCancel'])->name('tbc-installment.cancel');
+                Route::get('order/{order}/tbc-installment/status',[\App\Http\Controllers\Admin\OrderController::class,'tbcInstallmentStatus'])->name('tbc-installment.status');
             });
         });
 

@@ -56,6 +56,7 @@
                                 {{$order->address}}<br>
                                 {{$order->info}}<br>
                                 <b>Payment Method ></b> {{$order->payment_method ? 'Bank' : 'Cash'}}<br>
+                                <b>Payment type ></b> {{$order->payment_type }}<br>
                                 <b>Shipping price ></b> {{$order->ship_price}}
                             </address>
                         </div>
