@@ -58,75 +58,44 @@
     position: absolute;
     transition: 1s;
 }
+#preloader .img-1 {
+    max-width: 420px;
+}
 #preloader .img-2 {
-    top: 144px;
-    left: -67px;
+    top: 123px;
+    left: 6px;
     animation: img2 3s;
+    max-width: 137px;
 }
 #preloader .img-3 {
-    bottom: -46px;
-    right: -11px;
+    bottom: 28px;
+    right: 2px;
     animation: img3 3s;
+    max-width: 74px;
 }
 #preloader .img-4 {
-    top: 32px;
-    left: 99px;
+    top: 62px;
+    left: 83px;
     animation: img4 3s;
+    max-width: 82px;
 }
 #preloader .img-5 {
-    bottom: 133px;
-    left: -109px;
+    bottom: 44px;
+    left: -5px;
     animation: img5 3s;
+    max-width: 68px;
 }
 #preloader .img-6 {
-    bottom: 144px;
-    right: -68px;
+    bottom: 157px;
+    right: -45px;
     animation: img6 3s;
+    max-width: 71px;
 }
 #preloader .img-7 {
-    bottom: 82px;
-    right: -104px;
+    bottom: 95px;
+    right: -38px;
     animation: img7 3s;
-}
-@media screen and (max-width: 800px) {
-    #preloader .container {
-        width: 90%;
-        margin: auto;
-    }
-    #preloader .container .img-1 {
-        max-width: 100%;
-        width: auto;
-    }
-    #preloader .img-2 {
-        width: 125px;
-        top: 93px;
-        left: -18px;
-    }
-    #preloader .img-3 {
-        width: 72px;
-        bottom: -12px;
-        right: -4px;
-    }
-    #preloader .img-4 {
-        width: 67px;
-        top: 27px;
-        left: 68px;
-    }
-    #preloader .img-5 {
-        width: 50px;
-        bottom: 38px;
-        left: 2px;
-    }
-    #preloader .img-6 {
-        width: 50px;
-        bottom: 107px;
-        right: -30px;
-    }
-    #preloader .img-7 {
-        width: 20px;
-        bottom: 87px;
-        right: -13px;
-    }
+    max-width: 34px;
 }
 
 /* progressbar */
@@ -156,3 +125,49 @@
 }
 
 /* preloader end */
+
+@media screen and (max-width: 800px) {
+    #preloader .container {
+        width: 100%;
+        max-width: 360px;
+        margin: auto;
+    }
+    #preloader .container .img-1 {
+        width: auto;
+        max-width: 274px;
+        margin: auto;
+    }
+    #preloader .img-2 {
+        width: 91px;
+        top: 79px;
+        left: 32px;
+    }
+    #preloader .img-3 {
+        width: 49px;
+        bottom: 16px;
+        right: 36px;
+    }
+    #preloader .img-4 {
+        width: 44px;
+        top: 41px;
+        left: 105px;
+    }
+    #preloader .img-5 {
+        width: 35px;
+        bottom: 32px;
+        left: 48px;
+    }
+    #preloader .img-6 {
+        width: 37px;
+        bottom: 116px;
+        right: 9px;
+    }
+    #preloader .img-7 {
+        width: 20px;
+        bottom: 83px;
+        right: 2px;
+    }
+    .css-r40f8v-MuiTypography-root {
+        font-size: 24px !important;
+    }
+}

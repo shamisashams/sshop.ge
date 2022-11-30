@@ -177,7 +177,7 @@ const Products = ({ seo }) => {
                         >
                             <button
                                 onClick={() => setShowFilters(false)}
-                                className="absolute top-4 right-4"
+                                className="absolute top-4 right-4 lg:hidden"
                             >
                                 <IoCloseOutline className="w-5 h-5 " />
                             </button>

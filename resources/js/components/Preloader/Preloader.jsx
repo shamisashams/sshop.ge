@@ -86,8 +86,8 @@ const Preloader = () => {
                         alt=""
                     />
                 </div>
-                <div className="text-center max-w-lg mx-auto mt-20">
-                    <div className="bold mb-3">
+                <div className="text-center max-w-lg mx-auto md:mt-20 mb-20 md:mb-0">
+                    <div className="bold md:mb-3">
                         Getting ready for comfort shopping
                     </div>
                     <Box sx={{ width: "100%" }}>
