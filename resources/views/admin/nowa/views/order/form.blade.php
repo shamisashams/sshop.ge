@@ -112,6 +112,8 @@
 
                     @if($order->tbc_session_id)
 
+                        session id: {{$order->tbc_session_id}} <br>
+
                         <a class="btn btn-success" href="{{route('tbc-installment.confirm',$order)}}">Confirm TBC Installment</a>
 
                         <a class="btn btn-danger" href="{{route('tbc-installment.cancel',$order)}}">Cansel TBC Installment</a>
