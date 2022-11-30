@@ -61,15 +61,15 @@ class TbcInstallment
         $url = $this->baseUrl . '/' . $this->apiVersion . '/' . 'online-installments/applications';
 
         $json = [
-            'merchantKey ' => $merchantKey,
+            'merchantKey' => $merchantKey,
             'campaignId' => $campaignId,
             'invoiceId' => $invoiceId,
             'priceTotal' => $priceTotal,
             'products' => $installmentProducts,
         ];
 
-        //echo json_encode($json);
-        //exit();
+        /*echo json_encode($json);
+        exit();*/
         //dd(json_encode($json));
         try {
             $response = $this->http_client->request('POST', $url, [
@@ -81,11 +81,14 @@ class TbcInstallment
                 'json' => $json
             ]);
 
-            dd($response);
+            //dd($response);
+            //echo json_encode($response);
+            //exit();
 
-            return $response->getBody()->getContents();
+            return ['headers' => $response->getHeaders(), 'json' => $response->getBody()->getContents()];
         } catch (ClientException $exception){
-            dd($exception->getResponse()->getBody()->getContents());
+            echo($exception->getResponse()->getBody()->getContents());
+            exit();
         }
 
 

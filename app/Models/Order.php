@@ -30,7 +30,12 @@ class Order extends Model
         'user_id',
         'discount',
         'ship_price',
-        'status_text'
+        'status_text',
+        'tbc_session_id',
+        'tbc_pay_id',
+        'tbc_transaction_id',
+        'tbc_rec_id',
+        'tbc_payment_method'
     ];
 
     protected $appends = [

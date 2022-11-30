@@ -512,18 +512,23 @@ class OrderController extends Controller
                     foreach ($order->items as $key => $item){
                         $installmentProducts[] = [
                             'name' => $item->name,
-                            'price' => $item->price,
+                            'price' => floatval($item->price),
                             'quantity' => $item->qty_ordered
                         ];
                     }
 
-                    $resp = $tbcPay->initiateInstallment('000000000-ce21da5e-da92-48f3-8009-4d438cbcc137',204,$order->grand_total,$installmentProducts,$order->id);
-                    $resp = \json_decode($resp,true);
-                    if(isset($resp['status'])){
-                        if ($resp['status'] == 'Created'){
-                            $order->update(['tbc_pay_id' => $resp['payId']]);
-                            return Inertia::location($resp['links'][1]['uri']);
-                        }
+                    $resp = $tbcPay->initiateInstallment('000000000-ce21da5e-da92-48f3-8009-4d438cbcc137',204,floatval($order->grand_total),$installmentProducts,$order->id);
+
+
+                    $resp_json = \json_decode($resp['json'],true);
+
+
+                    //dd($resp_json);
+                    if(isset($resp_json['sessionId'])){
+
+                        $order->update(['tbc_session_id' => $resp_json['sessionId']]);
+                        return Inertia::location($resp['headers']['Location'][0]);
+
                     }
                 }
                  else {
