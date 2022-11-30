@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { Link, usePage } from "@inertiajs/inertia-react";
 
 const Preloader = () => {
+    const { localizations } = usePage().props;
+
     function LinearProgressWithLabel(props) {
         return (
             <Box className="progress">
@@ -88,7 +91,7 @@ const Preloader = () => {
                 </div>
                 <div className="text-center max-w-lg mx-auto md:mt-20 mb-20 md:mb-0">
                     <div className="bold md:mb-3">
-                        Getting ready for comfort shopping
+                        {__("client.preloader_text", localizations)}
                     </div>
                     <Box sx={{ width: "100%" }}>
                         <LinearProgressWithLabel value={progress} />
