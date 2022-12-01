@@ -10,7 +10,7 @@ class TbcInstallment
 
     //{base-url}/{api-version}/{product}/{sub-product}
 
-    private $baseUrl = 'https://test-api.tbcbank.ge';
+    private $baseUrl = 'https://api.tbcbank.ge';
 
     private $apiVersion = 'v1';
 
