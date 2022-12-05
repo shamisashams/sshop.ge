@@ -199,7 +199,7 @@ class AuthController extends Controller
         $request->validate([
            'name' => 'required|min:3',
            'surname' => 'required:min:3',
-           'id_number' => 'required|unique:users,id_number',
+           //'id_number' => 'required|unique:users,id_number',
             'phone' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:3',

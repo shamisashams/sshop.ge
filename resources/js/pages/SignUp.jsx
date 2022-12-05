@@ -48,8 +48,10 @@ const SignUp = ({seo}) => {
                           {errors.name && <div>{errors.name}</div>}
                           <input name="surname" type="surname" placeholder={__('client.form_surname',localizations)} onChange={handleChange} />
                           {errors.surname && <div>{errors.surname}</div>}
-                          <input name="id_number" type="id" placeholder={__('client.form_id',localizations)} onChange={handleChange} />
-                          {errors.id_number && <div>{errors.id_number}</div>}
+                          <input name="phone" type="numbers" placeholder={__('client.form_phone',localizations)} onChange={handleChange} />
+                          {errors.phone && <div>{errors.phone}</div>}
+                          {/*<input name="id_number" type="id" placeholder={__('client.form_id',localizations)} onChange={handleChange} />
+                          {errors.id_number && <div>{errors.id_number}</div>}*/}
                           <input name="email" type="email" placeholder={__('client.form_email',localizations)} onChange={handleChange} />
                           {errors.email && <div>{errors.email}</div>}
                           <input type="password" name="password" placeholder={__('client.form_password',localizations)} onChange={handleChange} />
@@ -61,8 +63,7 @@ const SignUp = ({seo}) => {
                               onChange={handleChange}
                           />
                           {errors.password_repeat && <div>{errors.password_repeat}</div>}
-                          <input name="phone" type="numbers" placeholder={__('client.form_phone',localizations)} onChange={handleChange} />
-                          {errors.phone && <div>{errors.phone}</div>}
+
                           <div className="flex items-center !justify-start mb-6">
                               <input
                                   className="hidden"
