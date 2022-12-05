@@ -379,8 +379,8 @@ const Navbar = () => {
                                                             item.children > 0
                                                                 ? "/"
                                                                 : route(
-                                                                      "client.category.show",
-                                                                      item.slug
+                                                                      "proxy",
+                                                                      item.url_path
                                                                   )
                                                         }
                                                         key={index + 1}
