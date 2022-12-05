@@ -30,11 +30,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            $mail = MailTemplate::first();
             $data = [
                 'url' => $url,
-                'text' => MailTemplate::first()->partner_register
+                'text' => $mail->partner_register
             ];
-            return (new MailMessage)->subject(__('admin.verify_subject'))->view('client.email.verify_email',$data);
+            return (new MailMessage)->subject($mail->verify_subject)->view('client.email.verify_email',$data);
         });
 
         //

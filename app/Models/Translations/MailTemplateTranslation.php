@@ -15,6 +15,8 @@ class MailTemplateTranslation extends BaseTranslationModel
         'promocode_cart',
         'promocode_products',
         'client_register',
-        'partner_register'
+        'partner_register',
+        'verify_subject',
+        'promocode_cart_subject'
     ];
 }

@@ -80,9 +80,14 @@
                                             </div>
 
                                             <div class="form-group">
+                                                <label class="form-label">@lang('admin.promocode_cart_subject')</label>
+                                                <input class="form-control" type="text" name="{{$locale}}[promocode_cart_subject]" value="{!! $model->translate($locale)->promocode_cart_subject ?? '' !!}">
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label class="form-label" for="description">@lang('admin.promocode_cart')</label>
                                                 <textarea class="form-control" id="promocode_cart-{{$locale}}"
-                                                          name="{{$locale}}[promocode_cart]'">{!! $model->translate($locale)->promocode_cart ?? '' !!}</textarea>
+                                                          name="{{$locale}}[promocode_cart]">{!! $model->translate($locale)->promocode_cart ?? '' !!}</textarea>
                                                 @error($locale.'.promocode_cart')
                                                 <small class="text-danger">
                                                     <div class="error">
@@ -90,6 +95,11 @@
                                                     </div>
                                                 </small>
                                                 @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">@lang('admin.verify_subject')</label>
+                                                <input class="form-control" type="text" name="{{$locale}}[verify_subject]" value="{!! $model->translate($locale)->verify_subject ?? '' !!}">
                                             </div>
 
                                             <div class="form-group">
