@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\MailTemplate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,6 +28,14 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            $data = [
+                'url' => $url,
+                'text' => MailTemplate::first()->partner_register
+            ];
+            return (new MailMessage)->subject(__('admin.verify_subject'))->view('client.email.verify_email',$data);
+        });
 
         //
     }

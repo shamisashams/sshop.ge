@@ -93,10 +93,10 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="form-label" for="description">@lang('admin.promocode_product')</label>
+                                                <label class="form-label" for="description">@lang('admin.verify_email')</label>
                                                 <textarea class="form-control" id="promocode_product-{{$locale}}"
-                                                          name="{{$locale}}[promocode_products]'">{!! $model->translate($locale)->promocode_products ?? '' !!}</textarea>
-                                                @error($locale.'.promocode_products')
+                                                          name="{{$locale}}[partner_register]'">{!! $model->translate($locale)->partner_register ?? '' !!}</textarea>
+                                                @error($locale.'.partner_register')
                                                 <small class="text-danger">
                                                     <div class="error">
                                                         {{$message}}
