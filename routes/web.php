@@ -183,7 +183,7 @@ Route::prefix('{locale?}')
         Route::get('partner-signin',[\App\Http\Controllers\Client\AuthController::class,'partnerLoginView'])->name('partner.login.index')->middleware('guest_p');
         Route::post('partner-signin',[\App\Http\Controllers\Client\AuthController::class,'partnerLogin'])->name('partner.login');
 
-        Route::get('guarantee', [\App\Http\Controllers\Client\AboutUsController::class, 'guarantee'])->name('client.guarantee');
+        //Route::get('guarantee', [\App\Http\Controllers\Client\AboutUsController::class, 'guarantee'])->name('client.guarantee');
         Route::get('shipping-payment', [\App\Http\Controllers\Client\AboutUsController::class, 'shippingPayment'])->name('client.shipping-payment');
         Route::get('privacy-policy', [\App\Http\Controllers\Client\AboutUsController::class, 'privacyPolicy'])->name('client.privacy-policy');
 

@@ -72,12 +72,12 @@ const Footer = () => {
                     >
                         {__("client.nav_terms", localizations)}
                     </Link>
-                    <Link
+                    {/*<Link
                         className="bold mb-4 block"
                         href={route("client.guarantee")}
                     >
                         {__("client.nav_guarantee", localizations)}
-                    </Link>
+                    </Link>*/}
                     <Link
                         className="bold mb-4 block"
                         href={route("client.shipping-payment")}
