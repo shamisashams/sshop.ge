@@ -116,7 +116,7 @@ class ProxyController extends Controller
                 'meta_title' => $category->title,
                 'meta_description' => $category->title,
                 'meta_keyword' => $category->title,
-                "image" => $category->title,
+                "image" => $category->file,
                 'og_title' => $category->title,
                 'og_description' => $category->title,
             ]);
