@@ -321,7 +321,7 @@ class CategoryController extends Controller
     }
 
     public function special(){
-        $page = Page::where('key', 'products')->firstOrFail();
+        $page = Page::where('key', 'special')->firstOrFail();
 
         $images = [];
         foreach ($page->sections as $sections){
@@ -469,7 +469,7 @@ class CategoryController extends Controller
 
 
     public function youMayLike(){
-        $page = Page::where('key', 'products')->firstOrFail();
+        $page = Page::where('key', 'you_may_like')->firstOrFail();
 
         $images = [];
         foreach ($page->sections as $sections){
