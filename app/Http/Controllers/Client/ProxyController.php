@@ -104,21 +104,21 @@ class ProxyController extends Controller
                 'images' => $images,
                 'filter' => $this->getAttributes($category),
                 "seo" => [
-                    "title"=>$page->meta_title,
-                    "description"=>$page->meta_description,
-                    "keywords"=>$page->meta_keyword,
-                    "og_title"=>$page->meta_og_title,
-                    "og_description"=>$page->meta_og_description,
+                    "title"=>$category->title,
+                    "description"=>$category->title,
+                    "keywords"=>$category->title,
+                    "og_title"=>$category->title,
+                    "og_description"=>$category->title,
 //            "image" => "imgg",
 //            "locale" => App::getLocale()
                 ]
             ])->withViewData([
-                'meta_title' => $page->meta_title,
-                'meta_description' => $page->meta_description,
-                'meta_keyword' => $page->meta_keyword,
-                "image" => $page->file,
-                'og_title' => $page->meta_og_title,
-                'og_description' => $page->meta_og_description
+                'meta_title' => $category->title,
+                'meta_description' => $category->title,
+                'meta_keyword' => $category->title,
+                "image" => $category->title,
+                'og_title' => $category->title,
+                'og_description' => $category->title,
             ]);
         }
 
