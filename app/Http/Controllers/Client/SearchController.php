@@ -37,7 +37,7 @@ class SearchController extends Controller
     public function index(string $locale, Request $request)
     {
 
-        $page = Page::where('key', 'about')->firstOrFail();
+        $page = Page::where('key', 'products')->firstOrFail();
 //        return 1;
 
         //dd($category->getAncestors());
