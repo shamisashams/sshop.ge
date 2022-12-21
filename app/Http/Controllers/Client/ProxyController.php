@@ -182,10 +182,10 @@ class ProxyController extends Controller
                 if($item->attribute->type == 'select'){
                     if($item->attribute->code == 'size'){
                         $result[$item->attribute->code]['attribute'] = $item->attribute->name;
-                        $result[$item->attribute->code]['option'] = $item->option->value;
+                        $result[$item->attribute->code]['option'] = $item->option ? $item->option->value : null;
                     }
                     else {
-                        $result[$item->attribute->code]['option'] = $item->option->label;
+                        $result[$item->attribute->code]['option'] = $item->option ? $item->option->label : null;
                         $result[$item->attribute->code]['attribute'] = $item->attribute->name;
                     }
                 }
@@ -331,7 +331,7 @@ class ProxyController extends Controller
                     }*/
                     if($item->attribute->type == 'select'){
 
-                        $_result[$item->attribute->code] = $item->option->label;
+                        $_result[$item->attribute->code] = $item->option ? $item->option->label : null;
 
 
                     }
