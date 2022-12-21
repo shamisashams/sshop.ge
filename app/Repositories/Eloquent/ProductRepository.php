@@ -78,7 +78,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->leftJoin('product_attribute_values','product_attribute_values.product_id','products.id');
 
         $query->whereHas('categories', function (Builder $query) {
-            $query->where('status', 1);
+            $query->where('categories.status', 1);
 
         });
 
@@ -200,7 +200,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 }
             //});
         }
-
+        $query->where('products.status',1);
         $query->groupBy('products.id');
 
         return $query->with(['translation','attribute_values.attribute.translation','attribute_values.option.translation','latestImage'])->paginate('16')->withQueryString();

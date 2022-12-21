@@ -123,7 +123,7 @@ class ProxyController extends Controller
         }
 
 
-        if ($product = Product::query()->where(['status' => true, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
+        if ($product = Product::query()->where(['status' => 1, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
 
         })->with(['translation','latestImage','video','attribute_values.attribute.translation','attribute_values.option.translation'])->first()){
