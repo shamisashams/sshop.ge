@@ -314,6 +314,7 @@ class OrderController extends Controller
                 $insert = [];
                 $product_images = [];
                 $product_models = [];
+                $product_urlpath = [];
                 foreach ($cart['products'] as $item){
 
                     $data['order_id'] = $order->id;
@@ -329,6 +330,7 @@ class OrderController extends Controller
                     $insert[] = $data;
                     $product_images[$item['product']->id] = $item['product']->latestImage ? $item['product']->latestImage->file_full_url : '';
                     $product_models[$item['product']->id] = $item['product']->model;
+                    $product_urlpath[$item['product']->id] = $item['product']->url_path;
                 }
                 //dd($insert);
                 OrderItem::insert($insert);
@@ -496,7 +498,7 @@ class OrderController extends Controller
                         $bog_products[$key]['total_item_qty'] = $item->qty_ordered;
                         $bog_products[$key]['total_item_amount'] = $item->qty_ordered * $item->price;
                         $bog_products[$key]['product_image_url'] = $product_images[$item->product_id];
-                        $bog_products[$key]['item_site_detail_url'] = route('proxy',$item->url_path);
+                        $bog_products[$key]['item_site_detail_url'] = route('proxy',$product_urlpath[$item->product_id]);
                     }
                     //dd($order->payment_type);
 
