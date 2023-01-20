@@ -496,7 +496,7 @@ class OrderController extends Controller
                         $bog_products[$key]['total_item_qty'] = $item->qty_ordered;
                         $bog_products[$key]['total_item_amount'] = $item->qty_ordered * $item->price;
                         $bog_products[$key]['product_image_url'] = $product_images[$item->product_id];
-                        $bog_products[$key]['item_site_detail_url'] = route('client.product.show',$item->product_id);
+                        $bog_products[$key]['item_site_detail_url'] = route('proxy',$item->url_path);
                     }
                     //dd($order->payment_type);
 
