@@ -4,6 +4,7 @@ namespace App\TerraPay;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 
 class TerraPay
 {
@@ -62,8 +63,8 @@ class TerraPay
             ]);
 
             return $response->getBody()->getContents();
-        } catch (ClientException $exception){
-            echo($exception->getResponse()->getBody()->getContents());
+        } catch (\Exception $exception){
+            echo($exception->getMessage());
             exit();
         }
 
