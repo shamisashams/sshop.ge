@@ -60,19 +60,8 @@ const PaymentDetails = ({ seo }) => {
             toast.warn(__('client.warn_select_bank',localizations));
             return;
         }
-        Inertia.post(route("client.checkout.order"), { payment_type: bank });
-    }
-
-    function selectBank(bank) {
-        setBank(bank);
-
-
-
         if (bank == "bog_installment") {
-            if(document.getElementById('term_conditions').checked === false){
-                toast.warn(__('client.warn_check_agree',localizations));
-                return;
-            }
+
             let csrf = document.querySelectorAll('meta[name="csrf-token"]');
             console.log(csrf);
             BOG.Calculator.open({
@@ -100,7 +89,16 @@ const PaymentDetails = ({ seo }) => {
                     return false;
                 },
             });
-        }
+        } else
+        Inertia.post(route("client.checkout.order"), { payment_type: bank });
+    }
+
+    function selectBank(bank) {
+        setBank(bank);
+
+
+
+
     }
 
     /*const handleClick = (item) => {
