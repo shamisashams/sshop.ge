@@ -59,7 +59,8 @@ class TerraPay
                     'Content-Type' => 'application/json',
                 ],
 
-                'json' => $json
+                'json' => $json,
+                'verify' => false
             ]);
 
             return $response->getBody()->getContents();
