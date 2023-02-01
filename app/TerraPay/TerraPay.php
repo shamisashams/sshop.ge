@@ -3,6 +3,7 @@
 namespace App\TerraPay;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class TerraPay
 {
@@ -51,15 +52,22 @@ class TerraPay
 
         $url = $this->apiUrl;
 
-        $response = $this->http_client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
+        try {
+            $response = $this->http_client->request('POST', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
 
-            'json' => $json
-        ]);
+                'json' => $json
+            ]);
 
-        return $response->getBody()->getContents();
+            return $response->getBody()->getContents();
+        } catch (ClientException $exception){
+            echo($exception->getResponse()->getBody()->getContents());
+            exit();
+        }
+
+
 
     }
 
