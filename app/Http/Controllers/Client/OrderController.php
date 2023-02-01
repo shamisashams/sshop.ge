@@ -519,7 +519,7 @@ class OrderController extends Controller
                         ];
                     }
 
-                    $resp = $tbcPay->initiateInstallment('000000000-ce21da5e-da92-48f3-8009-4d438cbcc137',204,floatval($order->grand_total),$installmentProducts,$order->id);
+                    $resp = $tbcPay->initiateInstallment('431182579-c6f197dc-3668-4bfa-affc-37fe6d043045',529,floatval($order->grand_total),$installmentProducts,$order->id);
 
 
                     $resp_json = \json_decode($resp['json'],true);

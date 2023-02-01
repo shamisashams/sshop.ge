@@ -66,7 +66,13 @@ const PaymentDetails = ({ seo }) => {
     function selectBank(bank) {
         setBank(bank);
 
+
+
         if (bank == "bog_installment") {
+            if(document.getElementById('term_conditions').checked === false){
+                toast.warn(__('client.warn_check_agree',localizations));
+                return;
+            }
             let csrf = document.querySelectorAll('meta[name="csrf-token"]');
             console.log(csrf);
             BOG.Calculator.open({
