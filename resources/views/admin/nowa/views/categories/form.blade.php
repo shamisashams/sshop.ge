@@ -144,6 +144,20 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                         </div>
 
                     </div>
+
+
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.position')</label>
+                        <input class="form-control" type="number" name="position" value="{{$category->position?$category->position:old('position')}}">
+                        @error('position')
+                        <small class="text-danger">
+                            <div class="error">
+                                {{$message}}
+                            </div>
+                        </small>
+                        @enderror
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label">@lang('admin.slug')</label>
                         <input type="text" name="slug" class="form-control" placeholder="@lang('admin.slug')" value="{{$category->slug ?? ''}}">
@@ -155,6 +169,8 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                         </div>
                     </small>
                     @enderror
+
+
                     <div class="form-group mb-0 justify-content-end">
                         <div class="checkbox">
                             <div class="custom-checkbox custom-control">

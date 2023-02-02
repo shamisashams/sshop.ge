@@ -28,6 +28,7 @@ const Navbar = () => {
         wishlist_count,
         categories,
         localizations,
+        user
     } = usePage().props;
 
     let subCategories = [];
@@ -213,7 +214,7 @@ const Navbar = () => {
                                 />
                             </svg>
                             <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300">
-                                {__("client.signin_up", localizations)}
+                                {user? __("client.auth_welcome", localizations) + ' ' + user.name + ' ' + user.surname :__("client.signin_up", localizations)}
                             </p>
                         </Link>
                         <Link
