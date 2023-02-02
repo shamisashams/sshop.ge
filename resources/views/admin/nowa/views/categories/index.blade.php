@@ -44,6 +44,7 @@
                                     <th>@lang('admin.status')</th>
                                     <th>@lang('admin.path')</th>
                                     <th>@lang('admin.title')</th>
+                                    <th>@lang('admin.position')</th>
                                     <th>@lang('admin.actions')</th>
                                 </tr>
                                 </thead>
@@ -180,6 +181,8 @@
                                                 </div>
 
                                             </td>
+
+                                            <td>{{$item->position}}</td>
 
                                             <td>
 
