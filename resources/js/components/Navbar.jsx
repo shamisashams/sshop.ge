@@ -28,7 +28,7 @@ const Navbar = () => {
         wishlist_count,
         categories,
         localizations,
-        user
+        user,
     } = usePage().props;
 
     let subCategories = [];
@@ -214,7 +214,11 @@ const Navbar = () => {
                                 />
                             </svg>
                             <p className="text-xs whitespace-nowrap text-custom-blue absolute left-1/2 -translate-x-1/2 top-full group-hover:opacity-100 opacity-0 transition-all duration-300">
-                                {user? __("client.auth_welcome", localizations) + ' ' + user.name :__("client.signin_up", localizations)}
+                                {user
+                                    ? __("client.auth_welcome", localizations) +
+                                      " " +
+                                      user.name
+                                    : __("client.signin_up", localizations)}
                             </p>
                         </Link>
                         <Link
@@ -309,10 +313,10 @@ const Navbar = () => {
 
                 {/* category start */}
                 <div
-                    onMouseLeave={() => {
-                        setCatIndex("1000");
-                        setSubCatIndex("1000");
-                    }}
+                    // onMouseLeave={() => {
+                    //     setCatIndex("1000");
+                    //     setSubCatIndex("1000");
+                    // }}
                     className={`categories absolute left-0 top-full w-full transition-all duration-500 lg:text-base text-sm  ${
                         openMenu
                             ? "translate-y-0 top-full"
@@ -327,20 +331,29 @@ const Navbar = () => {
 
                                     console.log(subCategories);
                                     return (
-                                        <Link
-                                            onMouseEnter={() =>
-                                                mainCatClick(index)
-                                            }
+                                        <button
                                             key={index + 1}
                                             className={`mb-3 block hover:text-custom-blue transition-all text-left ${
                                                 index + 1 === catIndex
                                                     ? "text-custom-blue"
                                                     : ""
                                             }`}
-                                            href={route('proxy',item.slug)}
                                         >
-                                            {item.title}
-                                        </Link>
+                                            <Link
+                                                href={route("proxy", item.slug)}
+                                            >
+                                                {" "}
+                                                {item.title}
+                                            </Link>
+
+                                            <button
+                                                onMouseEnter={() =>
+                                                    mainCatClick(index)
+                                                }
+                                            >
+                                                <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
+                                            </button>
+                                        </button>
                                     );
                                 })}
                             </div>
@@ -374,17 +387,8 @@ const Navbar = () => {
                                             {cat.map((item, index) => {
                                                 subCategories2[item.id] =
                                                     item.children;
-                                                console.log(subCategories2);
                                                 return (
-                                                    <Link
-                                                        href={
-                                                            item.children > 0
-                                                                ? "/"
-                                                                : route(
-                                                                      "proxy",
-                                                                      item.url_path
-                                                                  )
-                                                        }
+                                                    <button
                                                         key={index + 1}
                                                         onClick={(e) => {
                                                             if (
@@ -406,16 +410,16 @@ const Navbar = () => {
 
                                                             //alert(subCatIndex)
                                                         }}
-                                                        onMouseEnter={() => {
-                                                            if (
-                                                                item.children
-                                                                    .length > 0
-                                                            ) {
-                                                                setSubCatIndex(
-                                                                    item.id
-                                                                );
-                                                            }
-                                                        }}
+                                                        // onMouseEnter={() => {
+                                                        //     if (
+                                                        //         item.children
+                                                        //             .length > 0
+                                                        //     ) {
+                                                        //         setSubCatIndex(
+                                                        //             item.id
+                                                        //         );
+                                                        //     }
+                                                        // }}
                                                         className={`block mb-3 hover:text-custom-blue hover:fill-custom-blue transition-all text-left ${
                                                             item.id ===
                                                             subCatIndex
@@ -423,12 +427,34 @@ const Navbar = () => {
                                                                 : ""
                                                         }`}
                                                     >
-                                                        {item.title}
+                                                        <Link
+                                                            href={route(
+                                                                "proxy",
+                                                                item.url_path
+                                                            )}
+                                                        >
+                                                            {item.title}
+                                                        </Link>
                                                         {item.children.length >
                                                         0 ? (
-                                                            <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
+                                                            <button
+                                                                onMouseEnter={() => {
+                                                                    if (
+                                                                        item
+                                                                            .children
+                                                                            .length >
+                                                                        0
+                                                                    ) {
+                                                                        setSubCatIndex(
+                                                                            item.id
+                                                                        );
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
+                                                            </button>
                                                         ) : null}
-                                                    </Link>
+                                                    </button>
                                                 );
                                             })}
                                         </div>
