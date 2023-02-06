@@ -347,11 +347,12 @@ const Navbar = () => {
                                             </Link>
 
                                             <button
+                                                className="md:pl-2 pl-3"
                                                 onMouseEnter={() =>
                                                     mainCatClick(index)
                                                 }
                                             >
-                                                <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
+                                                <BiChevronRight className="inline-block md:w-5 md:h-5 w-6 h-6  fill-inherit" />
                                             </button>
                                         </button>
                                     );
@@ -450,8 +451,9 @@ const Navbar = () => {
                                                                         );
                                                                     }
                                                                 }}
+                                                                className="md:pl-2 pl-3"
                                                             >
-                                                                <BiChevronRight className="inline-block w-5 h-5 fill-inherit" />
+                                                                <BiChevronRight className="inline-block md:w-5 md:h-5 w-6 h-6  fill-inherit" />
                                                             </button>
                                                         ) : null}
                                                     </button>
