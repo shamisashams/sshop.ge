@@ -327,7 +327,7 @@ const Navbar = () => {
 
                                     console.log(subCategories);
                                     return (
-                                        <button
+                                        <Link
                                             onMouseEnter={() =>
                                                 mainCatClick(index)
                                             }
@@ -337,9 +337,10 @@ const Navbar = () => {
                                                     ? "text-custom-blue"
                                                     : ""
                                             }`}
+                                            href={route('proxy',item.slug)}
                                         >
                                             {item.title}
-                                        </button>
+                                        </Link>
                                     );
                                 })}
                             </div>
