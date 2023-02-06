@@ -23,6 +23,21 @@ class PageSeeder3 extends Seeder
             [
                 'key' => 'shipping_payment'
             ],
+            [
+                'key' => 'privacy_policy'
+            ],
+            [
+                'key' => 'cart'
+            ],
+            [
+                'key' => 'shipping'
+            ],
+            [
+                'key' => 'payment'
+            ],
+            [
+                'key' => 'favorites'
+            ]
         ];
 
         // Insert Pages

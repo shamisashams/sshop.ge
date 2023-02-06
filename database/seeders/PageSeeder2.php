@@ -20,7 +20,36 @@ class PageSeeder2 extends Seeder
             [
                 'key' => 'term_condition'
             ],
-
+            [
+                'key' => 'guarantee'
+            ],
+            [
+                'key' => 'shipping_payment'
+            ],
+            [
+                'key' => 'privacy_policy'
+            ],
+            [
+                'key' => 'popular'
+            ],
+            [
+                'key' => 'special'
+            ],
+            [
+                'key' => 'you_may_like'
+            ],
+            [
+                'key' => 'cart'
+            ],
+            [
+                'key' => 'shipping'
+            ],
+            [
+                'key' => 'payment'
+            ],
+            [
+                'key' => 'favorites'
+            ]
         ];
 
         // Insert Pages
