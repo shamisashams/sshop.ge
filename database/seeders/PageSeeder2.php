@@ -30,6 +30,9 @@ class PageSeeder2 extends Seeder
                 'key' => 'privacy_policy'
             ],
             [
+                'key' => 'news'
+            ],
+            [
                 'key' => 'popular'
             ],
             [
