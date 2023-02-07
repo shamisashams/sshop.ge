@@ -52,6 +52,8 @@ const Navbar = () => {
         });
     }
 
+    console.log('categories',categories);
+
     return (
         <>
             <header className="fixed w-full left-0 top-0 md:bg-white/[0.9] bg-white  py-4 after:backdrop-blur-md after:left-0 after:top-0 after:w-full after:h-full after:-z-10 z-50">
