@@ -305,6 +305,9 @@ table tr:last-child td {
         height: 100vh;
         overflow: scroll;
     } */
+    .categories .wrapper {
+        max-height: 50vh !important;
+    }
     .categories .cat-1,
     .categories .cat-2 {
         width: 100%;
@@ -338,6 +341,11 @@ table tr:last-child td {
 @media screen and (max-width: 600px) {
     .singleSlideImg .img-wrapper {
         height: 270px;
+    }
+}
+@media screen and (max-height: 400px) {
+    .categories .wrapper {
+        max-height: 40vh !important;
     }
 }
 
