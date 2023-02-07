@@ -50,7 +50,7 @@ class CategoryController extends Controller
     public function index(CategoryRequest $request)
     {
 
-        $categories = Category::all();
+        /*$categories = Category::all();
 
         foreach ($categories as $item){
             $url_path = '';
@@ -81,7 +81,7 @@ class CategoryController extends Controller
             }
 
             $item->update(['url_path' => $url_path]);
-        }
+        }*/
 
 //        dd($languages = Language::where('status' ,true)->pluck('title', 'locale'));
         return view('admin.nowa.views.categories.index', [
