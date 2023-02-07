@@ -57,7 +57,7 @@ class HandleInertiaRequests extends Middleware
 
         $result = $this->buildTree($categories);
 
-        dd($result);
+        //dd($result);
 
         $info = [];
 
