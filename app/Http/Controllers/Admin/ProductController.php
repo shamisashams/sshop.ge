@@ -94,7 +94,7 @@ class ProductController extends Controller
             'products' => $this->productRepository->getData($request, ['translations', 'categories'])
         ]);*/
 
-        $products = Product::all();
+        /*$products = Product::with(['categories.ancestors','categories.translation'])->get();
 
         foreach ($products as $product){
             $categories = $product->categories()->withDepth()->with(['ancestors'])->orderBy('depth')->get();
@@ -148,7 +148,7 @@ class ProductController extends Controller
             //dd($url_path);
             //dd($attributes);
             $product->update(['url_path' => $url_path]);
-        }
+        }*/
 
         return view('admin.nowa.views.products.index', [
             'data' => $this->productRepository->getData($request, ['translations', 'categories','stocks','categories.ancestors','categories.colors','latestImage']),
