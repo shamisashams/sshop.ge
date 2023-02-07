@@ -301,10 +301,10 @@ table tr:last-child td {
 /* categorty style start */
 
 @media screen and (max-width: 768px) {
-    .categories {
+    /* .categories {
         height: 100vh;
         overflow: scroll;
-    }
+    } */
     .categories .cat-1,
     .categories .cat-2 {
         width: 100%;
