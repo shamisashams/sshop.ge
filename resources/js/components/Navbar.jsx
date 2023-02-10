@@ -52,7 +52,7 @@ const Navbar = () => {
         });
     }
 
-    console.log('categories',categories);
+    console.log("categories", categories);
 
     return (
         <>
@@ -326,7 +326,14 @@ const Navbar = () => {
                     }`}
                 >
                     <div className="w-full h-full  md:bg-white/[0.9] bg-white backdrop-blur-md py-10 ">
-                        <div className="wrapper flex items-start justify-start relative">
+                        <div
+                            style={{
+                                maxHeight: "70vh",
+                                overflowY: "scroll",
+                                height: "100vh",
+                            }}
+                            className="wrapper flex items-start justify-start relative pb-10"
+                        >
                             <div className="md:pr-10 pr-5 md:mr-10 mr-5  cat-0">
                                 {categories.map((item, index) => {
                                     subCategories.push(item.children);

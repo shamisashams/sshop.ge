@@ -8,7 +8,7 @@ import { MdCall, MdEmail, MdLocationOn } from "react-icons/md";
 const Footer = () => {
     const { localizations, info } = usePage().props;
     return (
-        <div className="py-10 border-t">
+        <div className="pt-10 pb-24 border-t">
             <div className="wrapper flex justify-between items-start flex-wrap text-sm sm:text-base">
                 <Link href="/" className="w-full sm:w-auto mb-10">
                     <img src="/client/assets/images/logo/1.png" alt="" />
