@@ -79,8 +79,8 @@
 }
 .about-us-background {
     background-color: #e9edff;
-    height: 1007px;
     width: 100%;
+    padding-bottom: 50px;
 }
 #about-us .title {
     font-size: 35px;
