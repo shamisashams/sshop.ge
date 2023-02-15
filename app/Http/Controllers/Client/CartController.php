@@ -67,7 +67,7 @@ class CartController extends Controller
                 }*/
                 if($item->attribute->type == 'select'){
 
-                    $_result[$item->attribute->code] = $item->option->label;
+                    $_result[$item->attribute->code] = $item->option?$item->option->label:'';
 
 
                 }
