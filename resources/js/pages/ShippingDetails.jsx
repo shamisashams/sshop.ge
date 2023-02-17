@@ -13,7 +13,7 @@ import { Link, usePage } from "@inertiajs/inertia-react";
 import { Inertia } from '@inertiajs/inertia'
 
 const ShippingDetails = ({seo}) => {
-    const { cart, cities, errors, shipping, localizations } = usePage().props;
+    const { cart, cities, errors, shipping, localizations, cart_count } = usePage().props;
 
     const renderHTML = (rawHTML) =>
         React.createElement("span", {
@@ -224,7 +224,7 @@ const ShippingDetails = ({seo}) => {
                           <div className="lg:w-1/3 lg:ml-10 mx-auto lg:mx-0">
                               <div className="max-w-md">
                                   <div className="bold text-lg">{__('client.summary', localizations)}</div>
-                                  <div className="opacity-50 my-4">({cart.count} {__('client.items', localizations)})</div>
+                                  <div className="opacity-50 my-4">({cart_count} {__('client.items', localizations)})</div>
                                   {cart.products.map((item, index) => {
                                       return (
                                           <div

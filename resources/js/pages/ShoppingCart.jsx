@@ -10,7 +10,7 @@ import { Inertia } from '@inertiajs/inertia'
 
 const ShoppingCart = ({seo}) => {
 
-    const {cart, promocode, localizations, products} = usePage().props;
+    const {cart, promocode, localizations, products, cart_count} = usePage().props;
 
     function removeItem(id){
         Inertia.get(route('remove-from-cart'), {id:id})
@@ -76,7 +76,7 @@ const ShoppingCart = ({seo}) => {
                           <div className="bg-white p-5 rounded lg:w-1/3 lg:ml-10 w-full">
                               <div className="flex items-center justify-between mb-5">
                                   <div className="text-sm">{__('client.product_qty', localizations)}</div>
-                                  <div className="bold text-lg">{cart.count}</div>
+                                  <div className="bold text-lg">{cart_count}</div>
                               </div>
                               <div className="flex items-center justify-between mb-5">
                                   <div className="bold text-lg">{__('client.subtotal', localizations)}</div>

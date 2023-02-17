@@ -15,7 +15,7 @@ import { Inertia } from "@inertiajs/inertia";
 import {toast} from "react-toastify";
 
 const PaymentDetails = ({ seo }) => {
-    const { cart, promocode, shipping, city, localizations } = usePage().props;
+    const { cart, promocode, shipping, city, localizations, cart_count } = usePage().props;
     const [bankSelect, setBankSelect] = useState(null);
 
     const renderHTML = (rawHTML) =>
@@ -390,7 +390,7 @@ const PaymentDetails = ({ seo }) => {
                                         {__("client.summary", localizations)}
                                     </div>
                                     <div className="opacity-50 my-4">
-                                        ({cart.count} items)
+                                        ({cart_count} items)
                                     </div>
                                     {cart.products.map((item, index) => {
                                         return (
