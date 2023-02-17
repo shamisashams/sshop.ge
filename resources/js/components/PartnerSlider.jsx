@@ -65,7 +65,7 @@ const PartnerSlider = () => {
                 {partners.map((item, index) => {
                     return (
                         <SwiperSlide key={index} className="pb-10">
-                            <div className="opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 h-24 ">
+                            <div className="opacity-100 grayscale-0 hover:opacity-100 hover:grayscale-0 transition-all duration-500 h-24 ">
                                 <img
                                     className="mx-auto h-full w-full object-contain"
                                     src={item.file_full_url}
