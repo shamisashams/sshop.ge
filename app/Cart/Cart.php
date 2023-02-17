@@ -330,10 +330,25 @@ class Cart
         return array('count' => count($cart) + count($cart_collection), 'products' => $products, 'collections' => $collections, 'total' => $total + $total_c);
     }
 
-    public function count(){
+    /*public function count(){
         $cart = session('cart') ?? array();
         $cart_collections = session('cart_collections') ?? array();
         return count($cart) + count($cart_collections);
+    }*/
+
+    public function count(){
+        $qty = 0;
+        $cart = session('cart') ?? [];
+        foreach ($cart as $item){
+            $qty += $item->quantity;
+        }
+
+        $cart_c = session('cart_collections') ?? [];
+        foreach ($cart_c as $item){
+            $qty += $item->quantity;
+        }
+
+        return $qty;
     }
 
     public function destroy(){
